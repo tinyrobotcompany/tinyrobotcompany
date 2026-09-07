@@ -11,7 +11,11 @@ type Face = (typeof FACES)[number];
  *
  * Motion is a DVD-screensaver bounce: constant speed, reflects off the stage
  * walls with a small random angle jitter each bounce (so she doesn't lock
- * into a repeating diagonal pattern). Face cycles on every wall hit.
+ * into a repeating diagonal pattern).
+ *
+ * Face cycles on its own randomised timer (every ~1.4–2.4s), picking one of
+ * the three non-current expressions each time — so the viewer sees changes
+ * quickly and the sequence never feels predictable.
  *
  * Falls back to static-centred (default Happy face) under prefers-reduced-motion.
  */
@@ -33,7 +37,6 @@ export function Mascot() {
     let y = 0;
     let vx = 0;
     let vy = 0;
-    let faceIdx = 0;
     let raf = 0;
     let lastTime = 0;
 
@@ -106,19 +109,32 @@ export function Mascot() {
         const angle = Math.atan2(vy, vx) + jitter;
         vx = Math.cos(angle) * speed;
         vy = Math.sin(angle) * speed;
-
-        // Cycle expression on every bounce.
-        faceIdx = (faceIdx + 1) % FACES.length;
-        setFace(FACES[faceIdx]);
       }
 
       applyTransform();
       raf = requestAnimationFrame(step);
     };
 
+    // Face cycler — self-scheduling timer so we can randomise each interval.
+    // Picks a random face from the three that aren't current, so every tick
+    // is a visible change.
+    let currentFace: Face = "happy";
+    let faceTimer = 0;
+    const scheduleFace = () => {
+      const delay = 1400 + Math.random() * 1000; // 1.4–2.4s
+      faceTimer = window.setTimeout(() => {
+        const others = FACES.filter((f) => f !== currentFace);
+        const next = others[Math.floor(Math.random() * others.length)];
+        currentFace = next;
+        setFace(next);
+        scheduleFace();
+      }, delay);
+    };
+
     reset();
     setReady(true);
     raf = requestAnimationFrame(step);
+    scheduleFace();
 
     // Re-centre on resize — otherwise she can end up stuck outside the new bounds.
     let resizeTimer = 0;
@@ -135,14 +151,15 @@ export function Mascot() {
     };
     window.addEventListener("resize", onResize);
 
-    // Pause the loop when the tab isn't visible — saves battery, avoids the
-    // giant dt catch-up jump when the tab is refocused.
+    // Pause the loop and the face timer when the tab isn't visible.
     const onVisibility = () => {
       if (document.hidden) {
         cancelAnimationFrame(raf);
+        window.clearTimeout(faceTimer);
       } else {
         lastTime = 0;
         raf = requestAnimationFrame(step);
+        scheduleFace();
       }
     };
     document.addEventListener("visibilitychange", onVisibility);
@@ -150,6 +167,7 @@ export function Mascot() {
     return () => {
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeTimer);
+      window.clearTimeout(faceTimer);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
     };
