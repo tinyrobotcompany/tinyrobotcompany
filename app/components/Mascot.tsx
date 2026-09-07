@@ -13,9 +13,11 @@ type Face = (typeof FACES)[number];
  * walls with a small random angle jitter each bounce (so she doesn't lock
  * into a repeating diagonal pattern).
  *
+ * Rotation: gentle continuous wobble (±5° over 2s), interrupted every 6–14s
+ * by a full 360° spin (~1.6s, random direction).
+ *
  * Face cycles on its own randomised timer (every ~1.4–2.4s), picking one of
- * the three non-current expressions each time — so the viewer sees changes
- * quickly and the sequence never feels predictable.
+ * the three non-current expressions each time.
  *
  * Falls back to static-centred (default Happy face) under prefers-reduced-motion.
  */
@@ -40,7 +42,17 @@ export function Mascot() {
     let raf = 0;
     let lastTime = 0;
 
-    const SPEED = 95; // pixels/sec — feels lively without being frantic
+    // Rotation state: a slowly-updating base angle plus a continuous sine
+    // wobble. Occasionally interrupted by a full 360° spin.
+    let baseAngle = 0;
+    let spinning = false;
+    let spinStart = 0;
+    let spinDir: 1 | -1 = 1;
+
+    const SPEED = 95;            // pixels/sec — feels lively without being frantic
+    const WOBBLE_AMP = 5;        // degrees (±)
+    const WOBBLE_PERIOD_MS = 2000;
+    const SPIN_DURATION_MS = 1600;
 
     /** (Re-)measure the stage and wrap; place the mascot at centre with a random heading. */
     const reset = () => {
@@ -55,8 +67,9 @@ export function Mascot() {
       applyTransform();
     };
 
-    const applyTransform = () => {
-      wrap.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`;
+    const applyTransform = (rotDeg = baseAngle) => {
+      wrap.style.transform =
+        `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotDeg.toFixed(2)}deg)`;
     };
 
     // Under reduced motion: just show the mascot centred with the default face.
@@ -111,8 +124,38 @@ export function Mascot() {
         vy = Math.sin(angle) * speed;
       }
 
-      applyTransform();
+      // Rotation: full-spin overrides the wobble while it's in progress.
+      let rot: number;
+      if (spinning) {
+        const t = Math.min(1, (time - spinStart) / SPIN_DURATION_MS);
+        // easeInOutQuad
+        const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        rot = baseAngle + eased * 360 * spinDir;
+        if (t >= 1) {
+          baseAngle += 360 * spinDir;
+          spinning = false;
+          scheduleNextSpin();
+        }
+      } else {
+        const wobble = Math.sin((time / WOBBLE_PERIOD_MS) * Math.PI * 2) * WOBBLE_AMP;
+        rot = baseAngle + wobble;
+      }
+
+      applyTransform(rot);
       raf = requestAnimationFrame(step);
+    };
+
+    // Occasional full spin — every 6–14s, alternating direction randomly.
+    let spinTimer = 0;
+    const triggerSpin = () => {
+      if (spinning) return;
+      spinning = true;
+      spinStart = performance.now();
+      spinDir = Math.random() < 0.5 ? 1 : -1;
+    };
+    const scheduleNextSpin = () => {
+      const delay = 6000 + Math.random() * 8000;
+      spinTimer = window.setTimeout(triggerSpin, delay);
     };
 
     // Face cycler — self-scheduling timer so we can randomise each interval.
@@ -135,6 +178,7 @@ export function Mascot() {
     setReady(true);
     raf = requestAnimationFrame(step);
     scheduleFace();
+    scheduleNextSpin();
 
     // Re-centre on resize — otherwise she can end up stuck outside the new bounds.
     let resizeTimer = 0;
@@ -151,15 +195,17 @@ export function Mascot() {
     };
     window.addEventListener("resize", onResize);
 
-    // Pause the loop and the face timer when the tab isn't visible.
+    // Pause everything when the tab isn't visible.
     const onVisibility = () => {
       if (document.hidden) {
         cancelAnimationFrame(raf);
         window.clearTimeout(faceTimer);
+        window.clearTimeout(spinTimer);
       } else {
         lastTime = 0;
         raf = requestAnimationFrame(step);
         scheduleFace();
+        if (!spinning) scheduleNextSpin();
       }
     };
     document.addEventListener("visibilitychange", onVisibility);
@@ -168,6 +214,7 @@ export function Mascot() {
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeTimer);
       window.clearTimeout(faceTimer);
+      window.clearTimeout(spinTimer);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
     };
