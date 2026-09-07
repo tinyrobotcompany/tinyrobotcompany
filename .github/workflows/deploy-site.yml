@@ -1,0 +1,71 @@
+name: Deploy site
+
+# Triggers on every main-branch push that changes site code.
+# Uses OIDC to authenticate to Azure, then fetches the SWA deployment
+# token at runtime — no static AZURE_STATIC_WEB_APPS_API_TOKEN secret
+# needs to be kept in GitHub.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'infrastructure/**'
+      - '.github/workflows/deploy-infrastructure.yml'
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-site-main
+  cancel-in-progress: true
+
+permissions:
+  id-token: write   # OIDC federated auth to Azure
+  contents: read
+
+env:
+  AZURE_RESOURCE_GROUP: rg-tinyrobotcompany
+  AZURE_SWA_NAME:       swa-tinyrobotcompany
+
+jobs:
+  build_and_deploy:
+    name: Build and deploy to Azure SWA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id:       ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id:       ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Fetch SWA deployment token
+        id: swa
+        run: |
+          TOKEN=$(az staticwebapp secrets list \
+            --name "${AZURE_SWA_NAME}" \
+            --resource-group "${AZURE_RESOURCE_GROUP}" \
+            --query 'properties.apiKey' \
+            --output tsv)
+          # Mask so it never lands in logs, then hand it to the next step.
+          echo "::add-mask::$TOKEN"
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ steps.swa.outputs.token }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: '/'
+          api_location: ''
+          output_location: ''

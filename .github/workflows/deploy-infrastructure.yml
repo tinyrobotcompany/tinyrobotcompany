@@ -1,0 +1,78 @@
+name: Deploy infrastructure
+
+# Triggers:
+#   - Push to main that touches infrastructure/**  → auto-deploys
+#   - Manual dispatch                              → pick what-if or deploy
+#
+# Authenticates via OIDC — no long-lived Azure secrets in GitHub.
+# The identity, federated credentials and role assignment are provisioned
+# once in the Azure Portal (see infrastructure/README.md).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'infrastructure/**'
+      - '.github/workflows/deploy-infrastructure.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Deployment mode'
+        required: true
+        default: 'what-if'
+        type: choice
+        options:
+          - what-if
+          - deploy
+
+concurrency:
+  group: deploy-infra-main
+  cancel-in-progress: false
+
+permissions:
+  id-token: write   # OIDC federated auth to Azure
+  contents: read
+
+env:
+  AZURE_LOCATION:  westeurope
+  DEPLOYMENT_NAME: trc-infra-${{ github.run_number }}
+
+jobs:
+  deploy:
+    name: Deploy Bicep to subscription
+    runs-on: ubuntu-latest
+    environment: production   # subject: repo:...:environment:production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id:       ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id:       ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Bicep — what-if preview
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'what-if'
+        run: |
+          az deployment sub what-if \
+            --name "${DEPLOYMENT_NAME}" \
+            --location "${AZURE_LOCATION}" \
+            --template-file ./infrastructure/main.bicep \
+            --parameters ./infrastructure/main.bicepparam
+
+      - name: Bicep — deploy
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'deploy')
+        run: |
+          az deployment sub create \
+            --name "${DEPLOYMENT_NAME}" \
+            --location "${AZURE_LOCATION}" \
+            --template-file ./infrastructure/main.bicep \
+            --parameters ./infrastructure/main.bicepparam
+
+      - name: Surface deployment outputs
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'deploy')
+        run: |
+          az deployment sub show \
+            --name "${DEPLOYMENT_NAME}" \
+            --query properties.outputs \
+            --output json
