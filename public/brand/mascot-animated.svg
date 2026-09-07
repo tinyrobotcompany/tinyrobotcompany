@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 320" width="300" height="320" role="img" aria-labelledby="trc-title trc-desc">
+  <title id="trc-title">Tiny Robot Company</title>
+  <desc id="trc-desc">A small red robot with a signal antenna that pulses; her face cycles between happy, focused, winking and sleeping.</desc>
+  <style>
+    @keyframes trc-blink {
+      0%, 62%, 100% { transform: scaleY(1); }
+      66%, 70%      { transform: scaleY(0.08); }
+      74%           { transform: scaleY(1); }
+      78%, 82%      { transform: scaleY(0.08); }
+      86%           { transform: scaleY(1); }
+    }
+    .trc-eye {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: trc-blink 2.6s ease-in-out infinite;
+    }
+
+    @keyframes trc-pulse {
+      0%   { r: 9;  opacity: 0.75; stroke-width: 3; }
+      80%  { opacity: 0; }
+      100% { r: 30; opacity: 0; stroke-width: 1.2; }
+    }
+    .trc-pulse   { animation: trc-pulse 1.4s ease-out infinite; }
+    .trc-pulse-2 { animation-delay: 0.7s; }
+
+    @keyframes trc-beacon {
+      0%, 100% { transform: scale(1);    opacity: 1; }
+      50%      { transform: scale(1.18); opacity: 0.9; }
+    }
+    .trc-beacon {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: trc-beacon 1.4s ease-in-out infinite;
+    }
+
+    @keyframes trc-face-1 { 0%,22% { opacity: 1; } 25%,97% { opacity: 0; } 100% { opacity: 1; } }
+    @keyframes trc-face-2 { 0%,22% { opacity: 0; } 25%,47% { opacity: 1; } 50%,100% { opacity: 0; } }
+    @keyframes trc-face-3 { 0%,47% { opacity: 0; } 50%,72% { opacity: 1; } 75%,100% { opacity: 0; } }
+    @keyframes trc-face-4 { 0%,72% { opacity: 0; } 75%,97% { opacity: 1; } 100% { opacity: 0; } }
+    .trc-face-happy { animation: trc-face-1 10s infinite; }
+    .trc-face-focus { opacity: 0; animation: trc-face-2 10s infinite; }
+    .trc-face-wink  { opacity: 0; animation: trc-face-3 10s infinite; }
+    .trc-face-sleep { opacity: 0; animation: trc-face-4 10s infinite; }
+
+    @keyframes trc-bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-3px); }
+    }
+    .trc-body-group {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: trc-bob 2.6s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .trc-eye, .trc-pulse, .trc-beacon, .trc-body-group,
+      .trc-face-happy, .trc-face-focus, .trc-face-wink, .trc-face-sleep {
+        animation: none !important;
+      }
+      .trc-face-happy { opacity: 1 !important; }
+      .trc-face-focus, .trc-face-wink, .trc-face-sleep { opacity: 0 !important; }
+    }
+  </style>
+
+  <g class="trc-body-group">
+    <ellipse cx="150" cy="308" rx="90" ry="7" fill="#000000" opacity="0.35"/>
+
+    <line x1="150" y1="36" x2="150" y2="66" stroke="#DE3A2A" stroke-width="6" stroke-linecap="round"/>
+    <circle class="trc-pulse trc-pulse-1" cx="150" cy="28" r="9" fill="none" stroke="#FBEEDA" stroke-width="3"/>
+    <circle class="trc-pulse trc-pulse-2" cx="150" cy="28" r="9" fill="none" stroke="#FBEEDA" stroke-width="3"/>
+    <circle class="trc-beacon" cx="150" cy="28" r="9" fill="#FBEEDA"/>
+    <circle cx="150" cy="28" r="9" fill="none" stroke="#A6281B" stroke-width="1.5" opacity="0.4"/>
+
+    <rect x="52" y="60" width="196" height="140" rx="42" fill="#DE3A2A"/>
+    <ellipse cx="80" cy="89" rx="18" ry="10" fill="#FFFFFF" opacity="0.09"/>
+    <path d="M 208 84 Q 220 132 208 184 L 218 184 Q 230 132 218 84 Z" fill="#000000" opacity="0.08"/>
+
+    <g class="trc-face-happy">
+      <path class="trc-eye" d="M 86 136 Q 106 102 126 136" stroke="#0F0F10" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path class="trc-eye" d="M 174 136 Q 194 102 214 136" stroke="#0F0F10" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <ellipse cx="78" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+      <ellipse cx="222" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+      <path d="M 138 166 Q 150 176 162 166" stroke="#0F0F10" stroke-width="5" stroke-linecap="round" fill="none"/>
+    </g>
+    <g class="trc-face-focus">
+      <circle cx="106" cy="128" r="10" fill="#0F0F10"/>
+      <circle cx="194" cy="128" r="10" fill="#0F0F10"/>
+      <circle cx="106" cy="125" r="3" fill="#FFFFFF" opacity="0.85"/>
+      <circle cx="194" cy="125" r="3" fill="#FFFFFF" opacity="0.85"/>
+      <ellipse cx="78" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+      <ellipse cx="222" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+      <path d="M 138 168 Q 150 180 162 168" stroke="#0F0F10" stroke-width="5" stroke-linecap="round" fill="none"/>
+    </g>
+    <g class="trc-face-wink">
+      <path d="M 86 136 Q 106 102 126 136" stroke="#0F0F10" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <circle cx="194" cy="128" r="10" fill="#0F0F10"/>
+      <circle cx="194" cy="125" r="3" fill="#FFFFFF" opacity="0.85"/>
+      <ellipse cx="78" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+      <ellipse cx="222" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+      <path d="M 130 164 Q 150 186 170 164" stroke="#0F0F10" stroke-width="5" stroke-linecap="round" fill="none"/>
+    </g>
+    <g class="trc-face-sleep">
+      <path d="M 86 132 L 126 132" stroke="#0F0F10" stroke-width="8" stroke-linecap="round"/>
+      <path d="M 174 132 L 214 132" stroke="#0F0F10" stroke-width="8" stroke-linecap="round"/>
+      <path d="M 138 166 Q 150 158 162 166" stroke="#0F0F10" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <text x="234" y="56" fill="#C7C7CB" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="30">z</text>
+      <text x="254" y="38" fill="#C7C7CB" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="20" opacity="0.6">z</text>
+    </g>
+
+    <rect x="66" y="216" width="168" height="72" rx="20" fill="#DE3A2A"/>
+    <rect x="106" y="228" width="88" height="46" rx="6" fill="#6A1A11" opacity="0.55"/>
+    <circle cx="150" cy="251" r="5" fill="#FBEEDA"/>
+    <line x1="122" y1="266" x2="178" y2="266" stroke="#FBEEDA" stroke-width="1.5" opacity="0.5"/>
+
+    <rect x="38" y="226" width="26" height="58" rx="13" fill="#DE3A2A"/>
+    <rect x="236" y="226" width="26" height="58" rx="13" fill="#DE3A2A"/>
+
+    <rect x="82" y="288" width="52" height="18" rx="6" fill="#0F0F10"/>
+    <rect x="166" y="288" width="52" height="18" rx="6" fill="#0F0F10"/>
+  </g>
+</svg>

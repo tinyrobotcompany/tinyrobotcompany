@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 320" width="300" height="320" role="img" aria-labelledby="trc-title trc-desc">
+  <title id="trc-title">Tiny Robot Company</title>
+  <desc id="trc-desc">A small red robot with a signal antenna and a friendly, closed-eye smile.</desc>
+
+  <ellipse cx="150" cy="308" rx="90" ry="7" fill="#000000" opacity="0.35"/>
+
+  <line x1="150" y1="36" x2="150" y2="66" stroke="#DE3A2A" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="150" cy="28" r="9" fill="#FBEEDA"/>
+  <circle cx="150" cy="28" r="9" fill="none" stroke="#A6281B" stroke-width="1.5" opacity="0.4"/>
+
+  <rect x="52" y="60" width="196" height="140" rx="42" fill="#DE3A2A"/>
+  <ellipse cx="80" cy="89" rx="18" ry="10" fill="#FFFFFF" opacity="0.09"/>
+  <path d="M 208 84 Q 220 132 208 184 L 218 184 Q 230 132 218 84 Z" fill="#000000" opacity="0.08"/>
+
+  <path d="M 86 136 Q 106 102 126 136" stroke="#0F0F10" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <path d="M 174 136 Q 194 102 214 136" stroke="#0F0F10" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <ellipse cx="78" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+  <ellipse cx="222" cy="159" rx="10" ry="6" fill="#A6281B" opacity="0.6"/>
+  <path d="M 138 166 Q 150 176 162 166" stroke="#0F0F10" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <rect x="66" y="216" width="168" height="72" rx="20" fill="#DE3A2A"/>
+  <rect x="106" y="228" width="88" height="46" rx="6" fill="#6A1A11" opacity="0.55"/>
+  <circle cx="150" cy="251" r="5" fill="#FBEEDA"/>
+  <line x1="122" y1="266" x2="178" y2="266" stroke="#FBEEDA" stroke-width="1.5" opacity="0.5"/>
+
+  <rect x="38" y="226" width="26" height="58" rx="13" fill="#DE3A2A"/>
+  <rect x="236" y="226" width="26" height="58" rx="13" fill="#DE3A2A"/>
+
+  <rect x="82" y="288" width="52" height="18" rx="6" fill="#0F0F10"/>
+  <rect x="166" y="288" width="52" height="18" rx="6" fill="#0F0F10"/>
+</svg>

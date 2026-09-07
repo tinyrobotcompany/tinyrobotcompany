@@ -1,0 +1,36 @@
+.ticker {
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mute);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 0.6rem 0;
+}
+.track {
+  display: inline-flex;
+  gap: 3rem;
+  padding-left: 3rem;
+  animation: scroll 42s linear infinite;
+}
+.track > span { display: inline-flex; align-items: center; gap: 0.5rem; }
+.track em { color: var(--fg); font-style: normal; }
+.dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--live);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--live-soft);
+}
+
+@keyframes scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+}

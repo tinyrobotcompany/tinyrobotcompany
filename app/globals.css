@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Tiny Robot Company — design tokens
+   Dark-first. A light theme is provided so `data-theme="light"` on the
+   <html> stays legible; the site is meant to be experienced in dark mode.
+------------------------------------------------------------------ */
+:root {
+  --bg:         #0A0A0A;
+  --bg-2:       #0E0E0F;
+  --surface:    #121214;
+  --surface-2:  #17171A;
+  --elev:       #1D1D21;
+  --line:       #26262B;
+  --line-2:     #33333A;
+
+  --fg:         #EDEDEE;
+  --fg-2:       #C7C7CB;
+  --mute:       #7B7B84;
+  --dim:        #4E4E56;
+
+  --robot:      #DE3A2A;
+  --robot-hi:   #EF5E4E;
+  --robot-lo:   #A6281B;
+  --robot-ink:  #6A1A11;
+  --cream:      #FBEEDA;
+  --ink:        #0F0F10;
+  --live:       #4ADE80;
+  --live-soft:  rgba(74, 222, 128, 0.14);
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg:        #F5F5F5;
+  --bg-2:      #EFEFEF;
+  --surface:   #FFFFFF;
+  --surface-2: #FAFAFA;
+  --elev:      #FFFFFF;
+  --line:      #E2E2E2;
+  --line-2:    #D4D4D4;
+
+  --fg:        #0B0B0B;
+  --fg-2:      #2E2E2E;
+  --mute:      #6E6E76;
+  --dim:       #A2A2AA;
+
+  --live:      #16A34A;
+  --live-soft: rgba(22, 163, 74, 0.10);
+  color-scheme: light;
+}
+
+/* Expose tokens + fonts to Tailwind's utility layer */
+@theme inline {
+  --color-bg:        var(--bg);
+  --color-surface:   var(--surface);
+  --color-fg:        var(--fg);
+  --color-mute:      var(--mute);
+  --color-robot:     var(--robot);
+  --color-cream:     var(--cream);
+  --color-live:      var(--live);
+  --font-sans:  var(--font-geist-sans);
+  --font-mono:  var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  font-feature-settings: "ss01", "ss02", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Subtle grain, sitewide */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  z-index: 100;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+:root[data-theme="light"] body::before { opacity: 0.045; }
+
+::selection { background: var(--robot); color: var(--cream); }
+
+/* Focus rings — visible only on keyboard */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
