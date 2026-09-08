@@ -199,6 +199,24 @@ export default function Home() {
               </div>
             </a>
 
+            {/* AI Function, Standing Start */}
+            <a className={`${styles.card} ${styles.cardThird}`} href="#">
+              <div className={styles.cardLabel}>
+                <span>TRC / 05 · <em>2026</em></span>
+                <span>Field</span>
+              </div>
+              <h3 className={styles.cardTitle}>AI Function, <span className={styles.serif}>Standing Start</span>.</h3>
+              <p className={styles.cardDesc}>
+                Built and led an AI engineering function from zero inside a global
+                industrial supplier — architecture, hiring, delivery. No pilots that
+                died in committee; this one runs.
+              </p>
+              <div className={styles.cardFoot}>
+                <span>Fractional lead · 0→N team</span>
+                <span className={styles.cardArrow}><Arrow /></span>
+              </div>
+            </a>
+
             {/* Uptime stat */}
             <div className={`${styles.card} ${styles.cardStat}`}>
               <div className={styles.cardLabel}>
@@ -227,16 +245,25 @@ export default function Home() {
 
           <div className={styles.statementBody}>
             <p className={styles.statementQuote}>
-              <span className={styles.mute}>I build</span> small, self-contained systems
-              <span className={styles.serif}> where software intelligence</span> meets a physical response.
-              <span className={styles.mute}> One studio,</span> all four sides of the loop &mdash;
-              model, firmware, hardware, <span className={styles.serif}>and the words</span> that explain themselves.
+              <span className={styles.mute}>Before the bench,</span> 10 years building things that actually had to work,
+              <span className={styles.serif}> leading AI engineering</span> inside a global industrial company.
+              <span className={styles.mute}> Shipping software,</span> that ran in production, not in slideshows. 
+              <br />
+              <br />
+              The
+              <span className={styles.mute}>Tiny Robot Company </span>
+              is what happens when that same discipline gets pointed at two things: 
+              <span className={styles.serif}> small self contained machines,  </span>
+              and
+              <span className={styles.serif}> AI functions that companies need </span>  
+              <span className={styles.serif}> to build properly,</span>
+              <span className={styles.mute}> not just talked about</span> 
             </p>
 
             <dl className={styles.statementMeta}>
-              <dt>Name</dt>              <dd>Simon Holmes</dd>
-              <dt>Role</dt>              <dd>Full-stack GenAI engineer</dd>
-              <dt>Base</dt>              <dd>Brussels · remote-first</dd>
+              <dt>Name</dt>              <dd>Simon Holmes, PhD</dd>
+              <dt>Role</dt>              <dd>Full-stack GenAI architect / engineer</dd>
+              <dt>Base</dt>              <dd>Paris · remote-first</dd>
               <dt>Available</dt>         <dd>Consulting · Q4 2026 · 2 slots</dd>
               <dt>Preferred brief</dt>   <dd>Small, weird, well-defined.</dd>
             </dl>
@@ -251,9 +278,10 @@ export default function Home() {
                 <em>§ 03</em> · Signal
               </div>
               <h2 className={styles.contactH2}>
-                Have something small<br />
-                that needs to <span className={styles.serif}>think</span> or{" "}
-                <span className={styles.serif}>move</span>?
+                Have something big or small<br />
+                that needs to <span className={styles.serif}>think,</span>
+                <span className={styles.serif}> move</span> or{" "}
+                <span className={styles.serif}>scale</span>?
               </h2>
               <p className={styles.contactLede}>
                 Briefs are read the same day. Fit-check reply within two working days,
@@ -267,7 +295,7 @@ export default function Home() {
                 <span className={styles.contactV}>hello@tinyrobotcompany.io</span>
                 <span className={styles.contactArrow}><Arrow /></span>
               </a>
-              <a className={styles.contactRow} href="#" rel="me">
+              <a className={styles.contactRow} href="https://github.com/tinyrobotcompany" target="_blank" rel="me noopener noreferrer">
                 <span className={styles.contactK}>GitHub</span>
                 <span className={styles.contactV}>/tinyrobotcompany</span>
                 <span className={styles.contactArrow}><Arrow /></span>
