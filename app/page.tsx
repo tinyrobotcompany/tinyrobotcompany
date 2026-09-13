@@ -82,7 +82,7 @@ export default function Home() {
                 See recent work <RightArrow />
               </a>
               <a className={`${styles.btn} ${styles.btnGhost}`} href="#signal">
-                hello@tinyrobotcompany.io
+                hello@TheLittleSystemsCompany.io
               </a>
             </div>
           </div>
@@ -288,9 +288,9 @@ export default function Home() {
             </div>
 
             <div className={styles.contactPanel}>
-              <a className={styles.contactRow} href="mailto:hello@tinyrobotcompany.io">
+              <a className={styles.contactRow} href="mailto:hello@TheLittleSystemsCompany.io">
                 <span className={styles.contactK}>Mail</span>
-                <span className={styles.contactV}>hello@tinyrobotcompany.io</span>
+                <span className={styles.contactV}>hello@TheLittleSystemsCompany.io</span>
                 <span className={styles.contactArrow}><Arrow /></span>
               </a>
               <a className={styles.contactRow} href="https://github.com/tinyrobotcompany" target="_blank" rel="me noopener noreferrer">

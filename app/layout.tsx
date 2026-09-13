@@ -20,7 +20,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tinyrobotcompany.io"),
+  metadataBase: new URL("https://TheLittleSystemsCompany.io"),
   title: {
     default: "The Little Systems Company",
     template: "%s · The Little Systems Company",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     title: "The Little Systems Company",
     description:
       "Robotics, AI systems and practical GenAI for small and mid-sized manufacturers.",
-    url: "https://tinyrobotcompany.io",
+    url: "https://TheLittleSystemsCompany.io",
     siteName: "The Little Systems Company",
   },
   twitter: {
