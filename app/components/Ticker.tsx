@@ -8,6 +8,12 @@ const ITEMS: Array<React.ReactNode> = [
   <span key="who">
     Simon Holmes / <em>full-stack GenAI engineer</em>
   </span>,
+  <span key="focus">
+    Focus: <em>robotics · AI systems · practical GenAI</em>
+  </span>,
+  <span key="who-for">
+    For: <em>small and mid-sized manufacturers</em>
+  </span>,
   <span key="ship">
     Latest ship: <em>Small Voice · v0.3</em>
   </span>,
@@ -18,9 +24,9 @@ const ITEMS: Array<React.ReactNode> = [
     Consulting slots: <em>Q4 2026 · 2 open</em>
   </span>,
   <span key="loc">
-    Location: <em>Brussels ↔ Anywhere</em>
+    Location: <em>Paris ↔ Anywhere</em>
   </span>,
-  <span key="dom">◆ tinyrobotcompany.io</span>,
+  <span key="dom">◆ The Little Systems Company</span>,
 ];
 
 /**

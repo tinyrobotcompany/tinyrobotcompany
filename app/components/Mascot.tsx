@@ -7,7 +7,7 @@ const FACES = ["happy", "focus", "wink", "sleep"] as const;
 type Face = (typeof FACES)[number];
 
 /**
- * The animated Tiny Robot Company mascot.
+ * The animated The Little Systems Company mascot.
  *
  * Motion is a DVD-screensaver bounce: constant speed, reflects off the stage
  * walls with a small random angle jitter each bounce (so she doesn't lock
@@ -221,8 +221,8 @@ export function Mascot() {
   }, []);
 
   return (
-    <div ref={stageRef} className={styles.stage} aria-label="Tiny Robot Company mascot">
-      <div className={styles.badge}>TR·01 / mascot</div>
+    <div ref={stageRef} className={styles.stage} aria-label="The Little Systems Company mascot">
+      <div className={styles.badge}>LS·01 / mascot</div>
 
       <div
         ref={wrapRef}
@@ -236,7 +236,7 @@ export function Mascot() {
           role="img"
           aria-labelledby="mascotTitle mascotDesc"
         >
-          <title id="mascotTitle">Tiny Robot Company</title>
+          <title id="mascotTitle">The Little Systems Company</title>
           <desc id="mascotDesc">
             A small red robot with a signal antenna, bouncing around her zone and switching between happy, focused, winking, and sleeping expressions.
           </desc>

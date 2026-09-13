@@ -22,33 +22,37 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL("https://tinyrobotcompany.io"),
   title: {
-    default: "Tiny Robot Company",
-    template: "%s · Tiny Robot Company",
+    default: "The Little Systems Company",
+    template: "%s · The Little Systems Company",
   },
   description:
-    "A studio of one making small things that think, move, and — occasionally — misbehave. Generative AI, electronics, and robotics from Simon Holmes.",
-  applicationName: "Tiny Robot Company",
+    "Robotics, AI systems and practical GenAI for small and mid-sized manufacturers. Building, education and consultancy — from a workshop of one.",
+  applicationName: "The Little Systems Company",
   authors: [{ name: "Simon Holmes" }],
   keywords: [
     "GenAI",
     "generative AI",
-    "electronics",
+    "AI systems",
     "robotics",
+    "manufacturing",
+    "AI consultancy",
+    "AI education",
     "Simon Holmes",
-    "Tiny Robot Company",
+    "The Little Systems Company",
   ],
   openGraph: {
     type: "website",
-    title: "Tiny Robot Company",
+    title: "The Little Systems Company",
     description:
-      "Small things that think, move, and — occasionally — misbehave. GenAI · Electronics · Robotics.",
+      "Robotics, AI systems and practical GenAI for small and mid-sized manufacturers.",
     url: "https://tinyrobotcompany.io",
-    siteName: "Tiny Robot Company",
+    siteName: "The Little Systems Company",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tiny Robot Company",
-    description: "Small things that think, move, and — occasionally — misbehave.",
+    title: "The Little Systems Company",
+    description:
+      "Robotics, AI systems and practical GenAI for small and mid-sized manufacturers.",
   },
 };
 

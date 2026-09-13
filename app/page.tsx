@@ -36,9 +36,9 @@ export default function Home() {
       <Spotlight />
 
       <header className={styles.nav} role="banner">
-        <a href="#top" className={styles.brand} aria-label="Tiny Robot Company, home">
+        <a href="#top" className={styles.brand} aria-label="The Little Systems Company, home">
           <BrandMark size={22} />
-          tinyrobotcompany.io
+          The Little Systems Company
         </a>
         <ul className={styles.navLinks}>
           <li><a href="#works">Works</a></li>
@@ -62,19 +62,19 @@ export default function Home() {
             <div className={styles.heroMeta}>
               <span><span className={styles.liveDot} aria-hidden="true" /> Workshop live</span>
               <span>Est. <em>2026</em></span>
-              <span>Rev. <em>A.03</em></span>
-              <span>Simon@<em>trc</em></span>
+              <span>Rev. <em>A.04</em></span>
+              <span>Simon@<em>lsc</em></span>
             </div>
 
             <h1 className={styles.heroTitle} id="hero-title">
-              Small machines,<span className={styles.and}>&mdash;</span>
-              <span className={styles.serif}>large</span> ideas.
+              Little systems,<span className={styles.and}>&mdash;</span>
+              <span className={styles.serif}>real</span> work.
             </h1>
 
             <p className={styles.heroLede}>
-              Tiny Robot Company is a <span className={styles.hl}>studio of one</span> working at the seam
-              between language models, circuits and things that move. Applied GenAI, small-batch
-              electronics, and the occasional robot that behaves.
+              The Little Systems Company builds <span className={styles.hl}>robotics, AI systems,
+              and practical GenAI</span> for small and mid-sized manufacturers &mdash; building,
+              education and consultancy from a workshop of one.
             </p>
 
             <div className={styles.heroActions}>
@@ -107,7 +107,7 @@ export default function Home() {
             <a className={`${styles.card} ${styles.cardFeature}`} href="#" aria-label="Signal Sketchbook — featured project">
               <div className={styles.cardLabel}>
                 <span>Featured · <em>2026</em></span>
-                <span>TRC / 04</span>
+                <span>LSC / 04</span>
               </div>
               <h3 className={styles.cardTitle}>Signal <span className={styles.serif}>Sketchbook</span>.</h3>
               <p className={styles.cardDesc}>
@@ -154,7 +154,7 @@ export default function Home() {
             {/* Small Voice */}
             <a className={`${styles.card} ${styles.cardSide}`} href="#">
               <div className={styles.cardLabel}>
-                <span>TRC / 03 · <em>2026</em></span>
+                <span>LSC / 03 · <em>2026</em></span>
                 <span>Ship</span>
               </div>
               <h3 className={styles.cardTitle}>Small <span className={styles.serif}>Voice</span>.</h3>
@@ -170,7 +170,7 @@ export default function Home() {
             {/* Servo Loom */}
             <a className={`${styles.card} ${styles.cardThird}`} href="#">
               <div className={styles.cardLabel}>
-                <span>TRC / 02 · <em>2025</em></span>
+                <span>LSC / 02 · <em>2025</em></span>
                 <span>Ship</span>
               </div>
               <h3 className={styles.cardTitle}>Servo <span className={styles.serif}>Loom</span>.</h3>
@@ -186,7 +186,7 @@ export default function Home() {
             {/* Retina Kit */}
             <a className={`${styles.card} ${styles.cardThird}`} href="#">
               <div className={styles.cardLabel}>
-                <span>TRC / 01 · <em>2024</em></span>
+                <span>LSC / 01 · <em>2024</em></span>
                 <span>Archive</span>
               </div>
               <h3 className={styles.cardTitle}>Retina <span className={styles.serif}>Kit</span>.</h3>
@@ -202,7 +202,7 @@ export default function Home() {
             {/* AI Function, Standing Start */}
             <a className={`${styles.card} ${styles.cardThird}`} href="#">
               <div className={styles.cardLabel}>
-                <span>TRC / 05 · <em>2026</em></span>
+                <span>LSC / 05 · <em>2026</em></span>
                 <span>Field</span>
               </div>
               <h3 className={styles.cardTitle}>AI Function, <span className={styles.serif}>Standing Start</span>.</h3>
@@ -247,17 +247,15 @@ export default function Home() {
             <p className={styles.statementQuote}>
               <span className={styles.mute}>Before the bench,</span> 10 years building things that actually had to work,
               <span className={styles.serif}> leading AI engineering</span> inside a global industrial company.
-              <span className={styles.mute}> Shipping software,</span> that ran in production, not in slideshows. 
+              <span className={styles.mute}> Shipping software,</span> that ran in production, not in slideshows.
               <br />
               <br />
-              The
-              <span className={styles.mute}>Tiny Robot Company </span>
-              is what happens when that same discipline gets pointed at two things: 
-              <span className={styles.serif}> small self contained machines,  </span>
-              and
-              <span className={styles.serif}> AI functions that companies need </span>  
-              <span className={styles.serif}> to build properly,</span>
-              <span className={styles.mute}> not just talked about</span> 
+              <span className={styles.mute}>The Little Systems Company</span> is what happens when that same
+              discipline gets pointed at three things:
+              <span className={styles.serif}> small self-contained machines,</span>
+              <span className={styles.serif}> AI systems that companies need to build properly,</span> and
+              <span className={styles.serif}> the education</span> that makes the difference between AI
+              that ships and AI that gets talked about.
             </p>
 
             <dl className={styles.statementMeta}>
@@ -311,9 +309,9 @@ export default function Home() {
       </main>
 
       <footer className={styles.foot}>
-        <div>© <em>Tiny Robot Company</em> · 2026 — Assembled by hand.</div>
+        <div>© <em>The Little Systems Company</em> · 2026 — Assembled by hand.</div>
         <div className={styles.footSide}>
-          <span>Build 12 · <em>A.03</em></span>
+          <span>Build 13 · <em>A.04</em></span>
           <a href="#top">Back to top ↑</a>
           <ThemeToggle />
         </div>
