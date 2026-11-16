@@ -9,10 +9,10 @@ const ITEMS: Array<React.ReactNode> = [
     Simon Holmes / <em>full-stack GenAI engineer</em>
   </span>,
   <span key="ship">
-    Latest ship: <em>Small Voice · v0.3</em>
+    In beta: <em>Voxa · Déjà Groove</em>
   </span>,
   <span key="bench">
-    Currently on the bench: <em>Servo Loom · calibration</em>
+    Currently on the bench: <em>Pico Pie · first face</em>
   </span>,
   <span key="slot">
     Consulting slots: <em>Q4 2026 · 2 open</em>
