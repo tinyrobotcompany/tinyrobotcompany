@@ -20,7 +20,10 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tinyrobotcompany.io"),
+  // www is canonical: the bare domain is a registrar redirect that drops the
+  // path, so shared links and previews must always use www.
+  metadataBase: new URL("https://www.tinyrobotcompany.io"),
+  alternates: { canonical: "./" },
   title: {
     default: "Tiny Robot Company",
     template: "%s · Tiny Robot Company",
@@ -42,7 +45,7 @@ export const metadata: Metadata = {
     title: "Tiny Robot Company",
     description:
       "Small things that think, move, and — occasionally — misbehave. GenAI · Electronics · Robotics.",
-    url: "https://tinyrobotcompany.io",
+    url: "https://www.tinyrobotcompany.io",
     siteName: "Tiny Robot Company",
   },
   twitter: {

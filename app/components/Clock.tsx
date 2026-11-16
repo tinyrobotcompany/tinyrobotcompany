@@ -10,9 +10,14 @@ export function Clock() {
   const [time, setTime] = useState<string>("--:--:-- UTC");
 
   useEffect(() => {
-    setTime(format(new Date()));
-    const id = window.setInterval(() => setTime(format(new Date())), 1000);
-    return () => window.clearInterval(id);
+    const tick = () => setTime(format(new Date()));
+    // First tick on the next frame (not synchronously in the effect), then every second.
+    const first = window.requestAnimationFrame(tick);
+    const id = window.setInterval(tick, 1000);
+    return () => {
+      window.cancelAnimationFrame(first);
+      window.clearInterval(id);
+    };
   }, []);
 
   return (

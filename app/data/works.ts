@@ -1,3 +1,5 @@
+import { CONTACT_FIELDS, mailto } from "./site";
+
 /* ------------------------------------------------------------------
    Works — the single source of truth for project cards on the home
    page and the /works/[slug] detail pages. Add a project by adding an
@@ -275,11 +277,17 @@ export const getWork = (slug: string) => works.find((w) => w.slug === slug);
 export const repoUrl = (w: Work) => `https://github.com/${w.repo.owner}/${w.repo.name}`;
 
 export const betaMailto = (w: Work) =>
-  `mailto:hello@tinyrobotcompany.io?subject=${encodeURIComponent(
+  mailto(
     `Beta access: ${fullName(w)}`,
-  )}&body=${encodeURIComponent(
     `Hi Simon,\n\nI'd like to try ${fullName(w)} on TestFlight.\n\nThe email I use for my Apple ID is: \n`,
-  )}`;
+  );
+
+/** Hardware isn't sold online yet: buying, kits and commissions start with an email. */
+export const enquiryMailto = (w: Work) =>
+  mailto(
+    `Enquiry: ${fullName(w)}`,
+    `Hi Simon,\n\nI'm interested in ${fullName(w)}.\n\nI'd like to: (buy one / get a kit / commission something similar / other)\n\n${CONTACT_FIELDS}`,
+  );
 
 export function fullName(w: Work) {
   return w.name.serif ? `${w.name.lead} ${w.name.serif}` : w.name.lead;

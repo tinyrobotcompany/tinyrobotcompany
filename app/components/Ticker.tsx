@@ -1,12 +1,13 @@
 import styles from "./ticker.module.css";
+import { DAY_RATE_EUR, euro, site } from "../data/site";
 
 const ITEMS: Array<React.ReactNode> = [
   <span key="live" className="inline-flex items-center gap-2">
     <span className={styles.dot} />
-    Workshop live
+    Consulting: <em>{site.availability}</em>
   </span>,
   <span key="who">
-    Simon Holmes / <em>full-stack GenAI engineer</em>
+    Simon Holmes, PhD / <em>AI architect &amp; engineer</em>
   </span>,
   <span key="ship">
     In beta: <em>Voxa · Déjà Groove</em>
@@ -14,11 +15,11 @@ const ITEMS: Array<React.ReactNode> = [
   <span key="bench">
     Currently on the bench: <em>Pico Pie · first face</em>
   </span>,
-  <span key="slot">
-    Consulting slots: <em>Q4 2026 · 2 open</em>
+  <span key="offer">
+    Strategy · architecture · build · training: <em>from {euro(DAY_RATE_EUR)} / day</em>
   </span>,
   <span key="loc">
-    Location: <em>Brussels ↔ Anywhere</em>
+    Location: <em>{site.location} ↔ Anywhere</em>
   </span>,
   <span key="dom">◆ tinyrobotcompany.io</span>,
 ];

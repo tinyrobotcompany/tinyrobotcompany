@@ -8,10 +8,9 @@ import { Arrow, RightArrow } from "../../components/Icons";
 import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Spotlight } from "../../components/Spotlight";
 import { AppIcon, CharacterPlate, FlowStrip } from "../../components/WorkVisuals";
-import { betaMailto, fullName, getWork, repoUrl, works } from "../../data/works";
+import { betaMailto, enquiryMailto, fullName, getWork, repoUrl, works } from "../../data/works";
 import { latestVersion } from "../../lib/github";
 
-export const dynamicParams = false;
 
 export function generateStaticParams() {
   return works.map((w) => ({ slug: w.slug }));
@@ -32,8 +31,6 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
   if (!work) notFound();
 
   const version = await latestVersion(work);
-  const index = works.indexOf(work);
-  const next = works[(index + 1) % works.length];
   const name = fullName(work);
 
   return (
@@ -72,13 +69,18 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
                 Request beta access <RightArrow />
               </a>
             ) : (
-              <Link className={`${base.btn} ${base.btnPrimary}`} href="/#signal">
-                Talk about a build like this <RightArrow />
-              </Link>
+              <a className={`${base.btn} ${base.btnPrimary}`} href={enquiryMailto(work)}>
+                Ask about {name} <RightArrow />
+              </a>
             )}
             <a className={`${base.btn} ${base.btnGhost}`} href={repoUrl(work)} target="_blank" rel="noopener noreferrer">
               View the code <Arrow />
             </a>
+            {!work.beta && (
+              <Link className={`${base.btn} ${base.btnGhost}`} href="/#services">
+                Commission something similar
+              </Link>
+            )}
           </div>
         </section>
 
@@ -164,15 +166,6 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
           <FlowStrip flow={work.flow} className={styles.flow} />
         </section>
 
-        {/* -------------------- NEXT -------------------- */}
-        <Link className={styles.next} href={`/works/${next.slug}`}>
-          <span className={base.sectionNo}>Next · <em>{next.no}</em></span>
-          <span className={styles.nextTitle}>
-            {next.name.lead}
-            {next.name.serif && <> <span className={base.serif}>{next.name.serif}</span></>}
-          </span>
-          <span className={base.cardArrow}><Arrow /></span>
-        </Link>
       </main>
 
       <SiteFooter />

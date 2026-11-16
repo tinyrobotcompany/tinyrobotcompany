@@ -93,21 +93,3 @@
 
 .flow { max-width: 760px; }
 
-/* --- Next --- */
-.next {
-  margin-top: clamp(1rem, 3vw, 2rem);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem 1.6rem;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--surface);
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-.next:hover { border-color: var(--line-2); background: var(--surface-2); }
-.nextTitle { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 500; letter-spacing: -0.025em; color: var(--fg); }
-@media (max-width: 560px) { .next { grid-template-columns: 1fr auto; } .next > span:first-child { grid-column: 1 / -1; } }
