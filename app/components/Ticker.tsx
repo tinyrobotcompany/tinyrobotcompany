@@ -4,7 +4,7 @@ import { DAY_RATE_EUR, euro, site } from "../data/site";
 const ITEMS: Array<React.ReactNode> = [
   <span key="live" className="inline-flex items-center gap-2">
     <span className={styles.dot} />
-    Workshop live
+    Consulting: <em>{site.availability}</em>
   </span>,
   <span key="who">
     Simon Holmes, PhD / <em>AI architect &amp; engineer</em>
@@ -14,9 +14,6 @@ const ITEMS: Array<React.ReactNode> = [
   </span>,
   <span key="bench">
     Currently on the bench: <em>Pico Pie · first face</em>
-  </span>,
-  <span key="slot">
-    Consulting: <em>{site.availability}</em>
   </span>,
   <span key="offer">
     Strategy · architecture · build · training: <em>from {euro(DAY_RATE_EUR)} / day</em>

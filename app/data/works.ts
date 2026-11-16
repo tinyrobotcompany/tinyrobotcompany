@@ -1,4 +1,4 @@
-import { mailto } from "./site";
+import { CONTACT_FIELDS, mailto } from "./site";
 
 /* ------------------------------------------------------------------
    Works — the single source of truth for project cards on the home
@@ -286,7 +286,7 @@ export const betaMailto = (w: Work) =>
 export const enquiryMailto = (w: Work) =>
   mailto(
     `Enquiry: ${fullName(w)}`,
-    `Hi Simon,\n\nI'm interested in ${fullName(w)}.\n\nI'd like to: (buy one / get a kit / commission something similar / other)\n\n`,
+    `Hi Simon,\n\nI'm interested in ${fullName(w)}.\n\nI'd like to: (buy one / get a kit / commission something similar / other)\n\n${CONTACT_FIELDS}`,
   );
 
 export function fullName(w: Work) {

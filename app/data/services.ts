@@ -2,7 +2,7 @@
    Services — what a company can hire Tiny Robot Company for. Prices are
    derived from DAY_RATE_EUR so a rate change updates every package.
 ------------------------------------------------------------------ */
-import { DAY_RATE_EUR, euro, mailto } from "./site";
+import { CONTACT_FIELDS, DAY_RATE_EUR, euro, mailto } from "./site";
 
 export type Price =
   | { kind: "package"; days: number }
@@ -78,12 +78,12 @@ export const services: Service[] = [
     title: { lead: "Design &", serif: "build" },
     audience: "companies that need it built, not just advised",
     summary:
-      "Hands-on architecture and coding of production AI software: agents, retrieval, LLM apps and the platform around them.",
+      "Hands-on design and coding of agentic AI: multi-agent systems that plan, call tools and act across your workflows, with the guardrails, evals and observability to run them in production.",
     includes: [
-      "Multi-agent systems, RAG and LLM integrations",
+      "Multi-agent orchestration, tool calling and MCP integrations",
       "Python, .NET, Next.js and SwiftUI",
       "Azure with infrastructure as code (Bicep)",
-      "Tests, CI/CD and monitoring from day one",
+      "Evals, tests, CI/CD and monitoring from day one",
     ],
     format: "Scoped per project",
     price: { kind: "day" },
@@ -156,5 +156,5 @@ export const serviceTitle = (s: Service) => (s.title.serif ? `${s.title.lead} ${
 export const serviceEnquiry = (s: Service) =>
   mailto(
     `Enquiry: ${serviceTitle(s)}`,
-    `Hi Simon,\n\nI'm interested in "${serviceTitle(s)}".\n\nCompany:\nWhat we're trying to do:\nTimeline:\n`,
+    `Hi Simon,\n\nI'm interested in "${serviceTitle(s)}".\n\n${CONTACT_FIELDS}\nWhat we're trying to do:\nTimeline:\n`,
   );

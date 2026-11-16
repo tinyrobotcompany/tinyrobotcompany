@@ -67,3 +67,9 @@ describe("canonical domain", () => {
     expect(occurrences(/https:\/\/tinyrobotcompany\.io/)).toEqual([]);
   });
 });
+
+describe("removed on request", () => {
+  it("drops filler and dated copy", () => {
+    expect(occurrences(/Deepest in manufacturing|2018 → 2026|not named for confidentiality|Coffee-to-commit|Workshop live|Simon@/)).toEqual([]);
+  });
+});

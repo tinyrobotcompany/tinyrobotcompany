@@ -16,6 +16,8 @@ export const site = {
   travel: "Available to travel anywhere",
   availability: "Booking 2027",
   languages: ["English", "French"],
+  /** Voxa translates everything, so enquiries are welcome in any language. */
+  anyLanguage: "Write in any language",
 } as const;
 
 export type Social = { label: string; handle: string; href: string };
@@ -54,3 +56,12 @@ export const euro = (n: number) =>
 
 export const mailto = (subject: string, body?: string) =>
   `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
+
+/** Asked in every enquiry email, so the reply can come the way the sender prefers. */
+export const CONTACT_FIELDS =
+  "Name:\nCompany:\nPhone (optional):\nPreferred way to reach me (email / phone call / SMS / WhatsApp / Teams / Zoom / other):\n";
+
+export const INTRO_CALL = mailto(
+  "Intro call",
+  `Hi Simon,\n\nI'd like to book a free 30-minute intro call.\n\n${CONTACT_FIELDS}\nWhat we're working on:\nA few times that suit me (with time zone):\n`,
+);

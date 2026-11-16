@@ -42,20 +42,20 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className={styles.foot}>
-      <div className={styles.footMain}>
-        <div>© <em>{site.name}</em> · 2026 — Assembled by hand in {site.location}.</div>
-        <ul className={styles.footLinks} aria-label="Social links">
-          {socials.map((s) => (
-            <li key={s.label}>
-              <a href={s.href} target="_blank" rel="me noopener noreferrer">{s.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className={styles.footSide}>
+      <div>© <em>{site.name}</em> · 2026 — Assembled by hand in {site.location}.</div>
+      <nav className={styles.footSide} aria-label="Site">
         <Link href="/legal">Legal notice</Link>
         <Link href="/privacy">Privacy</Link>
         <a href="#top">Back to top ↑</a>
+      </nav>
+      <ul className={styles.footLinks} aria-label="Social links">
+        {socials.map((s) => (
+          <li key={s.label}>
+            <a href={s.href} target="_blank" rel="me noopener noreferrer">{s.label}</a>
+          </li>
+        ))}
+      </ul>
+      <div className={styles.footTheme}>
         <ThemeToggle />
       </div>
     </footer>

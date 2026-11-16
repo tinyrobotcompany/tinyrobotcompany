@@ -6,16 +6,11 @@ import { Ticker } from "./components/Ticker";
 import { Arrow, RightArrow } from "./components/Icons";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { AppIcon, CharacterPlate, FlowStrip } from "./components/WorkVisuals";
-import { DAY_RATE_EUR, EMAIL, euro, mailto, site, socials } from "./data/site";
+import { DAY_RATE_EUR, EMAIL, euro, INTRO_CALL, site, socials } from "./data/site";
 import { priceLabel, serviceEnquiry, services, type Service } from "./data/services";
 import { caseStudies, FORMER_EMPLOYER, stats } from "./data/track-record";
 import { fullName, getWork, works, type Work } from "./data/works";
 import { latestVersions } from "./lib/github";
-
-const INTRO_CALL = mailto(
-  "Intro call",
-  "Hi Simon,\n\nI'd like to book a 30-minute intro call.\n\nCompany:\nWhat we're working on:\nA few times that suit me:\n",
-);
 
 function WorkTitle({ work }: { work: Work }) {
   return (
@@ -86,10 +81,9 @@ export default async function Home() {
         <section className={styles.hero} aria-labelledby="hero-title">
           <div>
             <div className={styles.heroMeta}>
-              <span><span className={styles.liveDot} aria-hidden="true" /> Workshop live</span>
-              <span>Est. <em>2026</em></span>
-              <span>{site.location} · <em>{site.availability}</em></span>
-              <span>Simon@<em>trc</em></span>
+              <span><span className={styles.liveDot} aria-hidden="true" /> Consulting · <em>{site.availability}</em></span>
+              <span>{site.location} <em>→ anywhere</em></span>
+              <span><a className={styles.heroMail} href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
             </div>
 
             <h1 className={styles.heroTitle} id="hero-title">
@@ -148,8 +142,8 @@ export default async function Home() {
               <dl className={styles.rateTerms}>
                 <dt>VAT</dt>       <dd>Prices exclude VAT</dd>
                 <dt>Base</dt>      <dd>{site.location} · {site.travel.toLowerCase()}</dd>
-                <dt>Languages</dt> <dd>{site.languages.join(" · ")}</dd>
-                <dt>Industries</dt><dd>All. Deepest in manufacturing</dd>
+                <dt>Languages</dt> <dd>{site.languages.join(" · ")}. {site.anyLanguage}</dd>
+                <dt>Industries</dt><dd>All</dd>
               </dl>
               <a className={`${styles.btn} ${styles.btnPrimary} ${styles.rateCta}`} href={INTRO_CALL}>
                 Start with a free 30-min call <RightArrow />
@@ -165,7 +159,6 @@ export default async function Home() {
             <h2 className={styles.sectionTitle} id="record-h">
               Eight years building AI <span className={styles.serif}>that runs</span>.
             </h2>
-            <div className={styles.sectionCount}>2018 → 2026</div>
           </div>
 
           <p className={styles.recordLede}>
@@ -185,9 +178,6 @@ export default async function Home() {
               </div>
             ))}
           </div>
-          <p className={styles.footnote}>
-            Figures from in-house roles. The employer is not named for confidentiality.
-          </p>
 
           {caseStudies.length > 0 && (
             <div className={styles.cases}>
@@ -240,28 +230,23 @@ export default async function Home() {
               </div>
             </Link>
 
-            {/* Live status */}
-            <div className={`${styles.card} ${styles.cardStatus} ${styles.cardSide}`}>
+            {/* Availability: the real facts a buyer needs, next to the work */}
+            <a className={`${styles.card} ${styles.cardStatus} ${styles.cardSide}`} href={INTRO_CALL}>
               <div className={styles.cardLabel}>
-                <span>System · <em>Live</em></span>
-                <span>UTC</span>
+                <span>Availability</span>
+                <span><em>{site.availability}</em></span>
               </div>
               <dl className={styles.statusGrid}>
-                <dt>Workshop</dt><dd className={styles.statusUp}>Online</dd>
-                <dt>Response</dt><dd>~ 12h</dd>
-                <dt>Focus</dt><dd>GenAI + HW</dd>
-                <dt>Status</dt><dd>{site.availability}</dd>
+                <dt>Intro call</dt><dd className={styles.statusUp}>Free · 30 min</dd>
+                <dt>First reply</dt><dd>Within 2 working days</dd>
+                <dt>Base</dt><dd>{site.location} → anywhere</dd>
+                <dt>Languages</dt><dd>Any, in writing</dd>
               </dl>
-              <svg className={styles.wave} viewBox="0 0 200 42" preserveAspectRatio="none" aria-hidden="true">
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  d="M0 21 L10 21 L14 8 L18 33 L22 15 L26 28 L32 21 L46 21 L50 12 L54 30 L58 21 L74 21 L78 6 L82 35 L86 18 L90 24 L96 21 L118 21 L122 14 L126 27 L130 20 L146 21 L150 9 L154 32 L158 21 L200 21"
-                />
-              </svg>
-            </div>
+              <div className={styles.cardFoot}>
+                <span>Book a free intro call</span>
+                <span className={styles.cardArrow}><Arrow /></span>
+              </div>
+            </a>
 
             <WorkCard work={w("voxa")} version={versions.voxa} className={styles.cardSide} />
             <WorkCard work={w("deja-groove")} version={versions["deja-groove"]} className={styles.cardThird} />
@@ -269,7 +254,7 @@ export default async function Home() {
             <WorkCard work={w("waveform-one")} version={versions["waveform-one"]} className={styles.cardThird} />
 
             {/* AI Function, Standing Start — field work, links to the track record */}
-            <a className={`${styles.card} ${styles.cardWide}`} href="#record">
+            <a className={`${styles.card} ${styles.cardFull}`} href="#record">
               <div className={styles.cardLabel}>
                 <span>TRC / 00 · <em>Before TRC</em></span>
                 <span>Field</span>
@@ -285,20 +270,6 @@ export default async function Home() {
                 <span className={styles.cardArrow}><Arrow /></span>
               </div>
             </a>
-
-            {/* Uptime stat */}
-            <div className={`${styles.card} ${styles.cardStat}`}>
-              <div className={styles.cardLabel}>
-                <span>Uptime · <em>12 mo</em></span>
-                <span>Live</span>
-              </div>
-              <div className={styles.statValue}>99.4<span className={styles.unit}>%</span></div>
-              <div className={styles.statLabel}>Coffee-to-commit ratio, self-reported.</div>
-              <svg className={styles.spark} viewBox="0 0 200 34" preserveAspectRatio="none" aria-hidden="true">
-                <path fill="var(--fg)" opacity="0.05" d="M0 26 L20 22 L40 24 L60 18 L80 20 L100 12 L120 15 L140 8 L160 10 L180 6 L200 9 L200 34 L0 34 Z"/>
-                <path fill="none" stroke="var(--fg-2)" strokeWidth="1.5" d="M0 26 L20 22 L40 24 L60 18 L80 20 L100 12 L120 15 L140 8 L160 10 L180 6 L200 9"/>
-              </svg>
-            </div>
           </div>
         </section>
 
@@ -330,7 +301,7 @@ export default async function Home() {
               <dt>Name</dt>            <dd>{site.owner}</dd>
               <dt>Role</dt>            <dd>AI architect, engineer and teacher</dd>
               <dt>Base</dt>            <dd>{site.location} · {site.travel.toLowerCase()}</dd>
-              <dt>Languages</dt>       <dd>{site.languages.join(" · ")}</dd>
+              <dt>Languages</dt>       <dd>{site.languages.join(" · ")}. {site.anyLanguage}</dd>
               <dt>Available</dt>       <dd>{site.availability}</dd>
               <dt>Education</dt>       <dd>PhD, University of Cambridge</dd>
               <dt>Preferred brief</dt> <dd>Small, weird, well-defined.</dd>
@@ -355,8 +326,9 @@ export default async function Home() {
                 Briefs are read the same day. Fit-check reply within two working days,
                 prototype within four weeks where the scope allows. Now {site.availability.toLowerCase()}.
               </p>
-              <p className={styles.contactLede} lang="fr">
-                <em>Vous préférez le français ? Écrivez-moi en français.</em>
+              <p className={styles.contactLede}>
+                Write in whichever language you&rsquo;re most comfortable with. I&rsquo;ll reply in the same one,
+                with a little help from <Link href="/works/voxa">Voxa</Link>, my own translation app.
               </p>
             </div>
 

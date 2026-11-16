@@ -31,8 +31,6 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
   if (!work) notFound();
 
   const version = await latestVersion(work);
-  const index = works.indexOf(work);
-  const next = works[(index + 1) % works.length];
   const name = fullName(work);
 
   return (
@@ -168,15 +166,6 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
           <FlowStrip flow={work.flow} className={styles.flow} />
         </section>
 
-        {/* -------------------- NEXT -------------------- */}
-        <Link className={styles.next} href={`/works/${next.slug}`}>
-          <span className={base.sectionNo}>Next · <em>{next.no}</em></span>
-          <span className={styles.nextTitle}>
-            {next.name.lead}
-            {next.name.serif && <> <span className={base.serif}>{next.name.serif}</span></>}
-          </span>
-          <span className={base.cardArrow}><Arrow /></span>
-        </Link>
       </main>
 
       <SiteFooter />
