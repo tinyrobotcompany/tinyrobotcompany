@@ -2,7 +2,8 @@
    Landing page layout — kept in a module so it doesn't leak into the
    global stylesheet or fight Tailwind's utility layer.
 ------------------------------------------------------------------ */
-.wrap { max-width: 1360px; margin: 0 auto; padding: 0 clamp(1rem, 3.5vw, 2rem); position: relative; z-index: 1; }
+/* min-width: 0 — body is a flex column, so without it <main> refuses to shrink below its content's min width and the page scrolls sideways on phones. */
+.wrap { max-width: 1360px; width: 100%; min-width: 0; margin: 0 auto; padding: 0 clamp(1rem, 3.5vw, 2rem); position: relative; z-index: 1; }
 
 /* --- NAV --- */
 .nav {
@@ -52,7 +53,8 @@
   transition: transform 0.18s ease, background 0.18s ease;
 }
 .cta:hover, .cta:focus-visible { background: color-mix(in oklab, var(--fg) 88%, transparent); transform: translateY(-1px); outline: none; }
-@media (max-width: 720px) { .nav { grid-template-columns: auto 1fr; } .navLinks { display: none; } }
+@media (max-width: 720px) { .nav { grid-template-columns: auto 1fr; gap: 1rem; } .navLinks { display: none; } .navActions { justify-self: end; } }
+@media (max-width: 560px) { .navClock { display: none; } }
 
 /* --- HERO ---
    Hero is capped to one viewport minus the sticky nav+ticker (~100px),
@@ -226,6 +228,74 @@
   .cardFeature, .cardSide, .cardThird, .cardStat, .cardWide { grid-column: span 1; }
 }
 
+/* --- HERO offer chips --- */
+.offerChips { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 0 0 1.5rem; max-width: 46ch; }
+.offerChips a {
+  display: inline-block;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+  text-decoration: none;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+.offerChips a:hover { color: var(--fg); border-color: var(--fg-2); background: var(--surface); }
+
+/* --- SERVICES --- */
+.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.service {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.4rem 1.4rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.service .cardTitle { font-size: 1.25rem; }
+.serviceFor { margin: 0; font-size: 0.8rem; color: var(--fg-2); }
+.includes { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.4rem; }
+.includes li { position: relative; padding-left: 1rem; font-size: 0.85rem; line-height: 1.45; color: var(--mute); }
+.includes li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 6px; height: 1px; background: var(--fg-2); }
+.serviceFoot {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+.price { font-size: 0.95rem; font-weight: 500; color: var(--fg); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.enquire {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--mute); transition: color 0.18s ease;
+}
+.serviceFoot:hover .enquire, .serviceFoot:focus-visible .enquire { color: var(--fg); }
+.rateCard { background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0.04), transparent 60%), var(--surface-2); border-color: var(--line-2); }
+.rateTerms { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; margin: 0.25rem 0 0; font-size: 0.82rem; }
+.rateTerms dt { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--mute); padding-top: 0.2rem; }
+.rateTerms dd { margin: 0; color: var(--fg-2); }
+.rateCta { margin-top: auto; justify-content: center; }
+@media (max-width: 1100px) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px)  { .services { grid-template-columns: 1fr; } }
+
+/* --- TRACK RECORD --- */
+.recordLede { max-width: 68ch; margin: 0 0 1.75rem; font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.6; color: var(--fg-2); text-wrap: pretty; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.statTile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.4rem; display: grid; gap: 0.6rem; align-content: start; }
+.footnote { margin: 0.9rem 0 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 1.5rem; }
+@media (max-width: 860px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cases { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .stats { grid-template-columns: 1fr; } }
+
 /* --- STATEMENT (Studio) --- */
 .statementBody { display: grid; grid-template-columns: 1fr; }
 .statementQuote {
@@ -324,3 +394,7 @@
 .footSide { display: inline-flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 .footSide a { color: var(--mute); text-decoration: none; }
 .footSide a:hover { color: var(--fg); }
+.footMain { display: grid; gap: 0.6rem; }
+.footLinks { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; list-style: none; margin: 0; padding: 0; }
+.footLinks a { color: var(--mute); text-decoration: none; }
+.footLinks a:hover { color: var(--fg); }

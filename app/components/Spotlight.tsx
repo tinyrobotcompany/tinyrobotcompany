@@ -41,23 +41,27 @@ export function Spotlight() {
     };
   }, []);
 
+  // The 640px glow sits inside a viewport-sized clipping layer: a fixed
+  // element wider than a phone screen would otherwise widen the layout.
   return (
     <div
-      ref={ref}
       aria-hidden="true"
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: 640,
-        height: 640,
-        borderRadius: "50%",
-        pointerEvents: "none",
-        background:
-          "radial-gradient(circle at center, rgba(255,255,255,0.055), transparent 60%)",
-        transform: "translate3d(-9999px, -9999px, 0) translate3d(-50%, -50%, 0)",
-        zIndex: 0,
-      }}
-    />
+      style={{ position: "fixed", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}
+    >
+      <div
+        ref={ref}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 640,
+          height: 640,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle at center, rgba(255,255,255,0.055), transparent 60%)",
+          transform: "translate3d(-9999px, -9999px, 0) translate3d(-50%, -50%, 0)",
+        }}
+      />
+    </div>
   );
 }

@@ -4,9 +4,17 @@ import { BrandMark } from "./BrandMark";
 import { Clock } from "./Clock";
 import { Arrow } from "./Icons";
 import { ThemeToggle } from "./ThemeToggle";
+import { site, socials } from "../data/site";
 
-/* Header and footer shared by the home page and the /works pages.
+/* Header and footer shared by every page.
    Links are root-relative ("/#works") so they work from any route. */
+
+export const NAV_LINKS = [
+  { href: "/#services", label: "Services" },
+  { href: "/#record", label: "Track record" },
+  { href: "/#works", label: "Bench" },
+  { href: "/#signal", label: "Contact" },
+] as const;
 
 export function SiteHeader() {
   return (
@@ -16,12 +24,12 @@ export function SiteHeader() {
         tinyrobotcompany.io
       </Link>
       <ul className={styles.navLinks}>
-        <li><Link href="/#works">Works</Link></li>
-        <li><Link href="/#studio">Studio</Link></li>
-        <li><Link href="/#signal">Signal</Link></li>
+        {NAV_LINKS.map((l) => (
+          <li key={l.href}><Link href={l.href}>{l.label}</Link></li>
+        ))}
       </ul>
       <div className={styles.navActions}>
-        <Clock />
+        <span className={styles.navClock}><Clock /></span>
         <Link className={styles.cta} href="/#signal">
           Start a brief
           <Arrow />
@@ -34,9 +42,19 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className={styles.foot}>
-      <div>© <em>Tiny Robot Company</em> · 2026 — Assembled by hand.</div>
+      <div className={styles.footMain}>
+        <div>© <em>{site.name}</em> · 2026 — Assembled by hand in {site.location}.</div>
+        <ul className={styles.footLinks} aria-label="Social links">
+          {socials.map((s) => (
+            <li key={s.label}>
+              <a href={s.href} target="_blank" rel="me noopener noreferrer">{s.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className={styles.footSide}>
-        <span>Build 12 · <em>A.03</em></span>
+        <Link href="/legal">Legal notice</Link>
+        <Link href="/privacy">Privacy</Link>
         <a href="#top">Back to top ↑</a>
         <ThemeToggle />
       </div>

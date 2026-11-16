@@ -1,8 +1,5 @@
 import type { Work } from "../data/works";
 
-/** Refresh release tags at most every 6 hours. */
-const REVALIDATE_SECONDS = 60 * 60 * 6;
-
 /**
  * Latest published release tag for a work's repo, e.g. "v0.20.13".
  * Falls back to the version recorded in works.ts if GitHub is
@@ -17,7 +14,9 @@ export async function latestVersion(work: Work): Promise<string> {
   try {
     const res = await fetch(`https://api.github.com/repos/${owner}/${name}/releases/latest`, {
       headers,
-      next: { revalidate: REVALIDATE_SECONDS },
+      // Fetched once per build. The site is a static export, so tags refresh
+      // on every deploy (plus the weekly scheduled rebuild in deploy-site.yml).
+      cache: "force-cache",
       signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) return work.fallbackVersion;

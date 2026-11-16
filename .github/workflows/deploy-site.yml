@@ -11,6 +11,10 @@ on:
       - 'infrastructure/**'
       - '.github/workflows/deploy-infrastructure.yml'
       - '**.md'
+  # Weekly rebuild so project version labels (read from GitHub releases at
+  # build time) stay current even when the site itself hasn't changed.
+  schedule:
+    - cron: '0 6 * * 1'
   workflow_dispatch:
 
 concurrency:
@@ -41,6 +45,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Unit tests
+        run: npm test
+
+      - name: Build static export
+        run: npm run build
+        env:
+          # Raises the GitHub API rate limit for the release-tag lookups.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check every route was exported
+        run: node scripts/check-export.mjs out
+
       - name: Azure login (OIDC)
         uses: azure/login@v2
         with:
@@ -66,6 +82,12 @@ jobs:
           azure_static_web_apps_api_token: ${{ steps.swa.outputs.token }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: upload
-          app_location: '/'
+          # Upload the pre-built static export; skip SWA's own build so
+          # what we tested above is exactly what ships.
+          app_location: 'out'
           api_location: ''
           output_location: ''
+          skip_app_build: true
+
+      - name: Smoke-test the live site
+        run: node scripts/smoke-test.mjs https://www.tinyrobotcompany.io

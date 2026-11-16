@@ -75,8 +75,8 @@ export function Mascot() {
     // Under reduced motion: just show the mascot centred with the default face.
     if (reducedMotion) {
       reset();
-      setReady(true);
-      return;
+      const frame = requestAnimationFrame(() => setReady(true));
+      return () => cancelAnimationFrame(frame);
     }
 
     const step = (time: number) => {
@@ -175,8 +175,11 @@ export function Mascot() {
     };
 
     reset();
-    setReady(true);
-    raf = requestAnimationFrame(step);
+    // Reveal on the first animation frame rather than synchronously in the effect.
+    raf = requestAnimationFrame((t) => {
+      setReady(true);
+      step(t);
+    });
     scheduleFace();
     scheduleNextSpin();
 
