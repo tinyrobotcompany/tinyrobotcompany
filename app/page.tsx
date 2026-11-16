@@ -1,58 +1,53 @@
+import Link from "next/link";
 import styles from "./page.module.css";
-import { BrandMark } from "./components/BrandMark";
-import { Clock } from "./components/Clock";
 import { Mascot } from "./components/Mascot";
 import { Spotlight } from "./components/Spotlight";
-import { ThemeToggle } from "./components/ThemeToggle";
 import { Ticker } from "./components/Ticker";
+import { Arrow, RightArrow } from "./components/Icons";
+import { SiteFooter, SiteHeader } from "./components/SiteChrome";
+import { AppIcon, CharacterPlate, FlowStrip } from "./components/WorkVisuals";
+import { fullName, getWork, works, type Work } from "./data/works";
+import { latestVersions } from "./lib/github";
 
-const Arrow = ({ size = 12 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 12 12" fill="none" aria-hidden="true">
-    <path
-      d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+function WorkTitle({ work }: { work: Work }) {
+  return (
+    <h3 className={styles.cardTitle}>
+      {work.name.lead}
+      {work.name.serif && <> <span className={styles.serif}>{work.name.serif}</span></>}.
+    </h3>
+  );
+}
 
-const RightArrow = ({ size = 12 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 12 12" fill="none" aria-hidden="true">
-    <path
-      d="M2.5 6H9.5M9.5 6L6 2.5M9.5 6L6 9.5"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+function WorkCard({ work, version, className }: { work: Work; version: string; className: string }) {
+  return (
+    <Link className={`${styles.card} ${className}`} href={`/works/${work.slug}`} aria-label={`${fullName(work)}: ${work.tagline}`}>
+      <div className={styles.cardLabel}>
+        <span>{work.no} · <em>{work.year}</em></span>
+        <span>{work.stage} · {version}</span>
+      </div>
+      <div className={styles.cardHead}>
+        {work.icon && <AppIcon src={work.icon} name={fullName(work)} size={36} />}
+        <WorkTitle work={work} />
+      </div>
+      <p className={styles.cardDesc}>{work.summary}</p>
+      <div className={styles.cardFoot}>
+        <span>{work.stack.slice(0, 3).join(" · ")}</span>
+        <span className={styles.cardArrow}><Arrow /></span>
+      </div>
+    </Link>
+  );
+}
 
-export default function Home() {
+export default async function Home() {
+  const versions = await latestVersions(works);
+  const w = (slug: string) => getWork(slug)!;
+  const featured = w("pico-pie");
+
   return (
     <>
       <Spotlight />
+      <SiteHeader />
 
-      <header className={styles.nav} role="banner">
-        <a href="#top" className={styles.brand} aria-label="Tiny Robot Company, home">
-          <BrandMark size={22} />
-          tinyrobotcompany.io
-        </a>
-        <ul className={styles.navLinks}>
-          <li><a href="#works">Works</a></li>
-          <li><a href="#studio">Studio</a></li>
-          <li><a href="#signal">Signal</a></li>
-        </ul>
-        <div className={styles.navActions}>
-          <Clock />
-          <a className={styles.cta} href="#signal">
-            Start a brief
-            <Arrow />
-          </a>
-        </div>
-      </header>
 
       <Ticker />
 
@@ -99,34 +94,34 @@ export default function Home() {
             <h2 className={styles.sectionTitle} id="works-h">
               Selected <span className={styles.serif}>benchwork</span>.
             </h2>
-            <div className={styles.sectionCount}>04 · 2024 → 2026</div>
+            <div className={styles.sectionCount}>{String(works.length).padStart(2, "0")} · on the bench · 2026</div>
           </div>
 
           <div className={styles.bento}>
             {/* Featured */}
-            <a className={`${styles.card} ${styles.cardFeature}`} href="#" aria-label="Signal Sketchbook — featured project">
+            <Link
+              className={`${styles.card} ${styles.cardFeature}`}
+              href={`/works/${featured.slug}`}
+              aria-label={`${fullName(featured)}, featured project: ${featured.tagline}`}
+            >
               <div className={styles.cardLabel}>
-                <span>Featured · <em>2026</em></span>
-                <span>TRC / 04</span>
+                <span>Featured · <em>{featured.year}</em></span>
+                <span>{featured.no} · {featured.stage} · {versions[featured.slug]}</span>
               </div>
-              <h3 className={styles.cardTitle}>Signal <span className={styles.serif}>Sketchbook</span>.</h3>
-              <p className={styles.cardDesc}>
-                A live visualiser that turns conversation and ambient audio into evolving
-                generative graphics. Runs entirely offline on a mid-range laptop — Whisper
-                into a custom WebGL pipeline, no cloud round-trips, no waiting.
-              </p>
-              <div className={styles.featureVisual} aria-hidden="true">
-                <div className={styles.fvNode}>MIC<small>INPUT</small></div>
-                <div className={styles.fvArrow}>→</div>
-                <div className={styles.fvNode}>WHISPER<small>LOCAL</small></div>
-                <div className={styles.fvArrow}>→</div>
-                <div className={styles.fvNode}>GL PIPE<small>OUTPUT</small></div>
+              <WorkTitle work={featured} />
+              <p className={styles.cardDesc}>{featured.summary}</p>
+              <div className={styles.featureVisual}>
+                {featured.visual?.kind === "family" ? (
+                  <CharacterPlate characters={featured.visual.characters} />
+                ) : (
+                  <FlowStrip flow={featured.flow} />
+                )}
               </div>
               <div className={styles.cardFoot}>
-                <span>Whisper · WGPU · Rust</span>
+                <span>{featured.stack.join(" · ")}</span>
                 <span className={styles.cardArrow}><Arrow /></span>
               </div>
-            </a>
+            </Link>
 
             {/* Live status */}
             <div className={`${styles.card} ${styles.cardStatus} ${styles.cardSide}`}>
@@ -151,58 +146,15 @@ export default function Home() {
               </svg>
             </div>
 
-            {/* Small Voice */}
-            <a className={`${styles.card} ${styles.cardSide}`} href="#">
-              <div className={styles.cardLabel}>
-                <span>TRC / 03 · <em>2026</em></span>
-                <span>Ship</span>
-              </div>
-              <h3 className={styles.cardTitle}>Small <span className={styles.serif}>Voice</span>.</h3>
-              <p className={styles.cardDesc}>
-                A local assistant on a Pi Zero 2 W. Wake-word, no cloud, low-milliwatt.
-              </p>
-              <div className={styles.cardFoot}>
-                <span>Llama.cpp · KiCad</span>
-                <span className={styles.cardArrow}><Arrow /></span>
-              </div>
-            </a>
+            <WorkCard work={w("voxa")} version={versions.voxa} className={styles.cardSide} />
+            <WorkCard work={w("deja-groove")} version={versions["deja-groove"]} className={styles.cardThird} />
+            <WorkCard work={w("tempo")} version={versions.tempo} className={styles.cardThird} />
+            <WorkCard work={w("waveform-one")} version={versions["waveform-one"]} className={styles.cardThird} />
 
-            {/* Servo Loom */}
-            <a className={`${styles.card} ${styles.cardThird}`} href="#">
+            {/* AI Function, Standing Start — field work, no detail page */}
+            <a className={`${styles.card} ${styles.cardWide}`} href="#signal">
               <div className={styles.cardLabel}>
-                <span>TRC / 02 · <em>2025</em></span>
-                <span>Ship</span>
-              </div>
-              <h3 className={styles.cardTitle}>Servo <span className={styles.serif}>Loom</span>.</h3>
-              <p className={styles.cardDesc}>
-                Four-axis textile plotter driven by an LLM planner. Type a phrase, weave a pattern.
-              </p>
-              <div className={styles.cardFoot}>
-                <span>ESP32 · GPT-4o</span>
-                <span className={styles.cardArrow}><Arrow /></span>
-              </div>
-            </a>
-
-            {/* Retina Kit */}
-            <a className={`${styles.card} ${styles.cardThird}`} href="#">
-              <div className={styles.cardLabel}>
-                <span>TRC / 01 · <em>2024</em></span>
-                <span>Archive</span>
-              </div>
-              <h3 className={styles.cardTitle}>Retina <span className={styles.serif}>Kit</span>.</h3>
-              <p className={styles.cardDesc}>
-                A breadboard-scale computer-vision teaching kit. Pixels to inference in a weekend.
-              </p>
-              <div className={styles.cardFoot}>
-                <span>OpenMV · TinyML</span>
-                <span className={styles.cardArrow}><Arrow /></span>
-              </div>
-            </a>
-
-            {/* AI Function, Standing Start */}
-            <a className={`${styles.card} ${styles.cardThird}`} href="#">
-              <div className={styles.cardLabel}>
-                <span>TRC / 05 · <em>2026</em></span>
+                <span>TRC / 00 · <em>Before TRC</em></span>
                 <span>Field</span>
               </div>
               <h3 className={styles.cardTitle}>AI Function, <span className={styles.serif}>Standing Start</span>.</h3>
@@ -310,14 +262,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className={styles.foot}>
-        <div>© <em>Tiny Robot Company</em> · 2026 — Assembled by hand.</div>
-        <div className={styles.footSide}>
-          <span>Build 12 · <em>A.03</em></span>
-          <a href="#top">Back to top ↑</a>
-          <ThemeToggle />
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

@@ -1,0 +1,181 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import base from "../../page.module.css";
+import styles from "./work.module.css";
+import { Arrow, RightArrow } from "../../components/Icons";
+import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
+import { Spotlight } from "../../components/Spotlight";
+import { AppIcon, CharacterPlate, FlowStrip } from "../../components/WorkVisuals";
+import { betaMailto, fullName, getWork, repoUrl, works } from "../../data/works";
+import { latestVersion } from "../../lib/github";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return works.map((w) => ({ slug: w.slug }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/works/[slug]">): Promise<Metadata> {
+  const work = getWork((await params).slug);
+  if (!work) return {};
+  return {
+    title: fullName(work),
+    description: work.tagline,
+    openGraph: { title: `${fullName(work)} · Tiny Robot Company`, description: work.tagline },
+  };
+}
+
+export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
+  const work = getWork((await params).slug);
+  if (!work) notFound();
+
+  const version = await latestVersion(work);
+  const index = works.indexOf(work);
+  const next = works[(index + 1) % works.length];
+  const name = fullName(work);
+
+  return (
+    <>
+      <Spotlight />
+      <SiteHeader />
+
+      <main id="top" className={base.wrap}>
+        <Link className={styles.back} href="/#works">
+          <RightArrow flip /> All works
+        </Link>
+
+        {/* -------------------- HEAD -------------------- */}
+        <section className={styles.head} aria-labelledby="work-title">
+          <div className={styles.meta}>
+            <span><em>{work.no}</em></span>
+            <span>{work.pillars.join(" · ")}</span>
+            <span>Est. <em>{work.year}</em></span>
+            <span>{work.stage}</span>
+            <span>Rev. <em>{version}</em></span>
+          </div>
+
+          <div className={styles.titleRow}>
+            {work.icon && <AppIcon src={work.icon} name={name} size={64} />}
+            <h1 className={styles.title} id="work-title">
+              {work.name.lead}
+              {work.name.serif && <> <span className={base.serif}>{work.name.serif}</span></>}.
+            </h1>
+          </div>
+
+          <p className={styles.lede}>{work.tagline}</p>
+
+          <div className={base.heroActions}>
+            {work.beta ? (
+              <a className={`${base.btn} ${base.btnPrimary}`} href={betaMailto(work)}>
+                Request beta access <RightArrow />
+              </a>
+            ) : (
+              <Link className={`${base.btn} ${base.btnPrimary}`} href="/#signal">
+                Talk about a build like this <RightArrow />
+              </Link>
+            )}
+            <a className={`${base.btn} ${base.btnGhost}`} href={repoUrl(work)} target="_blank" rel="noopener noreferrer">
+              View the code <Arrow />
+            </a>
+          </div>
+        </section>
+
+        {/* -------------------- VISUAL -------------------- */}
+        {work.visual && (
+          <figure className={styles.visual}>
+            {work.visual.kind === "family" ? (
+              <CharacterPlate characters={work.visual.characters} showNames priority />
+            ) : (
+              <Image
+                className={styles.screen}
+                src={work.visual.src}
+                alt={work.visual.alt}
+                width={work.visual.width}
+                height={work.visual.height}
+                unoptimized
+                priority
+              />
+            )}
+          </figure>
+        )}
+
+        {/* -------------------- ABOUT -------------------- */}
+        <section className={base.section} aria-labelledby="about-h">
+          <div className={base.sectionHead}>
+            <div className={base.sectionNo}><em>§ 01</em> · About</div>
+            <h2 className={base.sectionTitle} id="about-h">
+              What it <span className={base.serif}>does</span>.
+            </h2>
+            <div className={base.sectionCount}>{work.stage}</div>
+          </div>
+
+          <div className={styles.about}>
+            <div className={styles.body}>
+              {work.intro.map((p) => <p key={p.slice(0, 32)}>{p}</p>)}
+            </div>
+
+            <dl className={base.statementMeta}>
+              <dt>Status</dt>  <dd>{work.stage}</dd>
+              <dt>Release</dt> <dd>{version}</dd>
+              <dt>Pillar</dt>  <dd>{work.pillars.join(" · ")}</dd>
+              <dt>Stack</dt>   <dd>{work.stack.join(" · ")}</dd>
+              <dt>Source</dt>
+              <dd>
+                <a className={styles.inlineLink} href={repoUrl(work)} target="_blank" rel="noopener noreferrer">
+                  github.com/{work.repo.owner}/{work.repo.name}
+                </a>
+              </dd>
+            </dl>
+          </div>
+        </section>
+
+        {/* -------------------- HIGHLIGHTS -------------------- */}
+        <section className={base.section} aria-labelledby="highlights-h">
+          <div className={base.sectionHead}>
+            <div className={base.sectionNo}><em>§ 02</em> · Highlights</div>
+            <h2 className={base.sectionTitle} id="highlights-h">
+              Why it&rsquo;s <span className={base.serif}>interesting</span>.
+            </h2>
+            <div className={base.sectionCount}>{String(work.highlights.length).padStart(2, "0")}</div>
+          </div>
+
+          <div className={styles.highlights}>
+            {work.highlights.map((h, i) => (
+              <div key={h.title} className={styles.highlight}>
+                <div className={base.cardLabel}><span>{String(i + 1).padStart(2, "0")}</span></div>
+                <h3 className={base.cardTitle}>{h.title}</h3>
+                <p className={base.cardDesc}>{h.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* -------------------- FLOW -------------------- */}
+        <section className={base.section} aria-labelledby="flow-h">
+          <div className={base.sectionHead}>
+            <div className={base.sectionNo}><em>§ 03</em> · Signal path</div>
+            <h2 className={base.sectionTitle} id="flow-h">
+              How it fits <span className={base.serif}>together</span>.
+            </h2>
+            <div className={base.sectionCount}>03 stages</div>
+          </div>
+          <FlowStrip flow={work.flow} className={styles.flow} />
+        </section>
+
+        {/* -------------------- NEXT -------------------- */}
+        <Link className={styles.next} href={`/works/${next.slug}`}>
+          <span className={base.sectionNo}>Next · <em>{next.no}</em></span>
+          <span className={styles.nextTitle}>
+            {next.name.lead}
+            {next.name.serif && <> <span className={base.serif}>{next.name.serif}</span></>}
+          </span>
+          <span className={base.cardArrow}><Arrow /></span>
+        </Link>
+      </main>
+
+      <SiteFooter />
+    </>
+  );
+}

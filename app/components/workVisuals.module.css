@@ -1,0 +1,53 @@
+/* --- Flow strip --- */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+.flowCell { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+.flowArrow { color: var(--mute); font-family: var(--font-mono); font-size: 12px; flex: none; }
+.flowNode {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0.6rem 0.4rem;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--fg-2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--bg-2);
+  line-height: 1.2;
+}
+.flowNode small { display: block; color: var(--mute); font-size: 9px; margin-top: 0.15rem; letter-spacing: 0.14em; }
+
+/* --- Character plate ---
+   The CAD renders have a white ground, so they sit on a light plate
+   rather than fighting the dark surface. Reads as a product shot. */
+.plate {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.25rem;
+  padding: 0.75rem 0.75rem 0.5rem;
+  background: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+.character { margin: 0; display: grid; justify-items: center; gap: 0.35rem; }
+.character img { width: 100%; height: auto; display: block; }
+.character figcaption {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #6E6E76;
+}
+@media (max-width: 560px) {
+  .plate { grid-template-columns: repeat(3, 1fr); }
+}
+
+.appIcon { display: block; flex: none; box-shadow: 0 0 0 1px var(--line); }
