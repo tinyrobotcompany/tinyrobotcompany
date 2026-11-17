@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import LegalNotice from "./legal/page";
 import Privacy from "./privacy/page";
+import Join from "./join/page";
+import { works } from "./data/works";
 import { legal, socials } from "./data/site";
 
 describe("site chrome", () => {
@@ -52,5 +54,21 @@ describe("privacy policy", () => {
   it("explains client-data handling and GDPR rights", () => {
     expect(html).toContain("Client data in AI work");
     expect(html).toContain("CNIL");
+  });
+});
+
+describe("join page", () => {
+  const html = renderToStaticMarkup(<Join />);
+
+  it("lists every product, with consent and a privacy link", () => {
+    for (const w of works) expect(html).toContain(`value="${w.slug}"`);
+    expect(html).toContain('name="consent"');
+    expect(html).toContain('href="/privacy/"');
+  });
+});
+
+describe("privacy policy covers sign-ups", () => {
+  it("explains the waitlist and beta form", () => {
+    expect(renderToStaticMarkup(<Privacy />)).toContain("Waitlists and betas");
   });
 });

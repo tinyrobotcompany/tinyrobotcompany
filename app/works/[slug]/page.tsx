@@ -8,7 +8,7 @@ import { Arrow, RightArrow } from "../../components/Icons";
 import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Spotlight } from "../../components/Spotlight";
 import { AppIcon, CharacterPlate, FlowStrip } from "../../components/WorkVisuals";
-import { betaMailto, enquiryMailto, fullName, getWork, repoUrl, works } from "../../data/works";
+import { fullName, getWork, repoUrl, works } from "../../data/works";
 import { latestVersion } from "../../lib/github";
 
 
@@ -64,15 +64,9 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
           <p className={styles.lede}>{work.tagline}</p>
 
           <div className={base.heroActions}>
-            {work.beta ? (
-              <a className={`${base.btn} ${base.btnPrimary}`} href={betaMailto(work)}>
-                Request beta access <RightArrow />
-              </a>
-            ) : (
-              <a className={`${base.btn} ${base.btnPrimary}`} href={enquiryMailto(work)}>
-                Ask about {name} <RightArrow />
-              </a>
-            )}
+            <Link className={`${base.btn} ${base.btnPrimary}`} href={`/join/?for=${work.slug}`}>
+              {work.beta ? "Join the beta" : "Join the waitlist"} <RightArrow />
+            </Link>
             <a className={`${base.btn} ${base.btnGhost}`} href={repoUrl(work)} target="_blank" rel="noopener noreferrer">
               View the code <Arrow />
             </a>

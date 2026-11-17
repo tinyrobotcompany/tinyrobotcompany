@@ -402,3 +402,22 @@
 }
 .contactLede a { color: var(--fg); text-underline-offset: 3px; }
 .contactLede + .contactLede { margin-top: 0.75rem; }
+
+/* --- Capacity line under services --- */
+.capacity { margin: 1.25rem 0 0; color: var(--fg-2); font-size: 0.95rem; line-height: 1.55; max-width: 80ch; }
+.capacityK {
+  font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.16em;
+  color: var(--mute); margin-right: 0.75rem;
+}
+
+/* --- "Want one?" strip under the bench --- */
+.joinStrip {
+  margin-top: 10px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  padding: 1.5rem 1.6rem;
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  background: var(--surface);
+}
+.joinTitle { font-size: 1.25rem; font-weight: 500; color: var(--fg); margin-bottom: 0.25rem; }
+.joinText { margin: 0; color: var(--mute); max-width: 62ch; line-height: 1.5; }

@@ -61,7 +61,48 @@ export const mailto = (subject: string, body?: string) =>
 export const CONTACT_FIELDS =
   "Name:\nCompany:\nPhone (optional):\nPreferred way to reach me (email / phone call / SMS / WhatsApp / Teams / Zoom / other):\n";
 
-export const INTRO_CALL = mailto(
+export const INTRO_CALL_MAILTO = mailto(
   "Intro call",
   `Hi Simon,\n\nI'd like to book a free 30-minute intro call.\n\n${CONTACT_FIELDS}\nWhat we're working on:\nA few times that suit me (with time zone):\n`,
 );
+
+/* ------------------------------------------------------------------
+   Online services. Each stays switched off (null) until its account
+   exists; the site then falls back to email, so nothing ever breaks.
+------------------------------------------------------------------ */
+
+/**
+ * Booking page for the free intro call, e.g. a Cal.com or Calendly link.
+ * Ask for phone and preferred contact method as booking questions there.
+ */
+export const booking = {
+  url: null as string | null, // e.g. "https://cal.com/tinyrobotcompany/intro"
+  provider: null as string | null, // e.g. "Cal.com", named in the privacy policy
+};
+
+/**
+ * Waitlist / beta sign-up form backend. Web3Forms emails each submission
+ * to the address the access key was created for. The key is designed to
+ * be public (it can only send to that address).
+ */
+export const signupForm = {
+  endpoint: "https://api.web3forms.com/submit",
+  accessKey: null as string | null,
+  provider: "Web3Forms",
+};
+
+export type IntroCall = { href: string; external: boolean; label: string };
+
+/** Where "book an intro call" goes: the booking page if there is one, else an email. */
+export function introCallLink(url: string | null = booking.url): IntroCall {
+  return url
+    ? { href: url, external: true, label: "Pick a time" }
+    : { href: INTRO_CALL_MAILTO, external: false, label: "Email to book" };
+}
+
+/** How work gets delivered beyond one person. Shown under the services. */
+export const capacity = {
+  maxClients: 3,
+  partners:
+    "Larger builds are delivered with a small network of trusted specialists (design, data engineering, electronics), with me as your single, accountable lead.",
+};
