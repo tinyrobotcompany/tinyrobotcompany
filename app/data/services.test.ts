@@ -66,3 +66,16 @@ describe("enquiry emails", () => {
     }
   });
 });
+
+describe("sector examples", () => {
+  it("start with services that exist, and claim no results", async () => {
+    const { sectorExamples } = await import("./sectors");
+    expect(sectorExamples.length).toBeGreaterThanOrEqual(3);
+    const ids = new Set(services.map((s) => s.id));
+    for (const x of sectorExamples) {
+      for (const id of x.startWith) expect(ids.has(id), `${x.id} → ${id}`).toBe(true);
+      // Illustrative only: no percentages, money or client claims.
+      expect(`${x.situation} ${x.build}`).not.toMatch(/%|€|\$|client of|we helped|saved/i);
+    }
+  });
+});

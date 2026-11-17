@@ -13,6 +13,7 @@ export const NAV_LINKS = [
   { href: "/#services", label: "Services" },
   { href: "/#record", label: "Track record" },
   { href: "/#works", label: "Bench" },
+  { href: "/log/", label: "Log" },
   { href: "/#signal", label: "Contact" },
 ] as const;
 
@@ -44,6 +45,7 @@ export function SiteFooter() {
     <footer className={styles.foot}>
       <div>© <em>{site.name}</em> · 2026 — Assembled by hand in {site.location}.</div>
       <nav className={styles.footSide} aria-label="Site">
+        <Link href="/log/">Log</Link>
         <Link href="/legal">Legal notice</Link>
         <Link href="/privacy">Privacy</Link>
         <a href="#top">Back to top ↑</a>

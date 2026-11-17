@@ -8,8 +8,9 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { AppIcon, CharacterPlate, FlowStrip } from "./components/WorkVisuals";
 import { capacity, DAY_RATE_EUR, EMAIL, euro, introCallLink, site, socials } from "./data/site";
 import { IntroCallLink } from "./components/IntroCallLink";
-import { priceLabel, serviceEnquiry, services, type Service } from "./data/services";
-import { caseStudies, FORMER_EMPLOYER, stats } from "./data/track-record";
+import { priceLabel, serviceEnquiry, services, serviceTitle, type Service } from "./data/services";
+import { caseStudies, FORMER_EMPLOYER, stats, testimonials } from "./data/track-record";
+import { sectorExamples } from "./data/sectors";
 import { fullName, getWork, works, type Work } from "./data/works";
 import { latestVersions } from "./lib/github";
 
@@ -157,6 +158,28 @@ export default async function Home() {
             <span className={styles.capacityK}>Capacity</span>
             At most {capacity.maxClients} clients at a time, so each one gets real attention. {capacity.partners}
           </p>
+
+          <div className={styles.sectorsHead}>
+            <h3 className={styles.sectorsTitle}>What it could look like <span className={styles.serif}>in your sector</span></h3>
+            <p className={styles.sectorsNote}>Illustrative examples of how the services apply, not client case studies.</p>
+          </div>
+          <div className={styles.sectors}>
+            {sectorExamples.map((x) => (
+              <article key={x.id} className={styles.service}>
+                <div className={styles.cardLabel}>
+                  <span>Example · <em>{x.sector}</em></span>
+                </div>
+                <h4 className={styles.cardTitle}>{x.title}</h4>
+                <dl className={styles.sectorBody}>
+                  <dt>The situation</dt><dd>{x.situation}</dd>
+                  <dt>What I&rsquo;d build</dt><dd>{x.build}</dd>
+                </dl>
+                <div className={styles.cardFoot}>
+                  <span>Start with: {x.startWith.map((id) => serviceTitle(services.find((s) => s.id === id)!)).join(" → ")}</span>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
 
         {/* -------------------- TRACK RECORD -------------------- */}
@@ -185,6 +208,19 @@ export default async function Home() {
               </div>
             ))}
           </div>
+
+          {testimonials.length > 0 && (
+            <div className={styles.quotes}>
+              {testimonials.map((t) => (
+                <figure key={t.name} className={styles.quote}>
+                  <blockquote>&ldquo;{t.quote}&rdquo;</blockquote>
+                  <figcaption>
+                    <em>{t.name}</em> · {t.role} · {t.relationship}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          )}
 
           {caseStudies.length > 0 && (
             <div className={styles.cases}>
