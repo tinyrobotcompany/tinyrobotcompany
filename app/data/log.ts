@@ -22,36 +22,34 @@ export type Post = {
   /** Slugs of related bench projects (see works.ts). */
   works: string[];
   body: Block[];
+  /** Hidden from the Log and the RSS feed (e.g. its project is hidden). */
+  hidden?: boolean;
 };
 
-export const posts: Post[] = [
+/** Every post, including hidden ones. The site uses `posts` below. */
+export const allPosts: Post[] = [
   {
     slug: "no-ai-keys-on-devices",
-    title: "Why none of my devices hold an AI key",
+    title: "Why my apps never hold an AI key",
     date: "2026-11-17",
     summary:
-      "Three projects, one rule: the permanent AI key never leaves the server. Here's the pattern each one uses, and why it matters for any company putting AI into an app or a device.",
+      "Two apps, one rule: the permanent AI key never leaves the server. Here's the pattern each one uses, and why it matters for any company putting AI into an app or a device.",
     tags: ["Security", "Architecture"],
-    works: ["voxa", "deja-groove", "pico-pie"],
+    works: ["voxa", "deja-groove"],
     body: [
       {
         type: "p",
-        text: "Anything you ship to a user's phone or desk can be opened up. An app can be decompiled; a robot can be unscrewed. If a permanent API key is inside, it's only a matter of time before someone finds it and runs up your bill, or worse. So across the bench I follow one rule: the long-lived AI key stays on infrastructure I control.",
+        text: "Anything you ship to a user's phone or desk can be opened up. An app can be decompiled; a robot can be unscrewed. If a permanent API key is inside, it's only a matter of time before someone finds it and runs up your bill, or worse. So across the bench I follow one rule: the long-lived AI key stays on infrastructure I control, and never ships inside an app or a device.",
       },
       { type: "h", text: "Voxa: short-lived credentials for realtime voice" },
       {
         type: "p",
-        text: "Voxa's tutor talks to you in real time over WebRTC, which means the iPhone connects to the voice model directly. The app still never sees the permanent key. It asks Voxa's authenticated .NET backend on Azure for a short-lived client credential, uses it for that session, and the real secret stays in Azure Key Vault behind a managed identity.",
+        text: "Voxa's tutor talks to you in real time over WebRTC, which means the iPhone connects to the voice model directly. The app still never sees the permanent key. It asks Voxa's authenticated .NET backend for a short-lived client credential, uses it for that session, and the real secret stays in a managed key vault that only the backend can read.",
       },
       { type: "h", text: "Déjà Groove: a deliberately small proxy" },
       {
         type: "p",
-        text: "Déjà Groove keeps your record collection on your phone. The cloud side exists mainly to protect provider keys: an Azure Function receives the cover image, calls the recognition model and the Discogs metadata service, and returns a normalised answer. The app holds no provider secrets.",
-      },
-      { type: "h", text: "Pico Pie: designed in from the start" },
-      {
-        type: "p",
-        text: "For Pico Pie the rule is written into the engineering baseline: permanent AI keys must never be embedded in production devices. A lost or opened-up Pico should leak nothing.",
+        text: "Déjà Groove keeps your record collection on your phone. The cloud side exists mainly to protect provider keys: a small serverless function receives the cover image, calls the recognition model and the Discogs metadata service, and returns a normalised answer. The app holds no provider secrets.",
       },
       { type: "h", text: "Why this matters beyond side projects" },
       {
@@ -72,6 +70,8 @@ export const posts: Post[] = [
       "Before Pico can talk or move, it has to know who it is and find its friends. Notes on the network foundation that shipped as v0.1.0 and v0.1.1.",
     tags: ["Robotics", "Firmware"],
     works: ["pico-pie"],
+    // Hidden with Pico Pie until the robot is ready to show again.
+    hidden: true,
     body: [
       {
         type: "p",
@@ -120,7 +120,7 @@ export const posts: Post[] = [
       { type: "h", text: "The decision" },
       {
         type: "p",
-        text: "Record shopping is fast, noisy and often short of network. So the product direction is deliberately local-first: the iPhone owns your crate, wishlist, history and collections, and the duplicate check runs on the device. Azure is reduced to a small recognition proxy that keeps provider keys off the phone.",
+        text: "Record shopping is fast, noisy and often short of network. So the product direction is deliberately local-first: the iPhone owns your crate, wishlist, history and collections, and the duplicate check runs on the device. The cloud is reduced to a small recognition proxy that keeps provider keys off the phone.",
       },
       { type: "h", text: "Clear verdicts" },
       {
@@ -165,6 +165,9 @@ export const posts: Post[] = [
     ],
   },
 ];
+
+/** The posts shown on the site, newest first. */
+export const posts: Post[] = allPosts.filter((p) => !p.hidden);
 
 export const getPost = (slug: string) => posts.find((p) => p.slug === slug);
 

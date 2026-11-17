@@ -14,7 +14,7 @@ import {
 } from "./signup";
 
 const products = signupProducts(works);
-const valid: SignupValues = { ...emptySignup, products: ["voxa", "pico-pie"], email: "ada@example.com", consent: true };
+const valid: SignupValues = { ...emptySignup, products: ["voxa", "tempo"], email: "ada@example.com", consent: true };
 
 describe("sign-up products", () => {
   it("offers every app as a beta and every device as a waitlist", () => {
@@ -25,7 +25,7 @@ describe("sign-up products", () => {
   });
 
   it("pre-selects products from ?for=, ignoring unknown slugs", () => {
-    expect(productsFromQuery("?for=pico-pie", products)).toEqual(["pico-pie"]);
+    expect(productsFromQuery("?for=tempo", products)).toEqual(["tempo"]);
     expect(productsFromQuery("?for=voxa,tempo,nope", products).sort()).toEqual(["tempo", "voxa"]);
     expect(productsFromQuery("", products)).toEqual([]);
   });
@@ -59,7 +59,7 @@ describe("submission", () => {
     const body = signupPayload({ ...valid, interest: "kit" }, products, "KEY");
     expect(body.access_key).toBe("KEY");
     expect(body.betas).toBe("Voxa");
-    expect(body.waitlists).toBe("Pico Pie");
+    expect(body.waitlists).toBe("Tempo");
     expect(body.interest).toBe("Build one from a kit");
     expect(body.subject).toContain("Voxa");
   });
@@ -73,7 +73,7 @@ describe("submission", () => {
     const url = new URL(signupMailto({ ...valid, name: "Ada" }, products));
     expect(url.protocol).toBe("mailto:");
     const body = url.searchParams.get("body") ?? "";
-    expect(body).toContain("Hi Simon,\n\nPlease add me to: Voxa, Pico Pie");
+    expect(body).toContain("Hi Simon,\n\nPlease add me to: Voxa, Tempo");
     expect(body).toContain("Apple ID for TestFlight: ada@example.com");
   });
 });

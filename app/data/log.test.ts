@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatDate, getPost, posts, postsForWork } from "./log";
+import { allPosts, formatDate, getPost, posts, postsForWork } from "./log";
 import { getWork } from "./works";
 import { rssFeed } from "../lib/rss";
 
@@ -28,7 +28,16 @@ describe("log posts", () => {
 
   it("finds posts by slug and by project", () => {
     expect(getPost(posts[0].slug)).toBe(posts[0]);
-    expect(postsForWork("pico-pie").length).toBeGreaterThan(0);
+    expect(postsForWork("voxa").length).toBeGreaterThan(0);
+  });
+
+  it("leaves hidden posts out of the Log, the pages and the feed", () => {
+    const hidden = allPosts.filter((p) => p.hidden);
+    expect(hidden.length).toBeGreaterThan(0);
+    for (const p of hidden) {
+      expect(getPost(p.slug)).toBeUndefined();
+      expect(rssFeed()).not.toContain(`/log/${p.slug}/`);
+    }
   });
 
   it("formats dates in British English", () => {

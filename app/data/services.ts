@@ -82,7 +82,7 @@ export const services: Service[] = [
     includes: [
       "Multi-agent orchestration, tool calling and MCP integrations",
       "Python, .NET, Next.js and SwiftUI",
-      "Azure with infrastructure as code (Bicep)",
+      "Cloud-agnostic: AWS, Azure or Google Cloud, with infrastructure as code",
       "Evals, tests, CI/CD and monitoring from day one",
     ],
     format: "Scoped per project",

@@ -116,7 +116,6 @@
   color: var(--fg);
 }
 .heroTitle .serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--fg-2); letter-spacing: -0.015em; padding-right: 0.05em; }
-.heroTitle .and { display: inline-block; transform: translateY(-0.05em) scale(0.85); color: var(--mute); padding: 0 0.15em; }
 
 .heroLede {
   max-width: 46ch;
@@ -199,6 +198,7 @@
 .cardFeature .cardDesc { font-size: 1rem; max-width: 52ch; }
 .cardSide  { grid-column: span 2; grid-row: span 1; }
 .cardThird { grid-column: span 2; grid-row: span 1; }
+.cardHalf  { grid-column: span 3; grid-row: span 1; }
 .cardFull  { grid-column: 1 / -1; }
 
 .cardStatus { background: radial-gradient(circle at 100% 0%, rgba(74,222,128,0.06), transparent 55%), var(--surface); }
@@ -220,11 +220,11 @@
 @media (max-width: 900px) {
   .bento { grid-template-columns: repeat(2, 1fr); }
   .cardFeature { grid-column: span 2; grid-row: span 2; }
-  .cardSide, .cardThird { grid-column: span 2; grid-row: auto; }
+  .cardSide, .cardThird, .cardHalf { grid-column: span 2; grid-row: auto; }
 }
 @media (max-width: 560px) {
   .bento { grid-template-columns: 1fr; }
-  .cardFeature, .cardSide, .cardThird { grid-column: span 1; }
+  .cardFeature, .cardSide, .cardThird, .cardHalf { grid-column: span 1; }
 }
 
 /* --- HERO offer chips --- */
@@ -438,3 +438,14 @@
 .quote blockquote { margin: 0 0 1rem; font-size: 1.05rem; line-height: 1.55; color: var(--fg); }
 .quote figcaption { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mute); }
 .quote figcaption em { color: var(--fg); font-style: normal; }
+
+/* --- Bench: R&D framing and product status --- */
+.benchLede { max-width: 68ch; margin: -0.5rem 0 1.5rem; color: var(--mute); line-height: 1.6; }
+.cardStatusLine {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--live);
+}
