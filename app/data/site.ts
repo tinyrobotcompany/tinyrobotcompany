@@ -14,10 +14,13 @@ export const site = {
   owner: "Simon Holmes, PhD",
   location: "Paris",
   travel: "Available to travel anywhere",
-  availability: "Booking 2027",
+  /** Earliest start date for new consulting work. */
+  nextStart: "January 2027",
+  availability: "From January 2027",
+  /** Spoken languages, for calls and workshops. */
   languages: ["English", "French"],
-  /** Voxa translates everything, so enquiries are welcome in any language. */
-  anyLanguage: "Write in any language",
+  /** The one wording for languages, used everywhere on the site. */
+  languageLine: "Calls in English or French · write in any language",
 } as const;
 
 export type Social = { label: string; handle: string; href: string };
@@ -76,8 +79,8 @@ export const INTRO_CALL_MAILTO = mailto(
  * Ask for phone and preferred contact method as booking questions there.
  */
 export const booking = {
-  url: null as string | null, // e.g. "https://cal.com/tinyrobotcompany/intro"
-  provider: null as string | null, // e.g. "Cal.com", named in the privacy policy
+  url: "https://cal.com/tinyrobotcompany001/30min" as string | null,
+  provider: "Cal.com" as string | null, // named in the privacy policy
 };
 
 /**
@@ -87,7 +90,7 @@ export const booking = {
  */
 export const signupForm = {
   endpoint: "https://api.web3forms.com/submit",
-  accessKey: null as string | null,
+  accessKey: "5277ccd3-e45f-426f-b9b9-39070f240351" as string | null,
   provider: "Web3Forms",
 };
 
@@ -105,4 +108,5 @@ export const capacity = {
   maxClients: 3,
   partners:
     "Larger builds are delivered with a small network of trusted specialists (design, data engineering, electronics), with me as your single, accountable lead.",
+  subcontracting: "Also available as a subcontractor through your preferred supplier or integrator.",
 };

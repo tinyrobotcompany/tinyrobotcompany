@@ -35,6 +35,7 @@ function WorkCard({ work, version, className }: { work: Work; version: string; c
         <WorkTitle work={work} />
       </div>
       <p className={styles.cardDesc}>{work.summary}</p>
+      <p className={styles.cardStatusLine}>{work.status.availability}</p>
       <div className={styles.cardFoot}>
         <span>{work.stack.slice(0, 3).join(" · ")}</span>
         <span className={styles.cardArrow}><Arrow /></span>
@@ -70,7 +71,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 export default async function Home() {
   const versions = await latestVersions(works);
   const w = (slug: string) => getWork(slug)!;
-  const featured = w("pico-pie");
+  const featured = w("voxa");
 
   return (
     <>
@@ -89,14 +90,14 @@ export default async function Home() {
             </div>
 
             <h1 className={styles.heroTitle} id="hero-title">
-              Small machines,<span className={styles.and}>&mdash;</span>
-              <span className={styles.serif}>large</span> ideas.
+              Small machines, <span className={styles.serif}>large</span> ideas.
             </h1>
 
             <p className={styles.heroLede}>
               Tiny Robot Company is the independent AI studio of <span className={styles.hl}>Simon Holmes, PhD</span>.
               I help companies in any industry work out where AI pays, then <span className={styles.hl}>architect,
-              build and teach it</span>, from strategy to shipped code. On the side: small machines that think.
+              build and teach it</span>, from strategy to shipped code, on whichever cloud you already use. My own
+              apps and devices are where I test those ideas in public.
             </p>
 
             <ul className={styles.offerChips} aria-label="Services">
@@ -136,7 +137,7 @@ export default async function Home() {
             <aside className={`${styles.service} ${styles.rateCard}`} aria-label="Rates and terms">
               <div className={styles.cardLabel}>
                 <span>Rate card</span>
-                <span><em>{site.availability}</em></span>
+                <span><em>Fixed price or day rate</em></span>
               </div>
               <div className={styles.statValue}>
                 {euro(DAY_RATE_EUR)}<span className={styles.unit}>/ day</span>
@@ -144,7 +145,8 @@ export default async function Home() {
               <dl className={styles.rateTerms}>
                 <dt>VAT</dt>       <dd>Prices exclude VAT</dd>
                 <dt>Base</dt>      <dd>{site.location} · {site.travel.toLowerCase()}</dd>
-                <dt>Languages</dt> <dd>{site.languages.join(" · ")}. {site.anyLanguage}</dd>
+                <dt>Languages</dt> <dd>{site.languageLine}</dd>
+                <dt>Cloud</dt>     <dd>Cloud-agnostic: AWS, Azure or Google Cloud</dd>
                 <dt>Industries</dt><dd>All</dd>
                 <dt>Capacity</dt>  <dd>Max. {capacity.maxClients} clients at a time</dd>
               </dl>
@@ -156,7 +158,8 @@ export default async function Home() {
 
           <p className={styles.capacity}>
             <span className={styles.capacityK}>Capacity</span>
-            At most {capacity.maxClients} clients at a time, so each one gets real attention. {capacity.partners}
+            At most {capacity.maxClients} clients at a time, so each one gets real attention. {capacity.partners}{" "}
+            {capacity.subcontracting}
           </p>
 
           <div className={styles.sectorsHead}>
@@ -193,7 +196,7 @@ export default async function Home() {
 
           <p className={styles.recordLede}>
             Before Tiny Robot Company, I founded and led the AI development function at {FORMER_EMPLOYER}:
-            quality-control AI in production on the factory floor, multi-agent GenAI on Azure, and a team of 40
+            quality-control AI in production on the factory floor, multi-agent GenAI in production, and a team of 40
             across three countries. I also spent fifteen years in plant operations and finance, up to senior
             finance director, so I write the business case as well as the code.
           </p>
@@ -242,10 +245,16 @@ export default async function Home() {
           <div className={styles.sectionHead}>
             <div className={styles.sectionNo}><em>§ 03</em> · The bench</div>
             <h2 className={styles.sectionTitle} id="works-h">
-              Selected <span className={styles.serif}>benchwork</span>.
+              R&amp;D, <span className={styles.serif}>in public</span>.
             </h2>
             <div className={styles.sectionCount}>{String(works.length).padStart(2, "0")} · on the bench · 2026</div>
           </div>
+
+          <p className={styles.benchLede}>
+            The apps and devices I build for myself, with the same tools and discipline I bring to client work:
+            realtime voice, local-first apps, edge AI on small chips. The apps are heading for the App Store; the
+            devices are working prototypes, and the code is public.
+          </p>
 
           <div className={styles.bento}>
             {/* Featured */}
@@ -258,8 +267,12 @@ export default async function Home() {
                 <span>Featured · <em>{featured.year}</em></span>
                 <span>{featured.no} · {featured.stage} · {versions[featured.slug]}</span>
               </div>
-              <WorkTitle work={featured} />
+              <div className={styles.cardHead}>
+                {featured.icon && <AppIcon src={featured.icon} name={fullName(featured)} size={48} />}
+                <WorkTitle work={featured} />
+              </div>
               <p className={styles.cardDesc}>{featured.summary}</p>
+              <p className={styles.cardStatusLine}>{featured.status.availability}</p>
               <div className={styles.featureVisual}>
                 {featured.visual?.kind === "family" ? (
                   <CharacterPlate characters={featured.visual.characters} />
@@ -283,7 +296,6 @@ export default async function Home() {
                 <dt>Intro call</dt><dd className={styles.statusUp}>Free · 30 min</dd>
                 <dt>First reply</dt><dd>Within 2 working days</dd>
                 <dt>Base</dt><dd>{site.location} → anywhere</dd>
-                <dt>Languages</dt><dd>Any, in writing</dd>
               </dl>
               <div className={styles.cardFoot}>
                 <span>Book a free intro call</span>
@@ -291,10 +303,9 @@ export default async function Home() {
               </div>
             </IntroCallLink>
 
-            <WorkCard work={w("voxa")} version={versions.voxa} className={styles.cardSide} />
-            <WorkCard work={w("deja-groove")} version={versions["deja-groove"]} className={styles.cardThird} />
-            <WorkCard work={w("tempo")} version={versions.tempo} className={styles.cardThird} />
-            <WorkCard work={w("waveform-one")} version={versions["waveform-one"]} className={styles.cardThird} />
+            <WorkCard work={w("deja-groove")} version={versions["deja-groove"]} className={styles.cardSide} />
+            <WorkCard work={w("tempo")} version={versions.tempo} className={styles.cardHalf} />
+            <WorkCard work={w("waveform-one")} version={versions["waveform-one"]} className={styles.cardHalf} />
 
             {/* AI Function, Standing Start — field work, links to the track record */}
             <a className={`${styles.card} ${styles.cardFull}`} href="#record">
@@ -319,8 +330,8 @@ export default async function Home() {
             <div>
               <div className={styles.joinTitle}>Want one?</div>
               <p className={styles.joinText}>
-                The apps are in iPhone beta and the devices are prototypes. Join a beta, or get on the waitlist to
-                hear first when one is ready to buy or build.
+                The apps are in iPhone beta, coming soon to the App Store, with Android in development. The devices
+                are prototypes. Join a beta, or get on the waitlist to hear first when one is ready.
               </p>
             </div>
             <Link className={`${styles.btn} ${styles.btnPrimary}`} href="/join/">
@@ -357,7 +368,7 @@ export default async function Home() {
               <dt>Name</dt>            <dd>{site.owner}</dd>
               <dt>Role</dt>            <dd>AI architect, engineer and teacher</dd>
               <dt>Base</dt>            <dd>{site.location} · {site.travel.toLowerCase()}</dd>
-              <dt>Languages</dt>       <dd>{site.languages.join(" · ")}. {site.anyLanguage}</dd>
+              <dt>Languages</dt>       <dd>{site.languageLine}</dd>
               <dt>Available</dt>       <dd>{site.availability}</dd>
               <dt>Education</dt>       <dd>PhD, University of Cambridge</dd>
               <dt>Preferred brief</dt> <dd>Small, weird, well-defined.</dd>
@@ -380,11 +391,12 @@ export default async function Home() {
               </h2>
               <p className={styles.contactLede}>
                 Briefs are read the same day. Fit-check reply within two working days,
-                prototype within four weeks where the scope allows. Now {site.availability.toLowerCase()}.
+                prototype within four weeks where the scope allows. New projects can start from {site.nextStart}.
               </p>
               <p className={styles.contactLede}>
-                Write in whichever language you&rsquo;re most comfortable with. I&rsquo;ll reply in the same one,
-                with a little help from <Link href="/works/voxa">Voxa</Link>, my own translation app.
+                Write in whichever language you&rsquo;re most comfortable with, and I&rsquo;ll reply in the same one
+                using the translation built into <Link href="/works/voxa">Voxa</Link>, my language app. Calls are in
+                English or French.
               </p>
             </div>
 

@@ -43,3 +43,6 @@ next-env.d.ts
 # IDE
 .vscode/
 .idea/
+
+# private working notes (never commit)
+docs/pricing-analysis.md

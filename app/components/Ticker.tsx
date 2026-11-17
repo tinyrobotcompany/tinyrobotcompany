@@ -4,16 +4,16 @@ import { DAY_RATE_EUR, euro, site } from "../data/site";
 const ITEMS: Array<React.ReactNode> = [
   <span key="live" className="inline-flex items-center gap-2">
     <span className={styles.dot} />
-    Consulting: <em>{site.availability}</em>
+    Consulting: <em>new projects from {site.nextStart}</em>
   </span>,
   <span key="who">
     Simon Holmes, PhD / <em>AI architect &amp; engineer</em>
   </span>,
   <span key="ship">
-    In beta: <em>Voxa · Déjà Groove</em>
+    In beta: <em>Voxa · Déjà Groove</em>, App Store soon
   </span>,
   <span key="bench">
-    Currently on the bench: <em>Pico Pie · first face</em>
+    On the bench: <em>Tempo · Waveform One</em>
   </span>,
   <span key="offer">
     Strategy · architecture · build · training: <em>from {euro(DAY_RATE_EUR)} / day</em>

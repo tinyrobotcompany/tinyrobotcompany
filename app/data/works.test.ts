@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { fullName, getWork, repoUrl, works } from "./works";
+import { allWorks, fullName, getWork, repoUrl, works } from "./works";
 
 const publicFile = (src: string) => join(process.cwd(), "public", src);
 
@@ -23,6 +23,19 @@ describe("works data", () => {
     expect(w.flow).toHaveLength(3);
     expect(w.stack.length).toBeGreaterThan(0);
     expect(w.fallbackVersion).toMatch(/^v\d+\.\d+\.\d+$/);
+    expect(w.status.today.length).toBeGreaterThan(10);
+    expect(w.status.next.length).toBeGreaterThan(5);
+    expect(w.status.availability.length).toBeGreaterThan(10);
+  });
+
+  it("explains where the data goes for every app", () => {
+    for (const w of works.filter((x) => x.beta)) expect(w.dataNote?.length, w.slug).toBeGreaterThan(0);
+  });
+
+  it("keeps hidden projects off the site", () => {
+    expect(allWorks.find((w) => w.slug === "pico-pie")?.hidden).toBe(true);
+    expect(getWork("pico-pie")).toBeUndefined();
+    expect(works.some((w) => w.hidden)).toBe(false);
   });
 
   it.each(works.map((w) => [w.slug, w] as const))("%s references images that exist", (_slug, w) => {
@@ -45,7 +58,6 @@ describe("works data", () => {
 
 describe("works helpers", () => {
   const dg = getWork("deja-groove")!;
-  const pico = getWork("pico-pie")!;
 
   it("joins two-part names with a space", () => {
     expect(fullName(dg)).toBe("Déjà Groove");
@@ -53,6 +65,6 @@ describe("works helpers", () => {
   });
 
   it("builds GitHub repo URLs", () => {
-    expect(repoUrl(pico)).toBe("https://github.com/tinyrobotcompany/Pico_Pie");
+    expect(repoUrl(getWork("tempo")!)).toBe("https://github.com/tinyrobotcompany/Tempo");
   });
 });

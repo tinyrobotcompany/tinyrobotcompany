@@ -43,8 +43,23 @@ describe("stale or inconsistent facts", () => {
     expect(occurrences(/Brussels/)).toEqual([]);
   });
 
-  it("has no dated availability like 'Q4 2026' or '2 slots'", () => {
-    expect(occurrences(/Q4 2026|2 slots|2 \/ Q4/)).toEqual([]);
+  it("has no dated availability like 'Q4 2026', '2 slots' or 'Booking 2027'", () => {
+    expect(occurrences(/Q4 2026|2 slots|2 \/ Q4|Booking 2027/i)).toEqual([]);
+  });
+
+  it("describes languages one way (no 'Any, in writing' or 'translation app')", () => {
+    expect(occurrences(/Any, in writing|translation app|anyLanguage/)).toEqual([]);
+  });
+
+  it("keeps the hero punctuation clean", () => {
+    expect(occurrences(/Small machines,<span/)).toEqual([]);
+  });
+
+  it("stays cloud-agnostic in the consulting copy", () => {
+    const consulting = ["app/page.tsx", "app/data/services.ts", "app/privacy/page.tsx"];
+    for (const f of files.filter((x) => consulting.includes(x.path))) {
+      expect(f.text.match(/Azure/g)?.length ?? 0, f.path).toBeLessThanOrEqual(1);
+    }
   });
 });
 

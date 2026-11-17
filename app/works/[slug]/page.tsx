@@ -114,8 +114,10 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
             </div>
 
             <dl className={base.statementMeta}>
-              <dt>Status</dt>  <dd>{work.stage}</dd>
-              <dt>Release</dt> <dd>{version}</dd>
+              <dt>Works today</dt> <dd>{work.status.today}</dd>
+              <dt>Next</dt>        <dd>{work.status.next}</dd>
+              <dt>Get one</dt>     <dd>{work.status.availability}</dd>
+              <dt>Release</dt>     <dd>{version}</dd>
               <dt>Pillar</dt>  <dd>{work.pillars.join(" · ")}</dd>
               <dt>Stack</dt>   <dd>{work.stack.join(" · ")}</dd>
               <dt>Source</dt>
@@ -148,6 +150,24 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
             ))}
           </div>
         </section>
+
+        {/* -------------------- YOUR DATA -------------------- */}
+        {work.dataNote && (
+          <section className={base.section} aria-labelledby="data-h">
+            <div className={base.sectionHead}>
+              <div className={base.sectionNo}>Privacy</div>
+              <h2 className={base.sectionTitle} id="data-h">
+                Where your <span className={base.serif}>data goes</span>.
+              </h2>
+            </div>
+            <div className={styles.body}>
+              {work.dataNote.map((p) => <p key={p.slice(0, 32)}>{p}</p>)}
+              <p>
+                More in the <Link className={styles.inlineLink} href="/privacy/">privacy policy</Link>.
+              </p>
+            </div>
+          </section>
+        )}
 
         {/* -------------------- FLOW -------------------- */}
         <section className={base.section} aria-labelledby="flow-h">

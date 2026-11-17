@@ -12,7 +12,7 @@ import { signupProducts } from "../lib/signup";
 
 export const metadata: Metadata = {
   title: "Waitlists & betas",
-  description: "Join the iPhone betas for Voxa and Déjà Groove, or the waitlist for Pico Pie, Tempo and Waveform One.",
+  description: "Join the iPhone betas for Voxa and Déjà Groove, or the waitlist for Tempo and Waveform One.",
 };
 
 export default function Join() {
@@ -42,8 +42,8 @@ export default function Join() {
             </h1>
           </div>
           <p className={work.lede}>
-            Try the apps before anyone else, or be first to hear when a device is ready to buy or build. One form
-            for all of it: pick what you like.
+            Try the apps before they reach the App Store, or be first to hear when a device is ready. One form for
+            all of it: pick what you like.
           </p>
         </section>
 

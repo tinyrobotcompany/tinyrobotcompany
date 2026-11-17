@@ -30,8 +30,14 @@ export type Work = {
   repo: { owner: string; name: string };
   /** Shown if the GitHub release lookup fails at build time. */
   fallbackVersion: string;
-  /** Apps in private beta get a "Request beta access" mail link. */
+  /** Apps in private beta get a "Join the beta" button; the rest get a waitlist. */
   beta?: boolean;
+  /** Hidden from the site (no card, no page, no sign-up) until it's ready to show. */
+  hidden?: boolean;
+  /** Plain status line: what works today, what's next, how to get one. */
+  status: { today: string; next: string; availability: string };
+  /** Where the user's data goes, for apps that handle personal data. */
+  dataNote?: string[];
   icon?: string;
   visual?:
     | { kind: "screen"; src: string; alt: string; width: number; height: number }
@@ -40,7 +46,8 @@ export type Work = {
 
 type FlowNode = { label: string; sub: string };
 
-export const works: Work[] = [
+/** Every project, including hidden ones. The site uses `works` below. */
+export const allWorks: Work[] = [
   {
     slug: "pico-pie",
     no: "TRC / 04",
@@ -48,8 +55,15 @@ export const works: Work[] = [
     year: 2026,
     pillars: ["Robotics", "GenAI"],
     stage: "Prototype",
+    // Hidden until the robot is more mature as a product. Set to false to bring it back.
+    hidden: true,
+    status: {
+      today: "Device identity, Wi-Fi, local discovery between Picos and an animated face",
+      next: "Head movement, vision and realtime voice",
+      availability: "Not on sale yet: join the waitlist to hear first",
+    },
     tagline:
-      "A small AI companion robot for your desk. It listens, talks, and turns to look at you.",
+      "A small AI companion robot for your desk, being built to listen, talk and turn to look at you.",
     summary:
       "An expressive desk robot with swappable character heads. One platform, ten personalities: clip on a new shell and an NFC tag tells Pico who it is now.",
     intro: [
@@ -106,7 +120,7 @@ export const works: Work[] = [
       "Practise a language by talking. A realtime voice tutor that adapts to your level, plus translation, correction and review.",
     intro: [
       "Voxa lets learners practise a new language out loud. It places you at a CEFR-style level, sets goals around the time you have each day, then gives you a realtime voice tutor to talk with, alongside guided practice, translation from text, voice or photos, corrections with explanations, and review of what you've learned.",
-      "It runs on iPhone and iPad with a .NET backend on Azure, and is currently in TestFlight beta.",
+      "It runs on iPhone and iPad with a .NET backend in the cloud, and is currently in TestFlight beta.",
     ],
     highlights: [
       {
@@ -115,7 +129,7 @@ export const works: Work[] = [
       },
       {
         title: "Secure by design",
-        body: "The app never holds the permanent AI key. The backend issues short-lived credentials per session; secrets stay in Azure Key Vault.",
+        body: "The app never holds the permanent AI key. The backend issues short-lived credentials per session; secrets stay in a managed key vault.",
       },
       {
         title: "Learns with you",
@@ -128,13 +142,22 @@ export const works: Work[] = [
     ],
     flow: [
       { label: "Voice", sub: "iPhone" },
-      { label: "Azure", sub: ".NET 10" },
+      { label: "Backend", sub: ".NET 10" },
       { label: "Realtime", sub: "Tutor" },
     ],
-    stack: ["SwiftUI", ".NET 10", "Azure", "OpenAI Realtime"],
+    stack: ["SwiftUI", ".NET 10", "OpenAI Realtime", "Azure"],
     repo: { owner: "simonholmes001", name: "voxa" },
     fallbackVersion: "v0.20.13",
     beta: true,
+    status: {
+      today: "Placement, realtime voice tutor, translation, corrections and review, in TestFlight beta",
+      next: "App Store release",
+      availability: "Coming soon to the App Store (iPhone and iPad); Android in development",
+    },
+    dataNote: [
+      "When you talk to the tutor, your voice goes straight from the app to OpenAI's realtime voice model for that conversation. The app connects with a short-lived credential and never holds a permanent key.",
+      "Your account, language profiles and progress are kept by Voxa's own backend so you can pick up on another device. You can export or delete your account from the app.",
+    ],
     icon: "/works/voxa-icon.webp",
   },
   {
@@ -174,10 +197,19 @@ export const works: Work[] = [
       { label: "AI match", sub: "Proxy" },
       { label: "Your crate", sub: "On device" },
     ],
-    stack: ["Swift 6", "ShazamKit", "Azure Functions", "OpenAI", "Discogs"],
+    stack: ["Swift 6", "ShazamKit", "OpenAI", "Discogs", "Azure Functions"],
     repo: { owner: "simonholmes001", name: "deja-groove" },
     fallbackVersion: "v0.12.1",
     beta: true,
+    status: {
+      today: "Sleeve scan, song recognition and the duplicate check against your crate, in TestFlight beta",
+      next: "App Store release",
+      availability: "Coming soon to the App Store (iPhone); Android in development",
+    },
+    dataNote: [
+      "Your crate, wishlist, history and collections stay on your phone.",
+      "When you scan a sleeve, the image goes to Déjà Groove's small recognition service, which asks an AI model and Discogs to identify the release and sends back the match. Listening for a song uses Apple's ShazamKit.",
+    ],
     icon: "/works/deja-groove-icon.webp",
   },
   {
@@ -189,9 +221,9 @@ export const works: Work[] = [
     stage: "Prototype",
     tagline: "A 10-inch desk display for the time, the weather and your next train.",
     summary:
-      "A touchscreen clock for the shelf: time, local weather and live Paris-region departures at a glance, set up from your phone.",
+      "A touchscreen clock for the shelf: time, local weather and live public-transport departures at a glance, set up from your phone.",
     intro: [
-      "Tempo is a standalone 10.1-inch touchscreen for a desk or shelf. It shows the time in one of ten clock styles, local weather, and live departures and service alerts for nearby Île-de-France public transport, with route diagrams and street maps a tap away.",
+      "Tempo is a standalone 10.1-inch touchscreen for a desk or shelf. It shows the time in one of ten clock styles, local weather, and live departures and service alerts for nearby public transport, with route diagrams and street maps a tap away. Transit covers the Paris region today; all major cities are planned.",
       "There's no computer behind it: the embedded firmware drives the display and serves a control panel to your phone over the local network. It lives in a 3D-printed enclosure.",
     ],
     highlights: [
@@ -205,7 +237,7 @@ export const works: Work[] = [
       },
       {
         title: "Live transit",
-        body: "Departures, disruptions and route maps from the Île-de-France mobility data service.",
+        body: "Departures, disruptions and route maps, from the Île-de-France mobility data service today and more cities next.",
       },
       {
         title: "Tested like a product",
@@ -220,6 +252,11 @@ export const works: Work[] = [
     stack: ["ESP32-P4", "ESP-IDF", "LVGL", "C"],
     repo: { owner: "tinyrobotcompany", name: "Tempo" },
     fallbackVersion: "v0.8.16",
+    status: {
+      today: "Ten clock styles, local weather and live Paris-region transit, on a working prototype",
+      next: "Live transit for all major cities",
+      availability: "Not on sale yet: join the waitlist to hear first",
+    },
     visual: {
       kind: "screen",
       src: "/works/tempo-clock.webp",
@@ -268,8 +305,16 @@ export const works: Work[] = [
     stack: ["ESP32-S3", "ESP32-P4", "C++", "Rust"],
     repo: { owner: "tinyrobotcompany", name: "Waveform_One" },
     fallbackVersion: "v0.6.1",
+    status: {
+      today: "Real-time music visuals on a 64×32 LED panel, with touchscreen and phone control",
+      next: "On-device music recognition",
+      availability: "Not on sale yet: join the waitlist to hear first",
+    },
   },
 ];
+
+/** The projects shown on the site, in page order. */
+export const works: Work[] = allWorks.filter((w) => !w.hidden);
 
 export const getWork = (slug: string) => works.find((w) => w.slug === slug);
 

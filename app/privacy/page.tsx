@@ -76,7 +76,7 @@ export default function Privacy() {
       <p>For consulting and development projects, client data is handled under a written agreement:</p>
       <ul>
         <li>Processed only for the agreed project, under confidentiality and, where needed, a data processing agreement (DPA).</li>
-        <li>Hosted in EU cloud regions by default (for example Azure EU regions), unless you choose otherwise.</li>
+        <li>Hosted in the EU regions of your chosen cloud provider by default, unless you choose otherwise.</li>
         <li>Never used to train third-party models; AI providers are configured with training on customer data disabled.</li>
         <li>Returned or deleted at the end of the engagement.</li>
       </ul>
