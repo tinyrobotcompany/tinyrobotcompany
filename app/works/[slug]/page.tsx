@@ -9,6 +9,7 @@ import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Spotlight } from "../../components/Spotlight";
 import { AppIcon, CharacterPlate, FlowStrip } from "../../components/WorkVisuals";
 import { fullName, getWork, repoUrl, works } from "../../data/works";
+import { postsForWork } from "../../data/log";
 import { latestVersion } from "../../lib/github";
 
 
@@ -160,6 +161,21 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
           <FlowStrip flow={work.flow} className={styles.flow} />
         </section>
 
+        {postsForWork(work.slug).length > 0 && (
+          <section className={base.section} aria-labelledby="notes-h">
+            <div className={base.sectionHead}>
+              <div className={base.sectionNo}>Build notes</div>
+              <h2 className={base.sectionTitle} id="notes-h">From the <span className={base.serif}>log</span>.</h2>
+            </div>
+            <div className={base.heroActions}>
+              {postsForWork(work.slug).map((p) => (
+                <Link key={p.slug} className={`${base.btn} ${base.btnGhost}`} href={`/log/${p.slug}/`}>
+                  {p.title} <Arrow />
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <SiteFooter />

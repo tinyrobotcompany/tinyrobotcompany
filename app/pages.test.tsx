@@ -4,6 +4,8 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import LegalNotice from "./legal/page";
 import Privacy from "./privacy/page";
 import Join from "./join/page";
+import LogIndex from "./log/page";
+import { posts } from "./data/log";
 import { works } from "./data/works";
 import { legal, socials } from "./data/site";
 
@@ -70,5 +72,17 @@ describe("join page", () => {
 describe("privacy policy covers sign-ups", () => {
   it("explains the waitlist and beta form", () => {
     expect(renderToStaticMarkup(<Privacy />)).toContain("Waitlists and betas");
+  });
+});
+
+describe("log", () => {
+  it("lists every post", () => {
+    const html = renderToStaticMarkup(<LogIndex />);
+    for (const p of posts) expect(html).toMatch(new RegExp(`href="/log/${p.slug}/?"`));
+  });
+
+  it("is linked from the header and footer", () => {
+    expect(renderToStaticMarkup(<SiteHeader />)).toMatch(/href="\/log\/?"/);
+    expect(renderToStaticMarkup(<SiteFooter />)).toMatch(/href="\/log\/?"/);
   });
 });

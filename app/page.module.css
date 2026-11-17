@@ -421,3 +421,20 @@
 }
 .joinTitle { font-size: 1.25rem; font-weight: 500; color: var(--fg); margin-bottom: 0.25rem; }
 .joinText { margin: 0; color: var(--mute); max-width: 62ch; line-height: 1.5; }
+
+/* --- Sector examples (illustrative) --- */
+.sectorsHead { margin: clamp(2rem, 4vw, 3rem) 0 1rem; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; }
+.sectorsTitle { margin: 0; font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 500; letter-spacing: -0.02em; color: var(--fg); }
+.sectorsNote { margin: 0; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mute); }
+.sectors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 900px) { .sectors { grid-template-columns: 1fr; } }
+.sectorBody { margin: 0; display: grid; gap: 0.35rem; font-size: 0.92rem; line-height: 1.55; }
+.sectorBody dt { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--mute); margin-top: 0.4rem; }
+.sectorBody dd { margin: 0; color: var(--fg-2); }
+
+/* --- Testimonials (render only when real quotes exist) --- */
+.quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px; margin-top: 1.5rem; }
+.quote { margin: 0; padding: 1.5rem; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.quote blockquote { margin: 0 0 1rem; font-size: 1.05rem; line-height: 1.55; color: var(--fg); }
+.quote figcaption { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mute); }
+.quote figcaption em { color: var(--fg); font-style: normal; }

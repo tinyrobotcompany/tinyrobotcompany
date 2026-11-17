@@ -32,3 +32,21 @@ export type CaseStudy = {
  * here when they're ready.
  */
 export const caseStudies: CaseStudy[] = [];
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  /** e.g. "Plant Director" or "Voxa beta tester". */
+  role: string;
+  /** How they know Simon, e.g. "Former colleague" or "Client". */
+  relationship: string;
+  /** Must be true: only publish quotes the person agreed to, in these words. */
+  permission: true;
+};
+
+/**
+ * Quotes from real people — TO DO: Simon is collecting 2–3 (former
+ * colleagues, beta testers, early clients). Never invent or paraphrase
+ * one. The quotes block renders only once this has entries.
+ */
+export const testimonials: Testimonial[] = [];
