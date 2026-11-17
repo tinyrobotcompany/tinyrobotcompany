@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage } from "../components/LegalPage";
-import { legal, site } from "../data/site";
+import { booking, legal, signupForm, site } from "../data/site";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -16,7 +16,7 @@ export default function Privacy() {
       notice={
         <>
           Short version: this site sets no cookies, runs no analytics and loads no third-party trackers. If you
-          email me, I use your message to reply, and that&rsquo;s it.
+          email me or join a waitlist, I use your details for that and nothing else.
         </>
       }
     >
@@ -46,11 +46,30 @@ export default function Privacy() {
 
       <h2>When you get in touch</h2>
       <p>
-        If you email me, including through a &ldquo;request beta access&rdquo; or &ldquo;enquire&rdquo; link, I
-        receive your name, email address and whatever you write. I use it only to reply, and to prepare a
+        If you email me, including through an &ldquo;enquire&rdquo; link, I receive your name, email address and
+        whatever you write. I use it only to reply, and to prepare a
         proposal or contract if you ask for one (GDPR Art. 6(1)(b) and (f)). It is not shared or sold, and is
         deleted within 24 months of our last exchange unless it must be kept longer for legal or accounting
-        reasons. Beta testers&rsquo; email addresses are shared with Apple only to send the TestFlight invitation.
+        reasons.
+      </p>
+      {booking.provider && (
+        <p>
+          If you book an intro call online, the booking is handled by {booking.provider}, which receives the details
+          you enter and adds the meeting to my calendar. Its own privacy policy applies to that service.
+        </p>
+      )}
+
+      <h2>Waitlists and betas</h2>
+      <p>
+        The <a href="/join/">sign-up form</a> collects your email address, and optionally your name, an Apple ID
+        email, what you&rsquo;d like to do with a device and a message.
+        {signupForm.accessKey
+          ? ` It is delivered to me by email through ${signupForm.provider}, a form-to-email service.`
+          : " It opens your own email app; nothing is sent until you press send."}{" "}
+        I use it only to email you about the products you picked, based on your consent (GDPR Art. 6(1)(a)),
+        which you can withdraw at any time by replying &ldquo;unsubscribe&rdquo;. Beta testers&rsquo; email
+        addresses are shared with Apple only to send the TestFlight invitation. Sign-ups are deleted once you
+        unsubscribe, or 24 months after the last email I sent you.
       </p>
 
       <h2>Client data in AI work</h2>

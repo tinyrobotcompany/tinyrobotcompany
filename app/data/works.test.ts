@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { betaMailto, enquiryMailto, fullName, getWork, repoUrl, works } from "./works";
+import { fullName, getWork, repoUrl, works } from "./works";
 
 const publicFile = (src: string) => join(process.cwd(), "public", src);
 
@@ -54,18 +54,5 @@ describe("works helpers", () => {
 
   it("builds GitHub repo URLs", () => {
     expect(repoUrl(pico)).toBe("https://github.com/tinyrobotcompany/Pico_Pie");
-  });
-
-  it("builds an encoded beta-access email", () => {
-    const url = new URL(betaMailto(dg));
-    expect(url.protocol).toBe("mailto:");
-    expect(url.pathname).toBe("hello@tinyrobotcompany.io");
-    expect(url.searchParams.get("subject")).toBe("Beta access: Déjà Groove");
-    expect(url.searchParams.get("body")).toContain("TestFlight");
-  });
-
-  it("builds a hardware enquiry email", () => {
-    const url = new URL(enquiryMailto(pico));
-    expect(url.searchParams.get("subject")).toBe("Enquiry: Pico Pie");
   });
 });

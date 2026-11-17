@@ -6,7 +6,8 @@ import { Ticker } from "./components/Ticker";
 import { Arrow, RightArrow } from "./components/Icons";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { AppIcon, CharacterPlate, FlowStrip } from "./components/WorkVisuals";
-import { DAY_RATE_EUR, EMAIL, euro, INTRO_CALL, site, socials } from "./data/site";
+import { capacity, DAY_RATE_EUR, EMAIL, euro, introCallLink, site, socials } from "./data/site";
+import { IntroCallLink } from "./components/IntroCallLink";
 import { priceLabel, serviceEnquiry, services, type Service } from "./data/services";
 import { caseStudies, FORMER_EMPLOYER, stats } from "./data/track-record";
 import { fullName, getWork, works, type Work } from "./data/works";
@@ -107,9 +108,9 @@ export default async function Home() {
               <a className={`${styles.btn} ${styles.btnPrimary}`} href="#services">
                 Services &amp; prices <RightArrow />
               </a>
-              <a className={`${styles.btn} ${styles.btnGhost}`} href={INTRO_CALL}>
+              <IntroCallLink className={`${styles.btn} ${styles.btnGhost}`}>
                 Book a free intro call
-              </a>
+              </IntroCallLink>
             </div>
           </div>
 
@@ -144,12 +145,18 @@ export default async function Home() {
                 <dt>Base</dt>      <dd>{site.location} · {site.travel.toLowerCase()}</dd>
                 <dt>Languages</dt> <dd>{site.languages.join(" · ")}. {site.anyLanguage}</dd>
                 <dt>Industries</dt><dd>All</dd>
+                <dt>Capacity</dt>  <dd>Max. {capacity.maxClients} clients at a time</dd>
               </dl>
-              <a className={`${styles.btn} ${styles.btnPrimary} ${styles.rateCta}`} href={INTRO_CALL}>
+              <IntroCallLink className={`${styles.btn} ${styles.btnPrimary} ${styles.rateCta}`}>
                 Start with a free 30-min call <RightArrow />
-              </a>
+              </IntroCallLink>
             </aside>
           </div>
+
+          <p className={styles.capacity}>
+            <span className={styles.capacityK}>Capacity</span>
+            At most {capacity.maxClients} clients at a time, so each one gets real attention. {capacity.partners}
+          </p>
         </section>
 
         {/* -------------------- TRACK RECORD -------------------- */}
@@ -231,7 +238,7 @@ export default async function Home() {
             </Link>
 
             {/* Availability: the real facts a buyer needs, next to the work */}
-            <a className={`${styles.card} ${styles.cardStatus} ${styles.cardSide}`} href={INTRO_CALL}>
+            <IntroCallLink className={`${styles.card} ${styles.cardStatus} ${styles.cardSide}`}>
               <div className={styles.cardLabel}>
                 <span>Availability</span>
                 <span><em>{site.availability}</em></span>
@@ -246,7 +253,7 @@ export default async function Home() {
                 <span>Book a free intro call</span>
                 <span className={styles.cardArrow}><Arrow /></span>
               </div>
-            </a>
+            </IntroCallLink>
 
             <WorkCard work={w("voxa")} version={versions.voxa} className={styles.cardSide} />
             <WorkCard work={w("deja-groove")} version={versions["deja-groove"]} className={styles.cardThird} />
@@ -270,6 +277,19 @@ export default async function Home() {
                 <span className={styles.cardArrow}><Arrow /></span>
               </div>
             </a>
+          </div>
+
+          <div className={styles.joinStrip}>
+            <div>
+              <div className={styles.joinTitle}>Want one?</div>
+              <p className={styles.joinText}>
+                The apps are in iPhone beta and the devices are prototypes. Join a beta, or get on the waitlist to
+                hear first when one is ready to buy or build.
+              </p>
+            </div>
+            <Link className={`${styles.btn} ${styles.btnPrimary}`} href="/join/">
+              Join a waitlist or beta <RightArrow />
+            </Link>
           </div>
         </section>
 
@@ -333,11 +353,16 @@ export default async function Home() {
             </div>
 
             <div className={styles.contactPanel}>
-              <a className={styles.contactRow} href={INTRO_CALL}>
+              <IntroCallLink className={styles.contactRow}>
                 <span className={styles.contactK}>Call</span>
-                <span className={styles.contactV}>Book a free 30-min intro</span>
+                <span className={styles.contactV}>{introCallLink().external ? "Book a free 30-min intro" : "Ask for a free 30-min intro"}</span>
                 <span className={styles.contactArrow}><Arrow /></span>
-              </a>
+              </IntroCallLink>
+              <Link className={styles.contactRow} href="/join/">
+                <span className={styles.contactK}>Products</span>
+                <span className={styles.contactV}>Join a waitlist or beta</span>
+                <span className={styles.contactArrow}><Arrow /></span>
+              </Link>
               <a className={styles.contactRow} href={`mailto:${EMAIL}`}>
                 <span className={styles.contactK}>Mail</span>
                 <span className={styles.contactV}>{EMAIL}</span>

@@ -58,10 +58,8 @@ describe("service enquiries", () => {
 
 describe("enquiry emails", () => {
   it("ask for a phone number and the preferred way to be contacted", async () => {
-    const { INTRO_CALL } = await import("./site");
-    const { enquiryMailto, works } = await import("./works");
-    const hardware = works.filter((w) => !w.beta).map(enquiryMailto);
-    for (const link of [INTRO_CALL, ...services.map(serviceEnquiry), ...hardware]) {
+    const { INTRO_CALL_MAILTO } = await import("./site");
+    for (const link of [INTRO_CALL_MAILTO, ...services.map(serviceEnquiry)]) {
       const body = decodeURIComponent(link.split("body=")[1] ?? "");
       expect(body).toContain("Phone");
       expect(body).toMatch(/Preferred way to reach me \(email \/ phone call \/ SMS \/ WhatsApp \/ Teams/);
