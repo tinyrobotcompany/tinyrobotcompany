@@ -228,7 +228,7 @@
 }
 
 /* --- HERO offer chips --- */
-.offerChips { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 0 0 1.5rem; max-width: 46ch; }
+.offerChips { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 0 0 1.5rem; max-width: 64ch; }
 .offerChips a {
   display: inline-block;
   padding: 0.3rem 0.65rem;
@@ -449,3 +449,33 @@
   text-transform: uppercase;
   color: var(--live);
 }
+
+/* --- Service cards as chip targets --- */
+.service[id] { scroll-margin-top: 96px; }
+.service:target { border-color: var(--fg-2); box-shadow: 0 0 0 1px var(--fg-2); }
+
+/* --- Contact: social icons --- */
+.socialRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.6rem 0.6rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-2);
+}
+.socialIcons { display: flex; gap: 0.35rem; list-style: none; margin: 0; padding: 0; }
+.socialIcon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  color: var(--fg-2);
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+.socialIcon:hover { color: var(--fg); border-color: var(--fg-2); background: var(--elev); transform: translateY(-1px); }
+
+.nowrap { white-space: nowrap; }

@@ -25,18 +25,20 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.tinyrobotcompany.io"),
   alternates: { canonical: "./" },
   title: {
-    default: "Tiny Robot Company",
+    default: "Tiny Robot Company · Small studio. Serious AI, built to work.",
     template: "%s · Tiny Robot Company",
   },
   description:
-    "A studio of one making small things that think, move, and — occasionally — misbehave. Generative AI, electronics, and robotics from Simon Holmes.",
+    "The independent AI studio of Dr Simon Holmes: AI strategy, architecture, hands-on build and training, from strategy to production code, on any cloud.",
   applicationName: "Tiny Robot Company",
   authors: [{ name: "Simon Holmes" }],
   keywords: [
-    "GenAI",
+    "AI consulting",
+    "agentic AI",
+    "AI architecture",
+    "fractional head of AI",
+    "AI training",
     "generative AI",
-    "electronics",
-    "robotics",
     "Simon Holmes",
     "Tiny Robot Company",
   ],
@@ -44,14 +46,14 @@ export const metadata: Metadata = {
     type: "website",
     title: "Tiny Robot Company",
     description:
-      "Small things that think, move, and — occasionally — misbehave. GenAI · Electronics · Robotics.",
+      "Small studio. Serious AI, built to work. AI strategy, architecture, build and training from Dr Simon Holmes.",
     url: "https://www.tinyrobotcompany.io",
     siteName: "Tiny Robot Company",
   },
   twitter: {
     card: "summary_large_image",
     title: "Tiny Robot Company",
-    description: "Small things that think, move, and — occasionally — misbehave.",
+    description: "Small studio. Serious AI, built to work.",
   },
 };
 

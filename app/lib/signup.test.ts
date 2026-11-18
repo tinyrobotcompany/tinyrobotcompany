@@ -83,6 +83,11 @@ describe("intro call link", () => {
     expect(introCallLink("https://cal.com/x/intro")).toMatchObject({ href: "https://cal.com/x/intro", external: true });
   });
 
+  it("pre-fills the booking notes when given", () => {
+    const link = introCallLink("https://cal.com/x/30min", "Interested in: X\nTimeline:");
+    expect(new URL(link.href).searchParams.get("notes")).toBe("Interested in: X\nTimeline:");
+  });
+
   it("falls back to an email asking for phone and contact preference", () => {
     const link = introCallLink(null);
     expect(link.external).toBe(false);

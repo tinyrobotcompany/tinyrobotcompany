@@ -225,8 +225,6 @@ export function Mascot() {
 
   return (
     <div ref={stageRef} className={styles.stage} aria-label="Tiny Robot Company mascot">
-      <div className={styles.badge}>TR·01 / mascot</div>
-
       <div
         ref={wrapRef}
         className={styles.wrap}
@@ -308,11 +306,6 @@ export function Mascot() {
           <rect x="82" y="288" width="52" height="18" rx="6" fill="var(--ink)" />
           <rect x="166" y="288" width="52" height="18" rx="6" fill="var(--ink)" />
         </svg>
-      </div>
-
-      <div className={styles.cap}>
-        <span><em>Primary mark</em></span>
-        <span>Scale · 1:1</span>
       </div>
     </div>
   );

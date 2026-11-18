@@ -51,8 +51,9 @@ describe("stale or inconsistent facts", () => {
     expect(occurrences(/Any, in writing|translation app|anyLanguage/)).toEqual([]);
   });
 
-  it("keeps the hero punctuation clean", () => {
-    expect(occurrences(/Small machines,<span/)).toEqual([]);
+  it("uses the current headline, not the old hardware-first one", () => {
+    expect(occurrences(/Small machines|large ideas|misbehave/)).toEqual([]);
+    expect(occurrences(/Serious AI/).length).toBeGreaterThan(0);
   });
 
   it("stays cloud-agnostic in the consulting copy", () => {

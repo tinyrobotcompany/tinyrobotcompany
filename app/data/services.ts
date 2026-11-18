@@ -2,7 +2,7 @@
    Services — what a company can hire Tiny Robot Company for. Prices are
    derived from DAY_RATE_EUR so a rate change updates every package.
 ------------------------------------------------------------------ */
-import { CONTACT_FIELDS, DAY_RATE_EUR, euro, mailto } from "./site";
+import { booking, CONTACT_FIELDS, DAY_RATE_EUR, euro, introCallLink, mailto, type IntroCall } from "./site";
 
 export type Price =
   | { kind: "package"; days: number }
@@ -15,6 +15,8 @@ export type Service = {
   /** Short category shown on the card label. */
   kind: "Consult" | "Build" | "Lead" | "Teach" | "Make";
   title: { lead: string; serif?: string };
+  /** Short label for the hero chips, which jump to this card. */
+  chip: string;
   /** Who it's for; reads after "For", so start lowercase unless it's a proper noun or acronym. */
   audience: string;
   summary: string;
@@ -26,6 +28,7 @@ export type Service = {
 export const services: Service[] = [
   {
     id: "strategy",
+    chip: "AI strategy",
     kind: "Consult",
     title: { lead: "AI strategy &", serif: "opportunity map" },
     audience: "leadership teams in any industry",
@@ -42,6 +45,7 @@ export const services: Service[] = [
   },
   {
     id: "architecture-review",
+    chip: "Architecture review",
     kind: "Consult",
     title: { lead: "AI architecture", serif: "review" },
     audience: "CTOs, heads of AI, and investors doing due diligence",
@@ -58,6 +62,7 @@ export const services: Service[] = [
   },
   {
     id: "prototype-sprint",
+    chip: "Prototype sprint",
     kind: "Build",
     title: { lead: "Prototype", serif: "sprint" },
     audience: "teams with a well-defined idea to prove",
@@ -74,6 +79,7 @@ export const services: Service[] = [
   },
   {
     id: "design-build",
+    chip: "Design & build",
     kind: "Build",
     title: { lead: "Design &", serif: "build" },
     audience: "companies that need it built, not just advised",
@@ -90,6 +96,7 @@ export const services: Service[] = [
   },
   {
     id: "fractional-lead",
+    chip: "Fractional head of AI",
     kind: "Lead",
     title: { lead: "Fractional", serif: "head of AI" },
     audience: "organisations starting or scaling an AI function",
@@ -106,6 +113,7 @@ export const services: Service[] = [
   },
   {
     id: "education",
+    chip: "Training",
     kind: "Teach",
     title: { lead: "AI education &", serif: "training" },
     audience: "executives, engineering teams, schools and universities",
@@ -122,6 +130,7 @@ export const services: Service[] = [
   },
   {
     id: "hardware",
+    chip: "Hardware",
     kind: "Make",
     title: { lead: "Hardware &", serif: "edge AI prototypes" },
     audience: "product teams, museums, events and retail",
@@ -158,3 +167,17 @@ export const serviceEnquiry = (s: Service) =>
     `Enquiry: ${serviceTitle(s)}`,
     `Hi Simon,\n\nI'm interested in "${serviceTitle(s)}".\n\n${CONTACT_FIELDS}\nWhat we're trying to do:\nTimeline:\n`,
   );
+
+/** Anchor id of a service card, used by the hero chips. */
+export const serviceAnchor = (s: Service) => `service-${s.id}`;
+
+/** Notes pre-filled in the booking form, so the visitor is reminded what they picked. */
+export const serviceBookingNotes = (s: Service) =>
+  `Interested in: ${serviceTitle(s)} (${s.format}, ${priceLabel(s.price).toLowerCase()})\n\nWhat we're trying to do:\n\nTimeline:\n`;
+
+/** A service card's call to action: book a call about it, or email if booking is off. */
+export function serviceCta(s: Service, url: string | null = booking.url): IntroCall {
+  return url
+    ? introCallLink(url, serviceBookingNotes(s))
+    : { href: serviceEnquiry(s), external: false, label: "Enquire" };
+}

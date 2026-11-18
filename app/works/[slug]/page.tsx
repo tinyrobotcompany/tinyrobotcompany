@@ -8,7 +8,7 @@ import { Arrow, RightArrow } from "../../components/Icons";
 import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Spotlight } from "../../components/Spotlight";
 import { AppIcon, CharacterPlate, FlowStrip } from "../../components/WorkVisuals";
-import { fullName, getWork, repoUrl, works } from "../../data/works";
+import { fullName, getWork, repoUrl, works, type Work } from "../../data/works";
 import { postsForWork } from "../../data/log";
 import { latestVersion } from "../../lib/github";
 
@@ -25,6 +25,29 @@ export async function generateMetadata({ params }: PageProps<"/works/[slug]">): 
     description: work.tagline,
     openGraph: { title: `${fullName(work)} · Tiny Robot Company`, description: work.tagline },
   };
+}
+
+type ScreenVisual = Extract<NonNullable<Work["visual"]>, { kind: "screen" }>;
+
+/** One screen, or several of the same size side by side. */
+function ScreenSet({ visual }: { visual: ScreenVisual }) {
+  const images = [{ src: visual.src, alt: visual.alt }, ...(visual.more ?? [])];
+  return (
+    <div className={images.length > 1 ? styles.screens : undefined}>
+      {images.map((img, i) => (
+        <Image
+          key={img.src}
+          className={styles.screen}
+          src={img.src}
+          alt={img.alt}
+          width={visual.width}
+          height={visual.height}
+          unoptimized
+          priority={i === 0}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
@@ -85,15 +108,10 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
             {work.visual.kind === "family" ? (
               <CharacterPlate characters={work.visual.characters} showNames priority />
             ) : (
-              <Image
-                className={styles.screen}
-                src={work.visual.src}
-                alt={work.visual.alt}
-                width={work.visual.width}
-                height={work.visual.height}
-                unoptimized
-                priority
-              />
+              <ScreenSet visual={work.visual} />
+            )}
+            {work.visual.kind === "screen" && work.visual.caption && (
+              <figcaption className={styles.caption}>{work.visual.caption}</figcaption>
             )}
           </figure>
         )}

@@ -18,7 +18,7 @@
 [![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)](.github/workflows/)
 
 The website of **Tiny Robot Company**, the independent AI studio of Simon Holmes, PhD: AI consulting,
-architecture, hands-on build and training for companies, plus a bench of small machines and apps.
+architecture, hands-on build and training for companies, plus a bench of apps and devices built in public.
 
 Live at **[www.tinyrobotcompany.io](https://www.tinyrobotcompany.io)**.
 

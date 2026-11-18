@@ -40,7 +40,17 @@ export type Work = {
   dataNote?: string[];
   icon?: string;
   visual?:
-    | { kind: "screen"; src: string; alt: string; width: number; height: number }
+    | {
+        kind: "screen";
+        src: string;
+        alt: string;
+        width: number;
+        height: number;
+        /** Shown under the image, e.g. to say it's a render rather than a photo. */
+        caption?: string;
+        /** Further screens of the same size, shown side by side with the first. */
+        more?: { src: string; alt: string }[];
+      }
     | { kind: "family"; characters: { src: string; name: string }[] };
 };
 
@@ -260,9 +270,16 @@ export const allWorks: Work[] = [
     visual: {
       kind: "screen",
       src: "/works/tempo-clock.webp",
-      alt: "Tempo's clock screen: a large 06:56, local weather card and next bus departures.",
+      alt: "Tempo's clock screen in violet: a large 06:56, a local weather card and next bus departures.",
       width: 1280,
       height: 730,
+      more: [
+        {
+          src: "/works/tempo-clock-teal.webp",
+          alt: "Tempo's clock screen in teal: 08:00, weather with rain and wind, and the next three train departures.",
+        },
+      ],
+      caption: "Screens from the working prototype. Two of the ten clock styles; stop names blurred.",
     },
   },
   {
@@ -305,6 +322,15 @@ export const allWorks: Work[] = [
     stack: ["ESP32-S3", "ESP32-P4", "C++", "Rust"],
     repo: { owner: "tinyrobotcompany", name: "Waveform_One" },
     fallbackVersion: "v0.6.1",
+    visual: {
+      kind: "screen",
+      src: "/works/waveform-device.webp",
+      alt: "Mock of Waveform One: a black cabinet with the touchscreen showing the album playing and the LED panel in its mirrored style, a record sleeve standing on top, and the panel's three visual styles alongside.",
+      width: 2400,
+      height: 1656,
+      caption:
+        "A mock drawn from Waveform One's own design files: the cabinet from its CAD model, the Now Playing screen from the touchscreen firmware, the LED styles from the display code. The record is invented; photos of the device are coming.",
+    },
     status: {
       today: "Real-time music visuals on a 64×32 LED panel, with touchscreen and phone control",
       next: "On-device music recognition",

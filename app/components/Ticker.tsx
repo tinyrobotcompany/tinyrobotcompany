@@ -7,7 +7,7 @@ const ITEMS: Array<React.ReactNode> = [
     Consulting: <em>new projects from {site.nextStart}</em>
   </span>,
   <span key="who">
-    Simon Holmes, PhD / <em>AI architect &amp; engineer</em>
+    Simon Holmes, PhD / <em>AI engineer &amp; solutions architect</em>
   </span>,
   <span key="ship">
     In beta: <em>Voxa · Déjà Groove</em>, App Store soon
@@ -16,7 +16,7 @@ const ITEMS: Array<React.ReactNode> = [
     On the bench: <em>Tempo · Waveform One</em>
   </span>,
   <span key="offer">
-    Strategy · architecture · build · training: <em>from {euro(DAY_RATE_EUR)} / day</em>
+    Strategy · Architecture · Build · AI Education: <em>from {euro(DAY_RATE_EUR)} / day</em>
   </span>,
   <span key="loc">
     Location: <em>{site.location} ↔ Anywhere</em>
