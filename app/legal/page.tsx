@@ -59,7 +59,7 @@ export default function LegalNotice() {
       <h2>Language</h2>
       <p>
         This site is published in English. You are welcome to write in any language; replies come in the same
-        language. Calls are in English or French.
+        language.
       </p>
 
       <h2>Privacy</h2>

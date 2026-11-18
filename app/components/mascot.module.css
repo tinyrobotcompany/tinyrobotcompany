@@ -41,29 +41,6 @@
   .stage { justify-self: center; max-width: min(55svh, 380px); }
 }
 
-.badge {
-  position: absolute;
-  top: 1rem; right: 1.25rem;
-  z-index: 2;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--robot);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-}
-.cap {
-  position: absolute;
-  left: 1.25rem; bottom: 1rem;
-  z-index: 2;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--mute);
-  display: flex;
-  gap: 1rem;
-}
-.cap em { color: var(--fg); font-style: normal; }
 
 /* --- Wrap: absolutely positioned inside the stage, JS drives transform --- */
 .wrap {

@@ -96,11 +96,15 @@ export const signupForm = {
 
 export type IntroCall = { href: string; external: boolean; label: string };
 
-/** Where "book an intro call" goes: the booking page if there is one, else an email. */
-export function introCallLink(url: string | null = booking.url): IntroCall {
-  return url
-    ? { href: url, external: true, label: "Pick a time" }
-    : { href: INTRO_CALL_MAILTO, external: false, label: "Email to book" };
+/**
+ * Where "book an intro call" goes: the booking page if there is one, else an email.
+ * `notes` pre-fills the booking form's notes field (Cal.com's built-in "notes"
+ * question), so the visitor starts from a template instead of a blank box.
+ */
+export function introCallLink(url: string | null = booking.url, notes?: string): IntroCall {
+  if (!url) return { href: INTRO_CALL_MAILTO, external: false, label: "Email to book" };
+  const href = notes ? `${url}${url.includes("?") ? "&" : "?"}notes=${encodeURIComponent(notes)}` : url;
+  return { href, external: true, label: "Pick a time" };
 }
 
 /** How work gets delivered beyond one person. Shown under the services. */

@@ -3,12 +3,12 @@ import styles from "./page.module.css";
 import { Mascot } from "./components/Mascot";
 import { Spotlight } from "./components/Spotlight";
 import { Ticker } from "./components/Ticker";
-import { Arrow, RightArrow } from "./components/Icons";
+import { Arrow, RightArrow, SocialIcon } from "./components/Icons";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { AppIcon, CharacterPlate, FlowStrip } from "./components/WorkVisuals";
 import { capacity, DAY_RATE_EUR, EMAIL, euro, introCallLink, site, socials } from "./data/site";
 import { IntroCallLink } from "./components/IntroCallLink";
-import { priceLabel, serviceEnquiry, services, serviceTitle, type Service } from "./data/services";
+import { priceLabel, serviceAnchor, serviceCta, services, serviceTitle, type Service } from "./data/services";
 import { caseStudies, FORMER_EMPLOYER, stats, testimonials } from "./data/track-record";
 import { sectorExamples } from "./data/sectors";
 import { fullName, getWork, works, type Work } from "./data/works";
@@ -45,8 +45,9 @@ function WorkCard({ work, version, className }: { work: Work; version: string; c
 }
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const cta = serviceCta(service);
   return (
-    <article className={styles.service}>
+    <article className={styles.service} id={serviceAnchor(service)}>
       <div className={styles.cardLabel}>
         <span>{String(index + 1).padStart(2, "0")} · <em>{service.kind}</em></span>
         <span>{service.format}</span>
@@ -60,10 +61,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       <ul className={styles.includes}>
         {service.includes.map((item) => <li key={item}>{item}</li>)}
       </ul>
-      <a className={styles.serviceFoot} href={serviceEnquiry(service)}>
+      <IntroCallLink className={styles.serviceFoot} link={cta}>
         <span className={styles.price}>{priceLabel(service.price)}</span>
-        <span className={styles.enquire}>Enquire <Arrow /></span>
-      </a>
+        <span className={styles.enquire}>{cta.external ? "Book a call" : cta.label} <Arrow /></span>
+      </IntroCallLink>
     </article>
   );
 }
@@ -90,19 +91,20 @@ export default async function Home() {
             </div>
 
             <h1 className={styles.heroTitle} id="hero-title">
-              Small machines, <span className={styles.serif}>large</span> ideas.
+              Small studio.<br />
+              Serious AI, <span className={`${styles.serif} ${styles.nowrap}`}>built to work.</span>
             </h1>
 
             <p className={styles.heroLede}>
-              Tiny Robot Company is the independent AI studio of <span className={styles.hl}>Simon Holmes, PhD</span>.
-              I help companies in any industry work out where AI pays, then <span className={styles.hl}>architect,
-              build and teach it</span>, from strategy to shipped code, on whichever cloud you already use. My own
-              apps and devices are where I test those ideas in public.
+              Tiny Robot Company is the independent AI studio of <span className={styles.hl}>Dr Simon Holmes</span>.
+              I help companies work out where AI pays, then <span className={styles.hl}>design, build and run it</span>{" "}
+              with them, from strategy to production code, on whichever cloud you already use. My own apps and
+              devices are where I test my ideas in public.
             </p>
 
             <ul className={styles.offerChips} aria-label="Services">
-              {["AI consulting", "Architecture", "Design & build", "Fractional head of AI", "Training", "Hardware"].map((s) => (
-                <li key={s}><a href="#services">{s}</a></li>
+              {services.map((s) => (
+                <li key={s.id}><a href={`#${serviceAnchor(s)}`}>{s.chip}</a></li>
               ))}
             </ul>
 
@@ -190,7 +192,7 @@ export default async function Home() {
           <div className={styles.sectionHead}>
             <div className={styles.sectionNo}><em>§ 02</em> · Track record</div>
             <h2 className={styles.sectionTitle} id="record-h">
-              Eight years building AI <span className={styles.serif}>that runs</span>.
+              Ten years building AI <span className={styles.serif}>that runs</span>.
             </h2>
           </div>
 
@@ -395,8 +397,7 @@ export default async function Home() {
               </p>
               <p className={styles.contactLede}>
                 Write in whichever language you&rsquo;re most comfortable with, and I&rsquo;ll reply in the same one
-                using the translation built into <Link href="/works/voxa">Voxa</Link>, my language app. Calls are in
-                English or French.
+                using the translation built into <Link href="/works/voxa">Voxa</Link>, my language app.
               </p>
             </div>
 
@@ -416,13 +417,25 @@ export default async function Home() {
                 <span className={styles.contactV}>{EMAIL}</span>
                 <span className={styles.contactArrow}><Arrow /></span>
               </a>
-              {socials.slice(0, 2).map((s) => (
-                <a key={s.label} className={styles.contactRow} href={s.href} target="_blank" rel="me noopener noreferrer">
-                  <span className={styles.contactK}>{s.label}</span>
-                  <span className={styles.contactV}>{s.handle}</span>
-                  <span className={styles.contactArrow}><Arrow /></span>
-                </a>
-              ))}
+              <div className={styles.socialRow}>
+                <span className={styles.contactK}>Follow</span>
+                <ul className={styles.socialIcons}>
+                  {socials.map((s) => (
+                    <li key={s.label}>
+                      <a
+                        className={styles.socialIcon}
+                        href={s.href}
+                        target="_blank"
+                        rel="me noopener noreferrer"
+                        aria-label={`${s.label} ${s.handle}`}
+                        title={s.label}
+                      >
+                        <SocialIcon name={s.label} />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>

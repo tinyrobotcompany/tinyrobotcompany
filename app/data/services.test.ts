@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DAY_RATE_EUR } from "./site";
-import { priceLabel, serviceEnquiry, serviceTitle, services } from "./services";
+import { priceLabel, serviceAnchor, serviceCta, serviceEnquiry, serviceTitle, services } from "./services";
 
 /** Normalise the narrow no-break spaces Intl may emit. */
 const plain = (s: string) => s.replace(/\s/g, " ");
@@ -53,6 +53,28 @@ describe("service enquiries", () => {
       const url = new URL(serviceEnquiry(s));
       expect(url.searchParams.get("subject")).toBe(`Enquiry: ${serviceTitle(s)}`);
     }
+  });
+});
+
+describe("service calls to action", () => {
+  it("have unique chip labels and anchors for the hero chips", () => {
+    expect(new Set(services.map((s) => s.chip)).size).toBe(services.length);
+    expect(new Set(services.map(serviceAnchor)).size).toBe(services.length);
+    for (const s of services) expect(serviceAnchor(s)).toMatch(/^service-[a-z0-9-]+$/);
+  });
+
+  it("book a call with the service pre-filled in the notes when booking is on", () => {
+    for (const s of services) {
+      const cta = serviceCta(s, "https://cal.com/x/30min");
+      expect(cta.external).toBe(true);
+      const notes = new URL(cta.href).searchParams.get("notes") ?? "";
+      expect(notes).toContain(`Interested in: ${serviceTitle(s)}`);
+      expect(notes).toContain("What we're trying to do:");
+    }
+  });
+
+  it("fall back to the enquiry email when booking is off", () => {
+    for (const s of services) expect(serviceCta(s, null)).toEqual({ href: serviceEnquiry(s), external: false, label: "Enquire" });
   });
 });
 

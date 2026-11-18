@@ -40,7 +40,9 @@ describe("works data", () => {
 
   it.each(works.map((w) => [w.slug, w] as const))("%s references images that exist", (_slug, w) => {
     if (w.icon) expect(existsSync(publicFile(w.icon)), w.icon).toBe(true);
-    if (w.visual?.kind === "screen") expect(existsSync(publicFile(w.visual.src)), w.visual.src).toBe(true);
+    if (w.visual?.kind === "screen") {
+      for (const img of [w.visual, ...(w.visual.more ?? [])]) expect(existsSync(publicFile(img.src)), img.src).toBe(true);
+    }
     if (w.visual?.kind === "family") {
       for (const c of w.visual.characters) expect(existsSync(publicFile(c.src)), c.src).toBe(true);
     }
