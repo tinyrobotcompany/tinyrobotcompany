@@ -62,7 +62,8 @@ Site facts live in data files, so each one is changed in a single place:
 
 | File | Contents |
 | --- | --- |
-| [`app/data/site.ts`](app/data/site.ts) | Email, day rate, location, next start date, language wording, socials, legal identity, capacity, and the switches for online services |
+| [`app/data/build-levels.ts`](app/data/build-levels.ts) | Build rates by complexity (simple, medium, complex), with examples of each level and the quoting rule |
+| [`app/data/site.ts`](app/data/site.ts) | Email, advisory day rate, location, next start date, language wording, socials, legal identity, capacity, and the switches for online services |
 | [`app/data/services.ts`](app/data/services.ts) | The services, what each includes, and prices (derived from the day rate) |
 | [`app/data/track-record.ts`](app/data/track-record.ts) | Career figures and client case studies (the section appears once a case study is added) |
 | [`app/data/works.ts`](app/data/works.ts) | The bench projects: pages, repos, status lines and data notes. `hidden: true` takes one off the site (Pico Pie, for now) |

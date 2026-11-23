@@ -35,6 +35,11 @@ describe("confidentiality", () => {
 });
 
 describe("stale or inconsistent facts", () => {
+  it("never leads with the day rate (fixed prices first)", () => {
+    expect(occurrences(/DAY_RATE_EUR\)\}\s*<span className=\{styles\.unit\}>\/ day/)).toEqual([]);
+    expect(occurrences(/from \{euro\(DAY_RATE_EUR\)\} \/ day/)).toEqual([]);
+  });
+
   it("has no leftover placeholder projects", () => {
     expect(occurrences(/Signal Sketchbook|Small Voice|Servo Loom|Retina Kit/)).toEqual([]);
   });

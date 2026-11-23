@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { Mascot } from "./components/Mascot";
@@ -8,7 +9,8 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { AppIcon, CharacterPlate, FlowStrip } from "./components/WorkVisuals";
 import { capacity, DAY_RATE_EUR, EMAIL, euro, introCallLink, site, socials } from "./data/site";
 import { IntroCallLink } from "./components/IntroCallLink";
-import { priceLabel, serviceAnchor, serviceCta, services, serviceTitle, type Service } from "./data/services";
+import { priceLabel, serviceAnchor, serviceCta, services, serviceTitle, starters, tierValue, type Service } from "./data/services";
+import { BUILD_FROM_EUR, BUILD_MOBILE_NOTE, BUILD_PRICING_RULE, BUILD_RANGE_NOTE, BUILD_TO_EUR, buildLevels, levelRate } from "./data/build-levels";
 import { caseStudies, FORMER_EMPLOYER, stats, testimonials } from "./data/track-record";
 import { sectorExamples } from "./data/sectors";
 import { fullName, getWork, works, type Work } from "./data/works";
@@ -61,6 +63,16 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       <ul className={styles.includes}>
         {service.includes.map((item) => <li key={item}>{item}</li>)}
       </ul>
+      {service.tiers && (
+        <dl className={styles.tiers}>
+          {service.tiers.map((t) => (
+            <div key={t.label} className={styles.tier}>
+              <dt>{t.label}</dt>
+              <dd>{tierValue(t)}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
       <IntroCallLink className={styles.serviceFoot} link={cta}>
         <span className={styles.price}>{priceLabel(service.price)}</span>
         <span className={styles.enquire}>{cta.external ? "Book a call" : cta.label} <Arrow /></span>
@@ -139,19 +151,42 @@ export default async function Home() {
             <aside className={`${styles.service} ${styles.rateCard}`} aria-label="Rates and terms">
               <div className={styles.cardLabel}>
                 <span>Rate card</span>
-                <span><em>Fixed price or day rate</em></span>
+                <span><em>Priced by the work</em></span>
               </div>
               <div className={styles.statValue}>
-                {euro(DAY_RATE_EUR)}<span className={styles.unit}>/ day</span>
+                <span className={styles.unitLead}>from</span>{euro(BUILD_FROM_EUR)}<span className={styles.unit}>/ day</span>
               </div>
+              <dl className={`${styles.rateTerms} ${styles.rateStarters}`}>
+                <dt>Building</dt>
+                <dd>
+                  <a className={styles.rateLink} href="#build-levels">
+                    {euro(BUILD_FROM_EUR)}–{euro(BUILD_TO_EUR).replace("€", "")} / day, by complexity
+                  </a>
+                </dd>
+                <dt>Advice</dt> <dd>{euro(DAY_RATE_EUR)} / day: strategy, reviews, training</dd>
+              </dl>
+              <dl className={`${styles.rateTerms} ${styles.rateStarters}`}>
+                {starters.map((x) => (
+                  <Fragment key={x.label}>
+                    <dt>{x.label}</dt>
+                    <dd>
+                      <a className={styles.rateLink} href={`#${x.anchor}`}>
+                        {x.detail} · {x.from ? "from " : ""}{euro(x.eur)}
+                      </a>
+                    </dd>
+                  </Fragment>
+                ))}
+              </dl>
               <dl className={styles.rateTerms}>
                 <dt>VAT</dt>       <dd>Prices exclude VAT</dd>
                 <dt>Base</dt>      <dd>{site.location} · {site.travel.toLowerCase()}</dd>
                 <dt>Languages</dt> <dd>{site.languageLine}</dd>
                 <dt>Cloud</dt>     <dd>Cloud-agnostic: AWS, Azure or Google Cloud</dd>
-                <dt>Industries</dt><dd>All</dd>
                 <dt>Capacity</dt>  <dd>Max. {capacity.maxClients} clients at a time</dd>
               </dl>
+              <a className={styles.rateProof} href="#record">
+                Track record: {stats[0].value}{stats[0].unit} delivered, {stats[1].value} saved <RightArrow />
+              </a>
               <IntroCallLink className={`${styles.btn} ${styles.btnPrimary} ${styles.rateCta}`}>
                 Start with a free 30-min call <RightArrow />
               </IntroCallLink>
@@ -162,6 +197,37 @@ export default async function Home() {
             <span className={styles.capacityK}>Capacity</span>
             At most {capacity.maxClients} clients at a time, so each one gets real attention. {capacity.partners}{" "}
             {capacity.subcontracting}
+          </p>
+
+          <div className={`${styles.sectorsHead} ${styles.anchorTarget}`} id="build-levels">
+            <h3 className={styles.sectorsTitle}>How building is <span className={styles.serif}>priced</span></h3>
+            <p className={styles.sectorsNote}>
+              Advice and training: {euro(DAY_RATE_EUR)} / day. Building: by complexity, and AI is what moves it up.
+            </p>
+          </div>
+          <div className={styles.sectors}>
+            {buildLevels.map((l, i) => (
+              <article key={l.id} className={styles.service}>
+                <div className={styles.cardLabel}>
+                  <span>{String(i + 1).padStart(2, "0")} · <em>Build level</em></span>
+                </div>
+                <h4 className={styles.cardTitle}>
+                  {l.name} <span className={styles.serif}>{levelRate(l)}</span>
+                </h4>
+                <p className={styles.cardDesc}>{l.summary}</p>
+                <ul className={styles.includes}>
+                  {l.examples.map((x) => <li key={x}>{x}</li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <p className={styles.capacity}>
+            <span className={styles.capacityK}>Quotes</span>
+            {BUILD_PRICING_RULE} {BUILD_RANGE_NOTE}
+          </p>
+          <p className={styles.capacity}>
+            <span className={styles.capacityK}>Mobile</span>
+            {BUILD_MOBILE_NOTE}
           </p>
 
           <div className={styles.sectorsHead}>

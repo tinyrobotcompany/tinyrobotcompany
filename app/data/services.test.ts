@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DAY_RATE_EUR } from "./site";
-import { priceLabel, serviceAnchor, serviceCta, serviceEnquiry, serviceTitle, services } from "./services";
+import { priceLabel, serviceAnchor, serviceCta, serviceEnquiry, serviceTitle, services, starters, tierValue } from "./services";
 
 /** Normalise the narrow no-break spaces Intl may emit. */
 const plain = (s: string) => s.replace(/\s/g, " ");
@@ -35,15 +35,90 @@ describe("priceLabel", () => {
     expect(plain(priceLabel({ kind: "monthly", daysPerMonth: 2 }))).toBe("From €3,000 / month");
   });
 
-  it("says when a price is quoted per project", () => {
-    expect(priceLabel({ kind: "quote" })).toBe("Priced per project");
+  it("formats fixed prices, build rates and prototypes", () => {
+    expect(plain(priceLabel({ kind: "fixed", eur: 3500 }))).toBe("€3,500");
+    expect(plain(priceLabel({ kind: "fixed", eur: 3500, from: true }))).toBe("From €3,500");
+    expect(plain(priceLabel({ kind: "build" }))).toBe("From €600 / day");
+    expect(priceLabel({ kind: "quote" })).toBe("Fixed price");
   });
 
-  it("matches the advertised packages", () => {
+  it("matches the advertised prices", () => {
     const byId = Object.fromEntries(services.map((s) => [s.id, plain(priceLabel(s.price))]));
-    expect(byId["strategy"]).toBe("From €7,500");
-    expect(byId["architecture-review"]).toBe("From €6,000");
-    expect(byId["prototype-sprint"]).toBe("From €24,000");
+    expect(byId).toEqual({
+      strategy: "From €3,000",
+      "architecture-review": "From €6,000",
+      "prototype-sprint": "From €6,400",
+      "design-build": "From €600 / day",
+      "fractional-lead": "From €3,000 / month",
+      education: "From €900",
+      hardware: "Fixed price",
+    });
+  });
+});
+
+describe("price tiers", () => {
+  const tiered = services.filter((s) => s.tiers);
+
+  it("list the options on each card", () => {
+    const rows = Object.fromEntries(tiered.map((s) => [s.id, s.tiers!.map((t) => `${t.label}: ${plain(tierValue(t))}`)]));
+    expect(rows).toEqual({
+      strategy: ["Starter diagnostic · 2 days: €3,000", "Full map · 5 days: €7,500"],
+      "prototype-sprint": ["2 weeks · 8 days: €6,400–9,600", "4 weeks · 16 days: €12,800–19,200"],
+      "design-build": ["Simple: €600 / day", "Medium: €800–900 / day", "Complex (AI): €1,000–1,200 / day"],
+      "fractional-lead": ["2 days a month: €3,000", "4 days a month · 3-month minimum: €5,500"],
+      education: ["Half day: €900", "Full day: €1,500"],
+    });
+  });
+
+  it("are cheapest first, and a 'from' price is the cheapest tier", () => {
+    for (const s of tiered) {
+      const eur = s.tiers!.flatMap((t) => (t.eur === undefined ? [] : [t.eur]));
+      expect(eur, s.id).toEqual([...eur].sort((a, b) => a - b));
+      if (eur.length) expect(plain(priceLabel(s.price)), s.id).toMatch(new RegExp(`^From ${plain(tierValue({ label: "", eur: eur[0] }))}( / month)?$`));
+    }
+  });
+
+  it("each have a price or a text, and ranges go up", () => {
+    for (const s of tiered)
+      for (const t of s.tiers!) {
+        expect((t.eur !== undefined) !== (t.text !== undefined), `${s.id} ${t.label}`).toBe(true);
+        if (t.eurMax !== undefined) expect(t.eurMax).toBeGreaterThan(t.eur!);
+      }
+  });
+
+  it("price advice and training at the advisory day rate", () => {
+    const tier = (id: string, label: string) => services.find((s) => s.id === id)!.tiers!.find((t) => t.label === label)!.eur;
+    expect(tier("education", "Full day")).toBe(DAY_RATE_EUR);
+    expect(tier("strategy", "Starter diagnostic · 2 days")).toBe(2 * DAY_RATE_EUR);
+    expect(tier("strategy", "Full map · 5 days")).toBe(5 * DAY_RATE_EUR);
+  });
+});
+
+describe("rate card", () => {
+  it("lists fixed-price ways to start", () => {
+    expect(starters.map((x) => `${x.label}: ${x.detail} · ${x.from ? "from " : ""}${plain(tierValue({ label: "", eur: x.eur }))}`)).toEqual([
+      "Workshop: Half day · €900",
+      "Diagnostic: 2 days · €3,000",
+      "Prototype: 2 weeks · from €6,400",
+    ]);
+  });
+
+  it("links each starter to its service card", () => {
+    const anchors = new Set(services.map(serviceAnchor));
+    for (const x of starters) expect(anchors.has(x.anchor), x.anchor).toBe(true);
+  });
+
+  it("keeps the diagnostic small and puts a minimum on the discounted retainer", () => {
+    const strategy = services.find((s) => s.id === "strategy")!;
+    expect(strategy.includes).toContain("Starter: one half-day workshop, three quick wins, a 5-page plan");
+    const fractional = services.find((s) => s.id === "fractional-lead")!;
+    expect(fractional.tiers!.at(-1)!.label).toMatch(/3-month minimum/);
+  });
+
+  it("quotes the right track-record figures in the proof line", async () => {
+    const { stats } = await import("./track-record");
+    expect(stats[0].label).toMatch(/value delivered/i);
+    expect(stats[1].label).toMatch(/^Savings/);
   });
 });
 

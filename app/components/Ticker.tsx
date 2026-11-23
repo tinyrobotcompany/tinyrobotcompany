@@ -1,5 +1,6 @@
 import styles from "./ticker.module.css";
 import { DAY_RATE_EUR, euro, site } from "../data/site";
+import { BUILD_FROM_EUR } from "../data/build-levels";
 
 const ITEMS: Array<React.ReactNode> = [
   <span key="live" className="inline-flex items-center gap-2">
@@ -16,7 +17,7 @@ const ITEMS: Array<React.ReactNode> = [
     On the bench: <em>Tempo · Waveform One</em>
   </span>,
   <span key="offer">
-    Strategy · Architecture · Build · AI Education: <em>from {euro(DAY_RATE_EUR)} / day</em>
+    Advice &amp; training: <em>{euro(DAY_RATE_EUR)} / day</em> · Building: <em>from {euro(BUILD_FROM_EUR)} / day, by complexity</em>
   </span>,
   <span key="loc">
     Location: <em>{site.location} ↔ Anywhere</em>

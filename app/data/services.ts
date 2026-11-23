@@ -1,14 +1,32 @@
 /* ------------------------------------------------------------------
-   Services — what a company can hire Tiny Robot Company for. Prices are
-   derived from DAY_RATE_EUR so a rate change updates every package.
+   Services — what a company can hire Tiny Robot Company for. Advice and
+   training derive from DAY_RATE_EUR; building derives from the build
+   levels (build-levels.ts), priced by complexity.
 ------------------------------------------------------------------ */
 import { booking, CONTACT_FIELDS, DAY_RATE_EUR, euro, introCallLink, mailto, type IntroCall } from "./site";
+import { BUILD_FROM_EUR, buildLevels, getLevel, levelRate } from "./build-levels";
+
+/** Half-day workshop: 60% of a day, since the preparation is the same. */
+const HALF_DAY_EUR = 900;
+
+/** Prototype sprints are AI work: priced from the bottom of medium to the top of complex. */
+const SPRINT_RATE = { min: getLevel("medium").min, max: getLevel("complex").max };
+const sprint = (weeks: number, days: number) => ({
+  label: `${weeks} weeks · ${days} days`,
+  eur: days * SPRINT_RATE.min,
+  eurMax: days * SPRINT_RATE.max,
+});
 
 export type Price =
   | { kind: "package"; days: number }
+  | { kind: "fixed"; eur: number; from?: boolean }
   | { kind: "day" }
   | { kind: "monthly"; daysPerMonth: number }
+  | { kind: "build" }
   | { kind: "quote" };
+
+/** One option on a card, e.g. "Half day · €900". Give a price in euros (a range with eurMax), or a short text. */
+export type Tier = { label: string; eur?: number; eurMax?: number; text?: string };
 
 export type Service = {
   id: string;
@@ -23,6 +41,8 @@ export type Service = {
   includes: string[];
   format: string;
   price: Price;
+  /** Priced options shown on the card, cheapest first. */
+  tiers?: Tier[];
 };
 
 export const services: Service[] = [
@@ -33,22 +53,27 @@ export const services: Service[] = [
     title: { lead: "AI strategy &", serif: "opportunity map" },
     audience: "leadership teams in any industry",
     summary:
-      "Find where AI actually pays in your business, and where it doesn't, before anyone writes code.",
+      "Find where AI actually pays in your business, and where it doesn't, before anyone writes code. Start with a short diagnostic, or go straight to the full map.",
     includes: [
       "Interviews and process walk-throughs with your teams",
       "Ranked use cases, each with a business case and risks",
       "GDPR and EU AI Act exposure, build vs. buy",
       "A 90-day roadmap you can act on",
+      "Starter: one half-day workshop, three quick wins, a 5-page plan",
     ],
-    format: "5 days over 2–3 weeks",
-    price: { kind: "package", days: 5 },
+    format: "2 or 5 days",
+    price: { kind: "fixed", eur: 2 * DAY_RATE_EUR, from: true },
+    tiers: [
+      { label: "Starter diagnostic · 2 days", eur: 2 * DAY_RATE_EUR },
+      { label: "Full map · 5 days", eur: 5 * DAY_RATE_EUR },
+    ],
   },
   {
     id: "architecture-review",
     chip: "Architecture review",
     kind: "Consult",
     title: { lead: "AI architecture", serif: "review" },
-    audience: "CTOs, heads of AI, and investors doing due diligence",
+    audience: "CTOs of software companies and scale-ups, and investors doing due diligence",
     summary:
       "An independent review of an LLM, agent or ML system: is it secure, affordable, and ready for production?",
     includes: [
@@ -67,15 +92,16 @@ export const services: Service[] = [
     title: { lead: "Prototype", serif: "sprint" },
     audience: "teams with a well-defined idea to prove",
     summary:
-      "From brief to a working AI prototype in your environment in four weeks, with code you own.",
+      "From brief to a working AI prototype in your environment in two to four weeks, with code you own. Priced by how complex the AI is.",
     includes: [
       "Scoping workshop and success criteria",
       "Working prototype on your data and cloud",
       "Demo to stakeholders, handover and docs",
       "A clear go / no-go and production plan",
     ],
-    format: "4 weeks",
-    price: { kind: "package", days: 16 },
+    format: "2 or 4 weeks",
+    price: { kind: "fixed", eur: sprint(2, 8).eur, from: true },
+    tiers: [sprint(2, 8), sprint(4, 16)],
   },
   {
     id: "design-build",
@@ -84,15 +110,17 @@ export const services: Service[] = [
     title: { lead: "Design &", serif: "build" },
     audience: "companies that need it built, not just advised",
     summary:
-      "Hands-on design and coding of agentic AI: multi-agent systems that plan, call tools and act across your workflows, with the guardrails, evals and observability to run them in production.",
+      "Hands-on design and coding, from a simple internal tool to agentic AI that plans, calls tools and acts across your workflows. Priced by complexity, so simple work never costs AI rates.",
     includes: [
+      "Web and mobile apps (iOS and Android), internal tools and integrations",
       "Multi-agent orchestration, tool calling and MCP integrations",
       "Python, .NET, Next.js and SwiftUI",
       "Cloud-agnostic: AWS, Azure or Google Cloud, with infrastructure as code",
       "Evals, tests, CI/CD and monitoring from day one",
     ],
-    format: "Scoped per project",
-    price: { kind: "day" },
+    format: "Fixed-price phases",
+    price: { kind: "build" },
+    tiers: buildLevels.map((l) => ({ label: l.id === "complex" ? `${l.name} (AI)` : l.name, text: levelRate(l) })),
   },
   {
     id: "fractional-lead",
@@ -108,8 +136,12 @@ export const services: Service[] = [
       "Hiring, team set-up and vendor selection",
       "Governance and responsible-AI practice",
     ],
-    format: "From 2 days a month",
+    format: "2 or 4 days a month",
     price: { kind: "monthly", daysPerMonth: 2 },
+    tiers: [
+      { label: "2 days a month", eur: 3000 },
+      { label: "4 days a month · 3-month minimum", eur: 5500 },
+    ],
   },
   {
     id: "education",
@@ -126,7 +158,11 @@ export const services: Service[] = [
       "Talks and guest lectures, in English or French",
     ],
     format: "Half-day to multi-day",
-    price: { kind: "day" },
+    price: { kind: "fixed", eur: HALF_DAY_EUR, from: true },
+    tiers: [
+      { label: "Half day", eur: HALF_DAY_EUR },
+      { label: "Full day", eur: DAY_RATE_EUR },
+    ],
   },
   {
     id: "hardware",
@@ -142,7 +178,7 @@ export const services: Service[] = [
       "Interactive installations and exhibits",
       "3D-printed enclosures and small-batch builds",
     ],
-    format: "Scoped per project",
+    format: "Priced per prototype",
     price: { kind: "quote" },
   },
 ];
@@ -151,14 +187,42 @@ export function priceLabel(price: Price): string {
   switch (price.kind) {
     case "package":
       return `From ${euro(price.days * DAY_RATE_EUR)}`;
+    case "fixed":
+      return `${price.from ? "From " : ""}${euro(price.eur)}`;
     case "day":
       return `${euro(DAY_RATE_EUR)} / day`;
     case "monthly":
       return `From ${euro(price.daysPerMonth * DAY_RATE_EUR)} / month`;
+    case "build":
+      return `From ${euro(BUILD_FROM_EUR)} / day`;
     case "quote":
-      return "Priced per project";
+      return "Fixed price";
   }
 }
+
+/** The fixed-price ways to start, shown first on the rate card. Each points at a tier above. */
+const STARTERS = [
+  { label: "Workshop", detail: "Half day", service: "education", tier: "Half day" },
+  { label: "Diagnostic", detail: "2 days", service: "strategy", tier: "Starter diagnostic · 2 days" },
+  { label: "Prototype", detail: "2 weeks", service: "prototype-sprint", tier: "2 weeks · 8 days" },
+] as const;
+
+export type Starter = { label: string; detail: string; eur: number; from: boolean; anchor: string };
+
+export const starters: Starter[] = STARTERS.map((x) => {
+  const service = services.find((s) => s.id === x.service);
+  const tier = service?.tiers?.find((t) => t.label === x.tier);
+  if (!service || tier?.eur === undefined) throw new Error(`Rate card starter not found: ${x.service} / ${x.tier}`);
+  return { label: x.label, detail: x.detail, eur: tier.eur, from: tier.eurMax !== undefined, anchor: `service-${service.id}` };
+});
+
+/** A tier's price as shown on the card. */
+export const tierValue = (t: Tier) =>
+  t.eur === undefined
+    ? (t.text ?? "")
+    : t.eurMax === undefined
+      ? euro(t.eur)
+      : `${euro(t.eur)}–${euro(t.eurMax).replace("€", "")}`;
 
 export const serviceTitle = (s: Service) => (s.title.serif ? `${s.title.lead} ${s.title.serif}` : s.title.lead);
 
