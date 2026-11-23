@@ -3,6 +3,15 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## Unreleased
+
+Pricing by the work.
+
+- **Build rates by complexity:** simple €600 / day, medium €800–900, complex AI €1,000–1,200; advice and training stay at €1,500 / day
+- **How building is priced:** a new section defining each level with examples, the quoting rule, and how iOS and Android apps are priced
+- **Rate card:** leads with "from €600 / day", the advice rate and fixed-price ways to start; links to the track record
+- **Services:** 2-day diagnostic (€3,000), 2- and 4-week prototype sprints priced by complexity, training from €900 a half day, a 3-month minimum on the 4-day fractional tier
+
 ## v1.0.0 · 2026-11-18
 
 The full launch: booking, sign-ups and the reworked offer.

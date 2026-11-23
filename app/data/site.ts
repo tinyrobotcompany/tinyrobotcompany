@@ -6,7 +6,7 @@
 
 export const EMAIL = "hello@tinyrobotcompany.io";
 
-/** Consulting day rate in euros, excl. VAT. Package prices derive from it. */
+/** Consulting day rate in euros, excl. VAT. Packages priced in days derive from it; it also prices changes to fixed-price work. */
 export const DAY_RATE_EUR = 1500;
 
 export const site = {
