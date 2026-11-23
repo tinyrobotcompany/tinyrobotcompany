@@ -3,7 +3,7 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
-## Unreleased
+## v1.1.0 · 2026-11-23
 
 Pricing by the work.
 
