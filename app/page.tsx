@@ -110,7 +110,7 @@ export default async function Home() {
             <p className={styles.heroLede}>
               Tiny Robot Company is the independent AI studio of <span className={styles.hl}>Dr Simon Holmes</span>.
               I help companies work out where AI pays, then <span className={styles.hl}>design, build and run it</span>{" "}
-              with them, from strategy to production code, on whichever cloud you already use. My own apps and
+              with them and <span className={styles.hl}>get their teams using it</span>, from strategy to production code, on whichever cloud you already use. My own apps and
               devices are where I test my ideas in public.
             </p>
 

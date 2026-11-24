@@ -11,7 +11,7 @@ describe("services data", () => {
   });
 
   it("covers consulting, building, leadership, teaching and hardware", () => {
-    expect(new Set(services.map((s) => s.kind))).toEqual(new Set(["Consult", "Build", "Lead", "Teach", "Make"]));
+    expect(new Set(services.map((s) => s.kind))).toEqual(new Set(["Consult", "Build", "Lead", "Adopt", "Make"]));
   });
 
   it.each(services.map((s) => [s.id, s] as const))("%s is complete", (_id, s) => {
@@ -50,7 +50,7 @@ describe("priceLabel", () => {
       "prototype-sprint": "From €6,400",
       "design-build": "From €600 / day",
       "fractional-lead": "From €3,000 / month",
-      education: "From €900",
+      adoption: "From €900",
       hardware: "Fixed price",
     });
   });
@@ -66,7 +66,7 @@ describe("price tiers", () => {
       "prototype-sprint": ["2 weeks · 8 days: €6,400–9,600", "4 weeks · 16 days: €12,800–19,200"],
       "design-build": ["Simple: €600 / day", "Medium: €800–900 / day", "Complex (AI): €1,000–1,200 / day"],
       "fractional-lead": ["2 days a month: €3,000", "4 days a month · 3-month minimum: €5,500"],
-      education: ["Half day: €900", "Full day: €1,500"],
+      adoption: ["Half-day workshop: €900", "Full day: €1,500", "Adoption programme · 6 days: €9,000"],
     });
   });
 
@@ -88,9 +88,25 @@ describe("price tiers", () => {
 
   it("price advice and training at the advisory day rate", () => {
     const tier = (id: string, label: string) => services.find((s) => s.id === id)!.tiers!.find((t) => t.label === label)!.eur;
-    expect(tier("education", "Full day")).toBe(DAY_RATE_EUR);
+    expect(tier("adoption", "Full day")).toBe(DAY_RATE_EUR);
+    expect(tier("adoption", "Adoption programme · 6 days")).toBe(6 * DAY_RATE_EUR);
     expect(tier("strategy", "Starter diagnostic · 2 days")).toBe(2 * DAY_RATE_EUR);
     expect(tier("strategy", "Full map · 5 days")).toBe(5 * DAY_RATE_EUR);
+  });
+});
+
+describe("AI adoption", () => {
+  it("is offered as its own service, linked from the hero", () => {
+    const adoption = services.find((s) => s.id === "adoption")!;
+    expect(adoption.chip).toBe("AI adoption");
+    expect(serviceTitle(adoption)).toBe("AI adoption & training");
+    expect(adoption.includes.join(" ")).toMatch(/rollout/);
+    expect(adoption.includes.join(" ")).toMatch(/policy/);
+    expect(adoption.summary).toMatch(/EU AI Act/);
+  });
+
+  it("is led by the fractional head of AI too", () => {
+    expect(services.find((s) => s.id === "fractional-lead")!.includes).toContain("Leads AI adoption across the company");
   });
 });
 
