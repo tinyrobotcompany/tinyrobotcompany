@@ -9,6 +9,9 @@ import { BUILD_FROM_EUR, buildLevels, getLevel, levelRate } from "./build-levels
 /** Half-day workshop: 60% of a day, since the preparation is the same. */
 const HALF_DAY_EUR = 900;
 
+/** Adoption programme: rollout plan, policy, 3 team workshops and a 90-day review, at the advisory rate. */
+const ADOPTION_DAYS = 6;
+
 /** Prototype sprints are AI work: priced from the bottom of medium to the top of complex. */
 const SPRINT_RATE = { min: getLevel("medium").min, max: getLevel("complex").max };
 const sprint = (weeks: number, days: number) => ({
@@ -31,7 +34,7 @@ export type Tier = { label: string; eur?: number; eurMax?: number; text?: string
 export type Service = {
   id: string;
   /** Short category shown on the card label. */
-  kind: "Consult" | "Build" | "Lead" | "Teach" | "Make";
+  kind: "Consult" | "Build" | "Lead" | "Adopt" | "Make";
   title: { lead: string; serif?: string };
   /** Short label for the hero chips, which jump to this card. */
   chip: string;
@@ -135,6 +138,7 @@ export const services: Service[] = [
       "Engineering standards and platform choices",
       "Hiring, team set-up and vendor selection",
       "Governance and responsible-AI practice",
+      "Leads AI adoption across the company",
     ],
     format: "2 or 4 days a month",
     price: { kind: "monthly", daysPerMonth: 2 },
@@ -144,24 +148,26 @@ export const services: Service[] = [
     ],
   },
   {
-    id: "education",
-    chip: "Training",
-    kind: "Teach",
-    title: { lead: "AI education &", serif: "training" },
-    audience: "executives, engineering teams, schools and universities",
+    id: "adoption",
+    chip: "AI adoption",
+    kind: "Adopt",
+    title: { lead: "AI adoption &", serif: "training" },
+    audience: "companies that want every team using AI well, safely",
     summary:
-      "Clear, practical teaching, from a board-level briefing to hands-on workshops for the engineers doing the work.",
+      "Get your whole company using AI: pick the right tools, set the rules, train each team on its own work, and check what changes. The EU AI Act now requires AI-literate staff; this helps you meet that.",
     includes: [
-      "Executive briefings: what AI can and can't do for you",
-      "Workshops: building with LLMs and agents, safely",
-      "AI-assisted engineering with coding agents",
-      "Talks and guest lectures, in English or French",
+      "Tool choice and rollout plan (Microsoft Copilot, ChatGPT, Claude…)",
+      "An AI use policy covering GDPR and the EU AI Act",
+      "Hands-on training for each team, from executives to engineers",
+      "Champions in each team, and usage measured after 90 days",
+      "Talks and guest lectures for schools and universities, in English or French",
     ],
-    format: "Half-day to multi-day",
+    format: "Up to 3 months",
     price: { kind: "fixed", eur: HALF_DAY_EUR, from: true },
     tiers: [
-      { label: "Half day", eur: HALF_DAY_EUR },
+      { label: "Half-day workshop", eur: HALF_DAY_EUR },
       { label: "Full day", eur: DAY_RATE_EUR },
+      { label: "Adoption programme · 6 days", eur: ADOPTION_DAYS * DAY_RATE_EUR },
     ],
   },
   {
@@ -202,7 +208,7 @@ export function priceLabel(price: Price): string {
 
 /** The fixed-price ways to start, shown first on the rate card. Each points at a tier above. */
 const STARTERS = [
-  { label: "Workshop", detail: "Half day", service: "education", tier: "Half day" },
+  { label: "Workshop", detail: "Half day", service: "adoption", tier: "Half-day workshop" },
   { label: "Diagnostic", detail: "2 days", service: "strategy", tier: "Starter diagnostic · 2 days" },
   { label: "Prototype", detail: "2 weeks", service: "prototype-sprint", tier: "2 weeks · 8 days" },
 ] as const;

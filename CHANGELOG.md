@@ -3,6 +3,16 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## v1.2.0 · 2026-11-24
+
+AI adoption as a service.
+
+- **AI adoption & training:** the training card becomes a full adoption offer: tool choice and rollout, an AI use policy (GDPR, EU AI Act), training for each team, champions and usage measured after 90 days
+- **Adoption programme:** 6 days over 3 months for €9,000, next to the half-day workshop (€900) and full day (€1,500)
+- **EU AI Act:** the card explains the AI-literacy duty in force since February 2025
+- **Hero:** the intro now says "get their teams using it", and the chip reads "AI adoption"
+- **Fractional head of AI:** now also leads AI adoption across the company
+
 ## v1.1.0 · 2026-11-23
 
 Pricing by the work.
