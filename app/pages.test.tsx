@@ -5,6 +5,7 @@ import LegalNotice from "./legal/page";
 import Privacy from "./privacy/page";
 import Join from "./join/page";
 import BlogIndex from "./blog/page";
+import Newsletter from "./newsletter/page";
 import { posts } from "./data/blog";
 import { works } from "./data/works";
 import { legal, socials } from "./data/site";
@@ -84,5 +85,23 @@ describe("blog", () => {
   it("is linked from the header and footer", () => {
     expect(renderToStaticMarkup(<SiteHeader />)).toMatch(/href="\/blog\/?"/);
     expect(renderToStaticMarkup(<SiteFooter />)).toMatch(/href="\/blog\/?"/);
+  });
+});
+
+describe("newsletter", () => {
+  it("has a sign-up page with consent and a privacy link", () => {
+    const html = renderToStaticMarkup(<Newsletter />);
+    expect(html).toContain('name="email"');
+    expect(html).toContain('name="consent"');
+    expect(html).toContain('href="/privacy/"');
+  });
+
+  it("is linked from the footer and offered on the blog", () => {
+    expect(renderToStaticMarkup(<SiteFooter />)).toMatch(/href="\/newsletter\/?"/);
+    expect(renderToStaticMarkup(<BlogIndex />)).toContain("The Weekly Brief");
+  });
+
+  it("is covered by the privacy policy", () => {
+    expect(renderToStaticMarkup(<Privacy />)).toContain("The Weekly Brief newsletter");
   });
 });

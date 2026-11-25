@@ -3,6 +3,15 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## v1.4.0 · 2026-11-25
+
+The Weekly Brief newsletter.
+
+- **Newsletter page:** `/newsletter/` with a sign-up form (first name optional, email, consent), sent to MailerLite with double opt-in
+- **Blog:** a Weekly Brief sign-up box under the blog index and every post, and a "by email" link next to the RSS feed
+- **Footer:** new "Newsletter" link
+- **Privacy policy:** a new section on the newsletter and MailerLite; last updated 25 November 2026
+
 ## v1.3.0 · 2026-11-25
 
 The Log is now the Blog.

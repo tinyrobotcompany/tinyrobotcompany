@@ -6,6 +6,7 @@ import styles from "./blog.module.css";
 import { Arrow, RightArrow } from "../components/Icons";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { Spotlight } from "../components/Spotlight";
+import { NewsletterBox } from "./NewsletterBox";
 import { formatDate, posts } from "../data/blog";
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { types: { "application/rss+xml": "/blog/feed.xml" } },
 };
 
-export default function LogIndex() {
+export default function BlogIndex() {
   return (
     <>
       <Spotlight />
@@ -59,8 +60,9 @@ export default function LogIndex() {
             ))}
           </ul>
           <p className={styles.feed}>
-            Follow along: <a href="/blog/feed.xml">RSS feed</a>
+            Follow along: <a href="/newsletter/">by email</a> or <a href="/blog/feed.xml">RSS feed</a>
           </p>
+          <NewsletterBox />
         </section>
       </main>
 

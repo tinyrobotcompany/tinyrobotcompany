@@ -7,6 +7,7 @@ import styles from "../blog.module.css";
 import { RightArrow } from "../../components/Icons";
 import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Spotlight } from "../../components/Spotlight";
+import { NewsletterBox } from "../NewsletterBox";
 import { formatDate, getPost, posts, type Block } from "../../data/blog";
 import { fullName, getWork } from "../../data/works";
 
@@ -75,6 +76,8 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
                 ))}
               </div>
             )}
+
+            <NewsletterBox />
           </div>
         </article>
       </main>
