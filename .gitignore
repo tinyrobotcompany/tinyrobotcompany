@@ -49,4 +49,5 @@ docs/pricing-analysis.md
 
 # weekly brief tools
 /tools/weekly-brief/.fonts/
+/tools/weekly-brief/out/
 /tools/weekly-brief/**/.*-parts/

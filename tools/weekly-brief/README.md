@@ -101,8 +101,8 @@ Issue numbers: #1 is Monday 7 December 2026; add one per week.
 
 ```bash
 bash tools/weekly-brief/setup.sh            # once per machine: Python packages + brand fonts
-python3 tools/weekly-brief/render_video.py tools/weekly-brief/storyboards/example-3-ai-terms.json /tmp/brief/test.mp4
+python3 tools/weekly-brief/render_video.py tools/weekly-brief/storyboards/example-3-ai-terms.json tools/weekly-brief/out/test.mp4
 ```
 
-Fonts are fetched into `tools/weekly-brief/.fonts/` (ignored by git). Pico Pie is drawn from
+Fonts are fetched into `tools/weekly-brief/.fonts/` and videos go to `tools/weekly-brief/out/`; both are ignored by git. Keep all work inside the project folder. Pico Pie is drawn from
 `public/brand/mascot.svg`, so a change to the mascot shows up in the videos too.
