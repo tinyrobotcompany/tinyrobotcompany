@@ -1,0 +1,163 @@
+{
+ "duration": 41.5,
+ "footer_at": 37.5,
+ "wink_at": 35.6,
+ "scenes": [
+  {
+   "start": 0,
+   "robot": "center",
+   "face": "happy"
+  },
+  {
+   "start": 4,
+   "robot": "top",
+   "face": "focus",
+   "nod": true
+  },
+  {
+   "start": 14,
+   "robot": "top",
+   "face": "focus",
+   "nod": true
+  },
+  {
+   "start": 24,
+   "robot": "top",
+   "face": "focus",
+   "nod": true
+  },
+  {
+   "start": 34,
+   "robot": "center",
+   "face": "happy"
+  }
+ ],
+ "texts": [
+  {
+   "text": "3 AI terms you'll\nhear everywhere.",
+   "style": "headline",
+   "y": 290,
+   "in": 0.5,
+   "out": 4
+  },
+  {
+   "text": "Here's what they actually mean.",
+   "style": "sub",
+   "y": 590,
+   "in": 1.6,
+   "out": 4
+  },
+  {
+   "text": "TERM 01 / 03",
+   "style": "label",
+   "y": 790,
+   "in": 4.4,
+   "out": 14
+  },
+  {
+   "text": "LLM",
+   "style": "term",
+   "y": 850,
+   "in": 4.7,
+   "out": 14
+  },
+  {
+   "text": "Large language model",
+   "style": "termsub",
+   "y": 1040,
+   "in": 5.3,
+   "out": 14
+  },
+  {
+   "text": "The engine behind AI chatbots.\nIt learned from huge amounts of text\nand predicts the likeliest next words.",
+   "style": "body",
+   "y": 1140,
+   "in": 6.4,
+   "out": 14
+  },
+  {
+   "text": "TERM 02 / 03",
+   "style": "label",
+   "y": 790,
+   "in": 14.4,
+   "out": 24
+  },
+  {
+   "text": "AI agent",
+   "style": "term",
+   "y": 850,
+   "in": 14.7,
+   "out": 24
+  },
+  {
+   "text": "AI that acts, not just answers",
+   "style": "termsub",
+   "y": 1040,
+   "in": 15.3,
+   "out": 24
+  },
+  {
+   "text": "It carries out tasks for you,\nstep by step: searching, booking,\nfilling in forms.",
+   "style": "body",
+   "y": 1140,
+   "in": 16.4,
+   "out": 24
+  },
+  {
+   "text": "TERM 03 / 03",
+   "style": "label",
+   "y": 790,
+   "in": 24.4,
+   "out": 34
+  },
+  {
+   "text": "Hallucination",
+   "style": "term",
+   "y": 850,
+   "in": 24.7,
+   "out": 34
+  },
+  {
+   "text": "When AI makes things up",
+   "style": "termsub",
+   "y": 1040,
+   "in": 25.3,
+   "out": 34
+  },
+  {
+   "text": "An AI can state something false\nwith total confidence.",
+   "style": "body",
+   "y": 1140,
+   "in": 26.4,
+   "out": 34
+  },
+  {
+   "text": "Always double-check\nthe facts that matter.",
+   "style": "tip",
+   "y": 1340,
+   "in": 29.5,
+   "out": 34
+  },
+  {
+   "text": "Starting Monday\n7 December",
+   "style": "headline",
+   "y": 270,
+   "in": 34.9,
+   "out": 41.5
+  },
+  {
+   "text": "your weekly AI & robotics brief.",
+   "style": "sub",
+   "y": 545,
+   "in": 35.7,
+   "out": 41.5
+  },
+  {
+   "text": "*Follow* so you don't miss it.",
+   "style": "cta",
+   "y": 625,
+   "in": 36.7,
+   "out": 41.5
+  }
+ ]
+}

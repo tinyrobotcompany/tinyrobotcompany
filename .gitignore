@@ -46,3 +46,7 @@ next-env.d.ts
 
 # private working notes (never commit)
 docs/pricing-analysis.md
+
+# weekly brief tools
+/tools/weekly-brief/.fonts/
+/tools/weekly-brief/**/.*-parts/
