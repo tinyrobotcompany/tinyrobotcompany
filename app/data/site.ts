@@ -51,7 +51,7 @@ export const legal = {
     name: "Microsoft Ireland Operations Limited (Azure Static Web Apps)",
     address: "One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, D18 P521, Ireland",
   },
-  lastUpdated: "2026-11-16",
+  lastUpdated: "2026-11-25",
 };
 
 export const euro = (n: number) =>
@@ -92,6 +92,20 @@ export const signupForm = {
   endpoint: "https://api.web3forms.com/submit",
   accessKey: "5277ccd3-e45f-426f-b9b9-39070f240351" as string | null,
   provider: "Web3Forms",
+};
+
+/**
+ * Weekly Brief newsletter. Sign-ups go straight to a MailerLite embedded
+ * form (account + form IDs are public by design: they only allow
+ * subscribing). Double opt-in is on, so nobody is added without
+ * confirming by email.
+ */
+export const newsletter = {
+  provider: "MailerLite",
+  accountId: "2824102",
+  formId: "205123146689284039",
+  name: "The Weekly Brief",
+  cadence: "every Monday",
 };
 
 export type IntroCall = { href: string; external: boolean; label: string };

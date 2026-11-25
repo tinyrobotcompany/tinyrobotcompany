@@ -46,6 +46,7 @@ export function SiteFooter() {
       <div>© <em>{site.name}</em> · 2026 — Assembled by hand in {site.location}.</div>
       <nav className={styles.footSide} aria-label="Site">
         <Link href="/blog/">Blog</Link>
+        <Link href="/newsletter/">Newsletter</Link>
         <Link href="/legal">Legal notice</Link>
         <Link href="/privacy">Privacy</Link>
         <a href="#top">Back to top ↑</a>

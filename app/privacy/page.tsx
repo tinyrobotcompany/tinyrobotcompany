@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage } from "../components/LegalPage";
-import { booking, legal, signupForm, site } from "../data/site";
+import { booking, legal, newsletter, signupForm, site } from "../data/site";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -16,7 +16,7 @@ export default function Privacy() {
       notice={
         <>
           Short version: this site sets no cookies, runs no analytics and loads no third-party trackers. If you
-          email me or join a waitlist, I use your details for that and nothing else.
+          email me, join a waitlist or subscribe to the newsletter, I use your details for that and nothing else.
         </>
       }
     >
@@ -70,6 +70,16 @@ export default function Privacy() {
         which you can withdraw at any time by replying &ldquo;unsubscribe&rdquo;. Beta testers&rsquo; email
         addresses are shared with Apple only to send the TestFlight invitation. Sign-ups are deleted once you
         unsubscribe, or 24 months after the last email I sent you.
+      </p>
+
+      <h2>The Weekly Brief newsletter</h2>
+      <p>
+        The <a href="/newsletter/">newsletter form</a> collects your email address and, optionally, your first
+        name. They are stored by {newsletter.provider} (an EU-based email service), which sends you a confirmation
+        link first: you are only subscribed once you click it. I use your details only to send the newsletter,
+        based on your consent (GDPR Art. 6(1)(a)). {newsletter.provider} records whether emails are opened and
+        links clicked, so I can see which topics are useful. Every email has a one-click unsubscribe link; once you
+        unsubscribe, your address is no longer emailed and is deleted within 24 months.
       </p>
 
       <h2>Client data in AI work</h2>
