@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { types: { "application/rss+xml": "/blog/feed.xml" } },
 };
 
-export default function LogIndex() {
+export default function BlogIndex() {
   return (
     <>
       <Spotlight />
