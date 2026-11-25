@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   The Log: build notes from the bench. Every fact in these posts comes
+   The blog: build notes from the bench. Every fact in these posts comes
    from the project repositories (READMEs, release history) or the
    project pages. Keep it that way: no invented numbers or clients.
 
@@ -22,7 +22,7 @@ export type Post = {
   /** Slugs of related bench projects (see works.ts). */
   works: string[];
   body: Block[];
-  /** Hidden from the Log and the RSS feed (e.g. its project is hidden). */
+  /** Hidden from the blog and the RSS feed (e.g. its project is hidden). */
   hidden?: boolean;
 };
 

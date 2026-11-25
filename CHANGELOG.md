@@ -3,6 +3,14 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## v1.3.0 · 2026-11-25
+
+The Log is now the Blog.
+
+- **Blog:** the build notes move from `/log/` to `/blog/`, and the menu, footer and project pages say "Blog"
+- **RSS feed:** now at `/blog/feed.xml`
+- **Redirects:** old `/log/` links and the old feed address redirect permanently (301) to their new addresses, so shared links and existing subscribers keep working
+
 ## v1.2.0 · 2026-11-24
 
 AI adoption as a service.

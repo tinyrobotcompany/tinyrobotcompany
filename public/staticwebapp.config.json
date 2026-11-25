@@ -1,7 +1,41 @@
 {
   "trailingSlash": "auto",
+  "routes": [
+    {
+      "route": "/log/no-ai-keys-on-devices*",
+      "redirect": "/blog/no-ai-keys-on-devices/",
+      "statusCode": 301
+    },
+    {
+      "route": "/log/deja-groove-local-first*",
+      "redirect": "/blog/deja-groove-local-first/",
+      "statusCode": 301
+    },
+    {
+      "route": "/log/shipping-side-projects-like-production*",
+      "redirect": "/blog/shipping-side-projects-like-production/",
+      "statusCode": 301
+    },
+    {
+      "route": "/log/feed.xml",
+      "redirect": "/blog/feed.xml",
+      "statusCode": 301
+    },
+    {
+      "route": "/log/*",
+      "redirect": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "route": "/log",
+      "redirect": "/blog/",
+      "statusCode": 301
+    }
+  ],
   "responseOverrides": {
-    "404": { "rewrite": "/404.html" }
+    "404": {
+      "rewrite": "/404.html"
+    }
   },
   "globalHeaders": {
     "X-Content-Type-Options": "nosniff",

@@ -4,8 +4,8 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import LegalNotice from "./legal/page";
 import Privacy from "./privacy/page";
 import Join from "./join/page";
-import LogIndex from "./log/page";
-import { posts } from "./data/log";
+import BlogIndex from "./blog/page";
+import { posts } from "./data/blog";
 import { works } from "./data/works";
 import { legal, socials } from "./data/site";
 
@@ -75,14 +75,14 @@ describe("privacy policy covers sign-ups", () => {
   });
 });
 
-describe("log", () => {
+describe("blog", () => {
   it("lists every post", () => {
-    const html = renderToStaticMarkup(<LogIndex />);
-    for (const p of posts) expect(html).toMatch(new RegExp(`href="/log/${p.slug}/?"`));
+    const html = renderToStaticMarkup(<BlogIndex />);
+    for (const p of posts) expect(html).toMatch(new RegExp(`href="/blog/${p.slug}/?"`));
   });
 
   it("is linked from the header and footer", () => {
-    expect(renderToStaticMarkup(<SiteHeader />)).toMatch(/href="\/log\/?"/);
-    expect(renderToStaticMarkup(<SiteFooter />)).toMatch(/href="\/log\/?"/);
+    expect(renderToStaticMarkup(<SiteHeader />)).toMatch(/href="\/blog\/?"/);
+    expect(renderToStaticMarkup(<SiteFooter />)).toMatch(/href="\/blog\/?"/);
   });
 });

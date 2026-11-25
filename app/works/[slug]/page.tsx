@@ -9,7 +9,7 @@ import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Spotlight } from "../../components/Spotlight";
 import { AppIcon, CharacterPlate, FlowStrip } from "../../components/WorkVisuals";
 import { fullName, getWork, repoUrl, works, type Work } from "../../data/works";
-import { postsForWork } from "../../data/log";
+import { postsForWork } from "../../data/blog";
 import { latestVersion } from "../../lib/github";
 
 
@@ -203,11 +203,11 @@ export default async function WorkPage({ params }: PageProps<"/works/[slug]">) {
           <section className={base.section} aria-labelledby="notes-h">
             <div className={base.sectionHead}>
               <div className={base.sectionNo}>Build notes</div>
-              <h2 className={base.sectionTitle} id="notes-h">From the <span className={base.serif}>log</span>.</h2>
+              <h2 className={base.sectionTitle} id="notes-h">From the <span className={base.serif}>blog</span>.</h2>
             </div>
             <div className={base.heroActions}>
               {postsForWork(work.slug).map((p) => (
-                <Link key={p.slug} className={`${base.btn} ${base.btnGhost}`} href={`/log/${p.slug}/`}>
+                <Link key={p.slug} className={`${base.btn} ${base.btnGhost}`} href={`/blog/${p.slug}/`}>
                   {p.title} <Arrow />
                 </Link>
               ))}

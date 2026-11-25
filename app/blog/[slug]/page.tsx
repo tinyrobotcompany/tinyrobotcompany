@@ -3,18 +3,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import base from "../../page.module.css";
 import work from "../../works/[slug]/work.module.css";
-import styles from "../log.module.css";
+import styles from "../blog.module.css";
 import { RightArrow } from "../../components/Icons";
 import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Spotlight } from "../../components/Spotlight";
-import { formatDate, getPost, posts, type Block } from "../../data/log";
+import { formatDate, getPost, posts, type Block } from "../../data/blog";
 import { fullName, getWork } from "../../data/works";
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/log/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const post = getPost((await params).slug);
   if (!post) return {};
   return {
@@ -35,7 +35,7 @@ function BlockView({ block }: { block: Block }) {
   }
 }
 
-export default async function PostPage({ params }: PageProps<"/log/[slug]">) {
+export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
   const post = getPost((await params).slug);
   if (!post) notFound();
   const related = post.works.map(getWork).filter((w) => w !== undefined);
@@ -46,8 +46,8 @@ export default async function PostPage({ params }: PageProps<"/log/[slug]">) {
       <SiteHeader />
 
       <main id="top" className={base.wrap}>
-        <Link className={work.back} href="/log/">
-          <RightArrow flip /> The log
+        <Link className={work.back} href="/blog/">
+          <RightArrow flip /> The blog
         </Link>
 
         <article aria-labelledby="post-title">
