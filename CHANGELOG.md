@@ -3,6 +3,10 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## v1.4.1 · 2026-11-25
+
+- **Blog tests:** the check on old `/log/` redirects now covers only the 3 posts published before the rename, so adding a new post no longer fails the build
+
 ## v1.4.0 · 2026-11-25
 
 The Weekly Brief newsletter.
