@@ -3,6 +3,14 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## v1.5.0 · 2026-11-25
+
+Weekly Brief production tools. Nothing changes on the site.
+
+- **Playbook:** `tools/weekly-brief/README.md` sets the audience, the news / education / fun mix, accuracy rules, the weekly schedule, the deliverables and the approval step
+- **Video renderer:** `render_video.py` turns a storyboard into a vertical Pico Pie video (1080×1920), drawn from the brand mascot
+- **Setup:** `setup.sh` installs the Python packages and the brand fonts; an example storyboard is included
+
 ## v1.4.1 · 2026-11-25
 
 - **Blog tests:** the check on old `/log/` redirects now covers only the 3 posts published before the rename, so adding a new post no longer fails the build
