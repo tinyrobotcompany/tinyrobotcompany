@@ -62,9 +62,11 @@ describe("old /log/ addresses", () => {
   type Route = { route: string; redirect?: string; statusCode?: number };
   const routes: Route[] = JSON.parse(readFileSync("public/staticwebapp.config.json", "utf8")).routes ?? [];
   const target = (path: string) => routes.find((r) => r.route === path);
+  /** The posts that were published at /log/ before the rename (v1.3.0). Posts added later never had a /log/ address. */
+  const moved = ["no-ai-keys-on-devices", "deja-groove-local-first", "shipping-side-projects-like-production"];
 
-  it("redirect every post to its /blog/ page", () => {
-    for (const p of posts) expect(target(`/log/${p.slug}*`)).toEqual({ route: `/log/${p.slug}*`, redirect: `/blog/${p.slug}/`, statusCode: 301 });
+  it("redirect every post that was at /log/ to its /blog/ page", () => {
+    for (const slug of moved) expect(target(`/log/${slug}*`)).toEqual({ route: `/log/${slug}*`, redirect: `/blog/${slug}/`, statusCode: 301 });
   });
 
   it("redirect the feed and the index, after the posts", () => {
@@ -72,6 +74,6 @@ describe("old /log/ addresses", () => {
     expect(target("/log/*")?.redirect).toBe("/blog/");
     expect(target("/log")?.redirect).toBe("/blog/");
     const catchAll = routes.findIndex((r) => r.route === "/log/*");
-    for (const p of posts) expect(routes.findIndex((r) => r.route === `/log/${p.slug}*`)).toBeLessThan(catchAll);
+    for (const slug of moved) expect(routes.findIndex((r) => r.route === `/log/${slug}*`)).toBeLessThan(catchAll);
   });
 });
