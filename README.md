@@ -28,8 +28,8 @@ Live at **[www.tinyrobotcompany.io](https://www.tinyrobotcompany.io)**.
 | --- | --- |
 | `/` | Home: services and prices, track record, the bench (projects), about, contact |
 | `/works/<slug>/` | One page per project: Voxa, Déjà Groove, Tempo, Waveform One |
-| `/log/` | Build notes (the Log), with an RSS feed at `/log/feed.xml` |
-| `/log/<slug>/` | One page per post |
+| `/blog/` | Build notes (the blog), with an RSS feed at `/blog/feed.xml`. Old `/log/` addresses redirect here (301) |
+| `/blog/<slug>/` | One page per post |
 | `/join/` | One sign-up form for the app betas and the device waitlists (`?for=<slug>` preselects a product) |
 | `/legal/` | Legal notice (placeholders until the company is registered) |
 | `/privacy/` | Privacy policy |
@@ -68,7 +68,7 @@ Site facts live in data files, so each one is changed in a single place:
 | [`app/data/track-record.ts`](app/data/track-record.ts) | Career figures and client case studies (the section appears once a case study is added) |
 | [`app/data/works.ts`](app/data/works.ts) | The bench projects: pages, repos, status lines and data notes. `hidden: true` takes one off the site (Pico Pie, for now) |
 | [`app/data/sectors.ts`](app/data/sectors.ts) | Illustrative sector examples (not client cases) |
-| [`app/data/log.ts`](app/data/log.ts) | Log posts: add new ones at the top; facts only from the project repos. `hidden: true` keeps a post off the site |
+| [`app/data/blog.ts`](app/data/blog.ts) | Blog posts: add new ones at the top; facts only from the project repos. `hidden: true` keeps a post off the site |
 
 ### Online services
 
@@ -119,7 +119,7 @@ app/
   components/      Shared UI (header/footer, sign-up form, visuals, theme toggle)
   data/            Site facts, services, track record, works
   lib/             GitHub release lookup, sign-up logic
-  join/ legal/ log/ privacy/ works/[slug]/   Pages
+  blog/ join/ legal/ privacy/ works/[slug]/   Pages
 infrastructure/    Bicep for Azure
 public/            Images, brand assets, Static Web Apps config
 scripts/           Export check and post-deploy smoke test

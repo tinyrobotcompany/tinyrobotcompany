@@ -1,6 +1,6 @@
 import { rssFeed } from "../../lib/rss";
 
-// Static export: prerendered at build time into out/log/feed.xml.
+// Static export: prerendered at build time into out/blog/feed.xml.
 export const dynamic = "force-static";
 
 export function GET() {

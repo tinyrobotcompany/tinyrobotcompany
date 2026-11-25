@@ -1,4 +1,4 @@
-import { posts } from "../data/log";
+import { posts } from "../data/blog";
 import { site } from "../data/site";
 
 const ORIGIN = "https://www.tinyrobotcompany.io";
@@ -9,7 +9,7 @@ const esc = (s: string) =>
 export function rssFeed() {
   const items = posts
     .map((p) => {
-      const url = `${ORIGIN}/log/${p.slug}/`;
+      const url = `${ORIGIN}/blog/${p.slug}/`;
       return `    <item>
       <title>${esc(p.title)}</title>
       <link>${url}</link>
@@ -22,8 +22,8 @@ export function rssFeed() {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>${esc(site.name)} · Log</title>
-    <link>${ORIGIN}/log/</link>
+    <title>${esc(site.name)} · Blog</title>
+    <link>${ORIGIN}/blog/</link>
     <description>Build notes from the Tiny Robot Company bench.</description>
     <language>en</language>
 ${items}
