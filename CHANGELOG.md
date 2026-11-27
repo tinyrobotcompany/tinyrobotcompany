@@ -3,6 +3,13 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## v1.6.0 · 2026-11-27
+
+Weekly Brief: Instagram carousels as finished images. Nothing changes on the site.
+
+- **Carousel renderer:** `render_carousel.py` turns a short JSON file into 1080×1350 slides (cover, explanation slides, closing "follow / newsletter" slide) in the Pico Pie style, plus a contact sheet for checking
+- **Playbook:** the weekly issue now delivers the carousel as ready-to-upload images with a caption, instead of text only; an example carousel is included
+
 ## v1.5.1 · 2026-11-27
 
 - **Weekly Brief playbook:** the blog post is published on Monday at 07:25, just before the newsletter, instead of as soon as the issue is approved
