@@ -3,6 +3,10 @@
 What changed on [tinyrobotcompany.io](https://tinyrobotcompany.io), newest first.
 Each version is also a [GitHub release](https://github.com/tinyrobotcompany/tinyrobotcompany/releases).
 
+## v1.5.1 · 2026-11-27
+
+- **Weekly Brief playbook:** the blog post is published on Monday at 07:25, just before the newsletter, instead of as soon as the issue is approved
+
 ## v1.5.0 · 2026-11-25
 
 Weekly Brief production tools. Nothing changes on the site.
