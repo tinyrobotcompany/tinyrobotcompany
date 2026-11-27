@@ -1,0 +1,9 @@
+{
+ "slides": [
+  {"type": "cover", "label": "AI, EXPLAINED", "title": "3 AI terms you'll\nhear everywhere", "text": "Here's what they actually mean."},
+  {"type": "point", "label": "TERM 01 / 03", "title": "LLM", "subtitle": "Large language model", "text": "The engine behind AI chatbots.\nIt learned from huge amounts of text\nand predicts the likeliest next words."},
+  {"type": "point", "label": "TERM 02 / 03", "title": "AI agent", "subtitle": "AI that acts, not just answers", "text": "It carries out tasks for you,\nstep by step: searching, booking,\nfilling in forms."},
+  {"type": "point", "label": "TERM 03 / 03", "title": "Hallucination", "subtitle": "When AI makes things up", "text": "An AI can state something false\nwith total confidence.", "tip": "Always double-check\nthe facts that matter."},
+  {"type": "cta", "title": "Want one clear AI\nbriefing a week?", "text": "*Follow* @tinyrobotcompany\nand get the Weekly Brief:\nnewsletter link in bio."}
+ ]
+}
