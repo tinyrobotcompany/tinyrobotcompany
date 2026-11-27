@@ -51,3 +51,4 @@ docs/pricing-analysis.md
 /tools/weekly-brief/.fonts/
 /tools/weekly-brief/out/
 /tools/weekly-brief/**/.*-parts/
+/tools/weekly-brief/__pycache__/

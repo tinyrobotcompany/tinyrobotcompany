@@ -78,9 +78,12 @@ Issue numbers: #1 is Monday 7 December 2026; add one per week.
 - For each video also give: the voiceover script (matching the on-screen text, for text-to-speech in
   CapCut or Instagram), a caption, and 4–6 hashtags.
 
-### 4. Instagram carousel (text)
-- 6–8 slides of the Monday story: hook slide, 4–6 explanation slides, a final "Follow / newsletter link
-  in bio" slide. Give the text per slide.
+### 4. Instagram carousel (images)
+- 6 to 8 slides (1080x1350) on the Monday story: a cover slide with the hook, 4 to 6 explanation slides,
+  and a closing slide ("Follow @tinyrobotcompany / Weekly Brief newsletter link in bio").
+- Write a carousel JSON (see `carousels/example-3-ai-terms.json` and the header of `render_carousel.py`),
+  render it, open `contact-sheet.png` and check nothing overlaps, then send Simon every slide PNG in
+  order, with an Instagram caption and 4–6 hashtags. A slide is read in about 3 seconds, so keep text short.
 
 ### 5. LinkedIn post (formal)
 - Posted by the company, not by Pico Pie. Formal, measured, business-focused, **no emojis**, no hype.
@@ -90,8 +93,8 @@ Issue numbers: #1 is Monday 7 December 2026; add one per week.
 ## Review and approval
 
 - Present everything in one message: the newsletter (link to the MailerLite draft and the full text), the
-  blog PR link, the three videos (sent as files) with scripts and captions, the carousel text and the
-  LinkedIn text.
+  blog PR link, the three videos (sent as files) with scripts and captions, the carousel slides (sent as
+  files) with their caption, and the LinkedIn text.
 - Simon replies with changes in the same session; revise and re-send only what changed.
 - On **"approved"**: schedule the MailerLite campaign for Monday 07:30 Europe/Paris and merge the blog PR.
   Social posts are scheduled by Simon in each platform.
