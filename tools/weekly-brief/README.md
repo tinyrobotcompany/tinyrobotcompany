@@ -77,14 +77,15 @@ Issue numbers: #1 is Monday 7 December 2026; add one per week.
   `render_video.py`), render a contact sheet with `--stills` at the busiest moments and **look at it**
   (no overlapping text, nothing below y=1500), then render the video.
 - For each video also give: the voiceover script (matching the on-screen text, for text-to-speech in
-  CapCut or Instagram), a caption, and 4–6 hashtags.
+  CapCut or Instagram), a caption, 4–6 hashtags, and the **source links** for the stories it covers
+  (full URLs, primary source first) so Simon can add them to the post description.
 
 ### 4. Instagram carousel (images)
 - 6 to 8 slides (1080x1350) on the Monday story: a cover slide with the hook, 4 to 6 explanation slides,
   and a closing slide ("Follow @tinyrobotcompany / Weekly Brief newsletter link in bio").
 - Write a carousel JSON (see `carousels/example-3-ai-terms.json` and the header of `render_carousel.py`),
   render it, open `contact-sheet.png` and check nothing overlaps, then send Simon every slide PNG in
-  order, with an Instagram caption and 4–6 hashtags. A slide is read in about 3 seconds, so keep text short.
+  order, with an Instagram caption, 4–6 hashtags and the source links. A slide is read in about 3 seconds, so keep text short.
 
 ### 5. LinkedIn post (formal)
 - Posted by the company, not by Pico Pie. Formal, measured, business-focused, **no emojis**, no hype.
