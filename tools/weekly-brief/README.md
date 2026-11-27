@@ -39,7 +39,7 @@ anything is published. This file is the brief that task follows.
 | Fri ~14:00 | Scheduled task prepares the issue | Claude session, notification to Simon |
 | Fri evening – Sun noon | Simon reviews, asks for changes, writes "approved" | Same session |
 | Mon 07:30 | Newsletter | MailerLite, group "Weekly Brief" |
-| Mon 07:30 | Blog post | tinyrobotcompany.io/blog (PR merged on approval) |
+| Mon 07:30 | Blog post | tinyrobotcompany.io/blog (PR merged Monday morning, see below) |
 | Mon 18:30 | Video 1 + Instagram carousel | TikTok, Instagram Reels, YouTube Shorts (Simon schedules) |
 | Wed 16:00 | Formal post | LinkedIn company page (Simon schedules) |
 | Wed 18:30 | Video 2 | TikTok, Instagram, YouTube Shorts (Simon schedules) |
@@ -63,7 +63,8 @@ Issue numbers: #1 is Monday 7 December 2026; add one per week.
 - Same content as the newsletter, adapted for the web: a new entry at the **top** of `allPosts` in
   `app/data/blog.ts`, tag `"Weekly Brief"`, `works: []`, date = the Monday it goes out, slug
   `weekly-brief-<N>-<short-topic>`. Blocks: `p`, `h`, `list` (sources as a final list).
-- Branch `weekly-brief/<N>`, run `npm test`, open a PR. Merge only after "approved".
+- Branch `weekly-brief/<N>`, run `npm test`, open a PR. Merging publishes the post within minutes, so it is
+  merged on Monday morning, never earlier (see "Review and approval").
 
 ### 3. Three Pico Pie videos (vertical, 35–45 s each)
 - **Video 1 (Monday):** the week's biggest story, explained.
@@ -93,7 +94,9 @@ Issue numbers: #1 is Monday 7 December 2026; add one per week.
   blog PR link, the three videos (sent as files) with scripts and captions, the carousel text and the
   LinkedIn text.
 - Simon replies with changes in the same session; revise and re-send only what changed.
-- On **"approved"**: schedule the MailerLite campaign for Monday 07:30 Europe/Paris and merge the blog PR.
+- On **"approved"**: schedule the MailerLite campaign for Monday 07:30 Europe/Paris, and use `send_later`
+  to come back to the same session on Monday at 07:25 Europe/Paris to merge the blog PR (merging
+  publishes it straight away, so never merge before then). Confirm both to Simon.
   Social posts are scheduled by Simon in each platform.
 - Without approval, nothing is published.
 
