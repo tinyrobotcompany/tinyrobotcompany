@@ -29,6 +29,100 @@ export type Post = {
 /** Every post, including hidden ones. The site uses `posts` below. */
 export const allPosts: Post[] = [
   {
+    slug: "weekly-brief-rehearsal-robots-at-the-post-office",
+    title: "Weekly Brief (rehearsal): 45 robots join the post office",
+    date: "2026-11-30",
+    summary:
+      "Humanoid robots take on a real job at China Post, Google and Cloudflare build front doors for AI agents, and a robot hosts a car launch. The week in AI and robotics, in plain English.",
+    tags: ["Weekly Brief"],
+    works: [],
+    body: [
+      {
+        type: "p",
+        text: "Hello, and welcome to the Weekly Brief. This week, humanoid robots started a real job at a busy post office, and two of the companies that run the internet's plumbing began building proper front doors for AI agents. That second story matters more for your business than it sounds.",
+      },
+      { type: "h", text: "45 humanoid robots start feeding parcels to the sorter at China Post" },
+      {
+        type: "p",
+        text: "What happened: on 26 November, Chinese robot maker ROBOTERA announced that 45 of its humanoid robots are at work in China Post's Hangzhou Postal District Center. They pick up parcels, turn them the right way round, set aside odd-shaped ones and place them on the platforms that feed the sorting machines. Testing began in April. ROBOTERA says speed rose from 500 to 600 parcels an hour at first to about 1,200 an hour in specific test periods, with accuracy above 90%.",
+      },
+      {
+        type: "p",
+        text: "Why it matters: most humanoid robots so far have been demos. This is dozens of them doing one repetitive job in a real, busy building. It is still officially a test, though, and the figures are the company's own. The release doesn't say whether 1,200 an hour is per robot or for the whole group.",
+      },
+      {
+        type: "p",
+        text: "What it means for your business: humanoids won't be in your warehouse next year. But notice the pattern: robots win first on one dull, clearly defined task. If you have a job like that, it's worth asking whether simpler automation, such as a conveyor or a small robot arm, could take it on today.",
+      },
+      { type: "h", text: "Google sets the rules for AI agents in Gmail, Drive and Docs" },
+      {
+        type: "p",
+        text: "What happened: on 24 November, Google launched two usage tiers for apps and AI agents that connect to Google Workspace: a free Standard Tier, capped at 5,000 requests a day per project and per product through its official MCP servers, and a paid Scaled Tier. From 1 February 2027, AI agents that reach Workspace data must go through Google's official MCP servers or its Workspace command-line tool. Billing for the paid tier begins on 1 April 2027.",
+      },
+      {
+        type: "p",
+        text: "Why it matters: Google says fewer than 1% of active Workspace developers will need more than the free tier. But it is drawing a clear line: AI agents get their own official entrance, with their own rules and limits.",
+      },
+      {
+        type: "p",
+        text: "What it means for your business: if you use, or plan to use, an AI assistant that reads your company's email, calendar or files, ask your supplier or IT person one question before February: does it use Google's official MCP servers?",
+      },
+      { type: "h", text: "One idea, explained: what is MCP?" },
+      {
+        type: "p",
+        text: "MCP, the Model Context Protocol, is an open, standard way for an AI assistant to plug into other software. Think of it as a universal plug socket. Instead of every AI needing a custom cable for your email, another for your files and another for your customer database, each tool offers one standard socket, and any AI that speaks MCP can plug in, within the permissions you give it.",
+      },
+      { type: "h", text: "Cloudflare gives websites a search box built for AI agents" },
+      {
+        type: "p",
+        text: "What happened: on 25 November, the web infrastructure company Cloudflare launched Search for Agents. With one switch in its dashboard, a website gets a search address (/.well-known/search) that AI agents can query, and it answers with passages from the site's own pages. Cloudflare says it is open to all plans, including the free plan with limits, while its documentation still calls it a beta. Billing starts on 1 December: beyond the included amount, meaning-based searches cost $0.75 per 1,000.",
+      },
+      {
+        type: "p",
+        text: "Why it matters: more people now ask an AI assistant instead of searching themselves. Tools like this help those assistants find accurate answers on your own site rather than guessing.",
+      },
+      {
+        type: "p",
+        text: "What it means for your business: if your website already runs on Cloudflare, this is cheap to try. First check that your key pages (prices, opening hours, product details) are clear and current: an agent can only repeat what your site says.",
+      },
+      { type: "h", text: "A humanoid robot hosts a car maker's press conference" },
+      {
+        type: "p",
+        text: "What happened: in a release dated 27 November, XPENG says its humanoid robot IRON \"took centre stage to host\" its press conference at the Guangzhou Auto Show, while several more IRON robots worked the stand as receptionists, sales assistants and guides. XPENG plans to put IRON in its showrooms in China from the first quarter of 2027, and abroad in the second half of 2027.",
+      },
+      {
+        type: "p",
+        text: "Why it matters: receptions and showrooms are a gentler first job for humanoids than factory floors. The work is mostly talking and pointing, not lifting.",
+      },
+      {
+        type: "p",
+        text: "What it means for your business: front-of-house robots are marketing for now. The conversational AI behind them, though, already exists as plain software, for example a voice assistant on your phone line or website. No robot body needed.",
+      },
+      {
+        type: "p",
+        text: "Pico Pie's corner: when XPENG first showed IRON in November 2025, it moved so smoothly that engineers cut it open on stage to prove nobody was hiding inside. Pico Pie would like it known that it has never been asked to do this, and would like to keep it that way.",
+      },
+      { type: "h", text: "One thing to try this week" },
+      {
+        type: "p",
+        text: "Ask an AI assistant (ChatGPT, Claude, Gemini or Copilot) a question a customer might ask about your business, such as your opening hours or what you charge for your main service. If the answer is wrong or vague, the fix usually starts on your own website.",
+      },
+      { type: "h", text: "Sources" },
+      {
+        type: "list",
+        items: [
+          "ROBOTERA, \"ROBOTERA Puts 45 Humanoid Robots into Large-Scale Fleet Operations at China Post\", PR Newswire, 26 November 2026: https://www.prnewswire.com/news-releases/robotera-puts-45-humanoid-robots-into-large-scale-fleet-operations-at-china-post-302951216.html",
+          "The Techlantis, \"China Post is testing 45 Robotera humanoid robots at a Hangzhou parcel hub\", 27 November 2026: https://thetechlantis.com/news/china-post-robotera-45-humanoids-parcel-hub",
+          "Google for Developers, \"Usage tiers and quotas for Google Workspace APIs and MCP servers\", updated 26 November 2026: https://developers.google.com/workspace/guides/quota-usage-tiers",
+          "PPC Land, \"Cloudflare lets websites switch on a search box built for AI agents\", 26 November 2026, reporting Cloudflare's blog post of 25 November: https://ppc.land/cloudflare-lets-websites-switch-on-a-search-box-built-for-ai-agents/",
+          "Cloudflare Blog, \"Search for Agents\": https://blog.cloudflare.com/search-for-agents/",
+          "XPENG, \"XPENG Accelerates Global Physical AI Expansion at the 2026 Guangzhou International Automobile Exhibition\", GlobeNewswire, 27 November 2026, via StockTitan: https://www.stocktitan.net/news/XPEV/xpeng-accelerates-global-physical-ai-expansion-at-the-2026-guangzhou-knap6bcqmx1h.html",
+          "Live Science, on IRON being cut open at XPENG's AI Day, November 2025: https://www.livescience.com/technology/robotics/watch-chinese-companys-new-humanoid-robot-moves-so-smoothly-they-had-to-cut-it-open-to-prove-a-person-wasnt-hiding-inside",
+        ],
+      },
+    ],
+  },
+  {
     slug: "no-ai-keys-on-devices",
     title: "Why my apps never hold an AI key",
     date: "2026-11-17",
